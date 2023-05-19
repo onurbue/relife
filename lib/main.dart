@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:relife/ui/HomePage/homepage.dart';
+import 'package:relife/views/HomePage/homepage.dart';
+import 'package:relife/views/Login/login_page.dart';
 
 void main() {
   runApp(
@@ -14,7 +15,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: 'ReLife',
-      home: HomePage(),
+      // home: HomePage(),
+      home: LoginPage(),
     );
   }
 }
