@@ -36,13 +36,6 @@ class RecoverPassword extends StatelessWidget {
                   width: 346,
                   height: 56,
                   child: ElevatedButton(
-                    child: Text(
-                      'Send me a new password',
-                      style: GoogleFonts.workSans(
-                        textStyle: const TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w500),
-                      ),
-                    ),
                     onPressed: () {
                       print('a pessoa quer uma passe nova');
                     },
@@ -50,6 +43,13 @@ class RecoverPassword extends StatelessWidget {
                       backgroundColor: Colors.black,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(24),
+                      ),
+                    ),
+                    child: Text(
+                      'Send me a new password',
+                      style: GoogleFonts.workSans(
+                        textStyle: const TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w500),
                       ),
                     ),
                   ),
