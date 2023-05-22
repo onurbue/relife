@@ -46,7 +46,7 @@ class RecoverPassword extends StatelessWidget {
                       ),
                     ),
                     child: Text(
-                      'Send me a new password',
+                      'Enviem-me uma password nova',
                       style: GoogleFonts.workSans(
                         textStyle: const TextStyle(
                             fontSize: 16, fontWeight: FontWeight.w500),

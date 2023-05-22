@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:relife/views/HomePage/homepage.dart';
 import 'package:relife/views/Login/login_page.dart';
-import 'package:relife/views/RecoverPassword/recover_password.dart';
+import 'package:relife/views/Register/register.dart';
 
 void main() {
   runApp(
@@ -17,8 +17,8 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       title: 'ReLife',
       // home: HomePage(),
-      home: LoginPage(),
-      //home: RecoverPassword(),
+      //home: LoginPage(),
+      home: RegisterPage(),
     );
   }
 }
