@@ -36,6 +36,7 @@ class LoginPage extends StatelessWidget {
                   hintText: 'Insere a tua password',
                   labelText: 'Password',
                 ),
+                obscureText: true,
               ),
               const SizedBox(height: 60),
               SizedBox(
@@ -46,7 +47,7 @@ class LoginPage extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => HomePage(),
+                        builder: (context) => const HomePage(),
                       ),
                     );
                   },
