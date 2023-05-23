@@ -1,51 +1,46 @@
 import 'package:flutter/material.dart';
-import 'package:relife/views/start.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:convert';
-
+import 'package:google_fonts/google_fonts.dart';
+import 'package:relife/data/users.dart';
+import 'package:relife/views/Login/login_page.dart';
 import 'package:relife/utils/appbar.dart';
 import 'package:relife/utils/constants.dart';
-import 'package:relife/data/users.dart';
 
-import 'package:relife/views/HomePage/homepage.dart';
-import 'package:relife/views/Register/register.dart';
-import 'package:relife/views/RecoverPassword/recover_password.dart';
-
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
-  // Text Controllers &  Form key
+class _RegisterPageState extends State<RegisterPage> {
   final _formKey = GlobalKey<FormState>();
+  final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
-  // Submit the form, send the params to the API
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
+      final name = _nameController.text;
       final email = _emailController.text;
       final password = _passwordController.text;
 
-      Users.loginUser(email, password).then((token) {
-        // Armazena o token no SharedPreferences
-        SharedPreferences.getInstance().then((prefs) {
-          // Armazene o token como uma string
-          prefs.setString('token', token);
-
-          // Depois de armazenar o token, você pode prosseguir com a navegação
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => const InitialPage()),
-          );
-        });
+      Users.createUser(name, email, password).then((result) {
+        print(result);
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => const LoginPage()));
+        // Faça algo com a resposta da API
       }).catchError((error) {
-        // Trata o erro de login
+        print(error);
+        // Trate o erro adequadamente
       });
     }
+  }
+
+  bool isValidEmail(String email) {
+    // Regex para validar o formato do e-mail
+    final emailRegex = RegExp(
+        r'^[\w-]+(\.[\w-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,})$');
+    return emailRegex.hasMatch(email);
   }
 
   @override
@@ -57,7 +52,7 @@ class _LoginPageState extends State<LoginPage> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
-            'Login',
+            'Register',
             style: CustomTextStyles.title,
           ),
           Padding(
@@ -68,11 +63,25 @@ class _LoginPageState extends State<LoginPage> {
                 child: Column(
                   children: [
                     TextFormField(
+                      controller: _nameController,
+                      decoration: const InputDecoration(labelText: 'Name'),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please, insert your name';
+                        }
+                        return null;
+                      },
+                    ),
+                    TextFormField(
                       controller: _emailController,
+                      keyboardType: TextInputType.emailAddress,
                       decoration: const InputDecoration(labelText: 'E-mail'),
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Please, insert an email';
+                          // Checks if the email is valid formatted with @domain.com
+                        } else if (!isValidEmail(value)) {
+                          return 'Please, insert a valid email.';
                         }
                         return null;
                       },
@@ -82,7 +91,7 @@ class _LoginPageState extends State<LoginPage> {
                       decoration: const InputDecoration(labelText: 'Password'),
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return 'Please, insert your password';
+                          return 'Please, insert a password';
                         }
                         return null;
                       },
@@ -101,37 +110,18 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                         child: Text(
-                          'Login',
-                          style: CustomTextStyles.button,
+                          'Register',
+                          style: GoogleFonts.workSans(
+                            textStyle: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
                         ),
                       ),
                     ),
                   ],
                 ),
-              ),
-              const SizedBox(height: 18),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const RecoverPassword(),
-                    ),
-                  );
-                },
-                child: const Text('Recover password'),
-              ),
-              const SizedBox(height: 20),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const RegisterPage(),
-                    ),
-                  );
-                },
-                child: const Text('New User? Create an account'),
               ),
             ]),
           ),

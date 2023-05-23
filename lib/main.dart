@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:relife/views/HomePage/homepage.dart';
-import 'package:relife/views/Login/login_page.dart';
+import 'package:relife/utils/constants.dart';
+import 'package:relife/views/Backend/backend.dart';
+import 'package:relife/views/start.dart';
 
 void main() {
   runApp(
@@ -13,10 +14,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
+      theme: ThemeData(
+        appBarTheme: const AppBarTheme(
+          iconTheme: IconThemeData(
+            color: primaryColor, // Defina a cor desejada aqui
+          ),
+        ),
+      ),
       title: 'ReLife',
-      // home: HomePage(),
-      home: LoginPage(),
+      home: const InitialPage(),
+      // home: Dashboard(),
     );
   }
 }
