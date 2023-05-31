@@ -40,13 +40,8 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Featured Causes', style: CustomTextStyles.descriptions),
-
               // Missões em Destaque
               buildFeaturedMissions(),
-
-              const SizedBox(height: 20),
-              Text('Causes', style: CustomTextStyles.descriptions),
 
               // Missões Normais
               buildNormalMissions(),
@@ -60,93 +55,111 @@ class _HomePageState extends State<HomePage> {
   //Trocar isto por o carousell slider, para ficar tipo a imagem em slide
   // destacada
   Widget buildFeaturedMissions() {
-    return SizedBox(
-      height: 220,
-      child: FutureBuilder<List<Mission>>(
-        future: _missions,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return ListView.builder(
-              itemCount: snapshot.data!.length,
-              scrollDirection: Axis.vertical,
-              itemBuilder: (context, index) {
-                final Mission mission = snapshot.data![index];
-                if (mission.isLimited == 1) {
-                  return InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => MissionPage(
-                            missionId: mission.id,
-                            title: mission.title,
-                            description: mission.description,
-                          ),
-                        ),
-                      );
-                    },
-                    child: FeaturedCausesCard(
-                      title: mission.title,
-                      amountDonated: mission.totalAmount,
-                      totalAmount: mission.limitAmout,
-                    ),
-                  );
-                } else {
-                  //Devolve vazio se não for limitada
-                  return Container();
-                }
-              },
-            );
-          } else if (snapshot.hasError) {
-            return Text('${snapshot.error}');
-          }
+    return FutureBuilder<List<Mission>>(
+      future: _missions,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(
             child: CircularProgressIndicator(),
           );
-        },
-      ),
+        } else if (snapshot.hasError) {
+          return Text('${snapshot.error}');
+        } else if (snapshot.hasData) {
+          final filteredMissions = snapshot.data!
+              .where((mission) => mission.isLimited == 1)
+              .toList();
+          if (filteredMissions.isNotEmpty) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Featured Causes', style: CustomTextStyles.descriptions),
+                SizedBox(
+                  height: 220,
+                  child: ListView.builder(
+                    itemCount: filteredMissions.length,
+                    scrollDirection: Axis.vertical,
+                    itemBuilder: (context, index) {
+                      final Mission mission = filteredMissions[index];
+                      return InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => MissionPage(
+                                missionId: mission.id,
+                                title: mission.title,
+                                description: mission.description,
+                              ),
+                            ),
+                          );
+                        },
+                        child: FeaturedCausesCard(
+                          title: mission.title,
+                          amountDonated: mission.totalAmount,
+                          totalAmount: mission.limitAmout,
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                const SizedBox(height: 20),
+              ],
+            );
+          } else {
+            return Container();
+          }
+        } else {
+          return Container();
+        }
+      },
     );
   }
 
   Widget buildNormalMissions() {
-    return SizedBox(
-      height: 400,
-      child: FutureBuilder<List<Mission>>(
-        future: _missions,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return ListView.builder(
-              itemCount: snapshot.data!.length,
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) {
-                return InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => MissionPage(
-                          missionId: snapshot.data![index].id,
-                          title: snapshot.data![index].title,
-                          description: snapshot.data![index].description,
-                        ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('Causes', style: CustomTextStyles.descriptions),
+        SizedBox(
+          height: 400,
+          child: FutureBuilder<List<Mission>>(
+            future: _missions,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return ListView.builder(
+                  itemCount: snapshot.data!.length,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) {
+                    return InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => MissionPage(
+                              missionId: snapshot.data![index].id,
+                              title: snapshot.data![index].title,
+                              description: snapshot.data![index].description,
+                            ),
+                          ),
+                        );
+                      },
+                      child: NormalCausesCard(
+                        title: snapshot.data![index].title,
+                        description: snapshot.data![index].description,
                       ),
                     );
                   },
-                  child: NormalCausesCard(
-                    title: snapshot.data![index].title,
-                    description: snapshot.data![index].description,
-                  ),
                 );
-              },
-            );
-          } else if (snapshot.hasError) {
-            return Text('${snapshot.error}');
-          }
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        },
-      ),
+              } else if (snapshot.hasError) {
+                return Text('${snapshot.error}');
+              }
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 }

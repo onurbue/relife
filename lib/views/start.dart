@@ -12,46 +12,21 @@ class InitialPage extends StatefulWidget {
   State<InitialPage> createState() => _InitialPageState();
 }
 
-int _indiceAtual = 0; // Variável para controlar o índice das telas
-late Future<bool> _loginCheck;
-late Future<User?> _user;
-late User _currentUser;
+int _pageIndex = 0;
 
 final List<Widget> _telas = [
-  HomePage(),
-  ProfilePage(),
+  const HomePage(),
+  const ProfilePage(),
 ];
 
 class _InitialPageState extends State<InitialPage> {
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    _loginCheck = Users.checkUserLoggedIn();
-    _user = _loginCheck.then((isLoggedIn) {
-      if (isLoggedIn) {
-        return Users.fetchCurrentUser().then((user) {
-          setState(() {
-            _currentUser = user;
-          });
-          return user;
-        });
-      } else {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const LoginPage()),
-        );
-      }
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
-    print(_indiceAtual);
+    print(_pageIndex);
     return Scaffold(
-      body: _telas[_indiceAtual],
+      body: _telas[_pageIndex],
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _indiceAtual,
+        currentIndex: _pageIndex,
         onTap: onTabTapped,
         items: const [
           BottomNavigationBarItem(
@@ -63,16 +38,19 @@ class _InitialPageState extends State<InitialPage> {
   }
 
   void onTabTapped(int index) {
-    if (index == 1) {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const LoginPage(),
-          ));
-    } else {
-      setState(() {
-        _indiceAtual = index;
-      });
-    }
+    // if (index == 1) {
+    //   Navigator.push(
+    //       context,
+    //       MaterialPageRoute(
+    //         builder: (context) => const LoginPage(),
+    //       ));
+    // } else {
+    //   setState(() {
+    //     _indiceAtual = index;
+    //   });
+    // }
+    setState(() {
+      _pageIndex = index;
+    });
   }
 }

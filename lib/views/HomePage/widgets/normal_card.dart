@@ -19,7 +19,7 @@ class NormalCausesCard extends StatelessWidget {
         ),
         child: Column(children: [
           Image.network(
-            'https://static.globalnoticias.pt/dn/image.jpg?brand=DN&type=generate&guid=da4b597f-a3a4-44ac-b665-b5fb976cd364',
+            'https://images.impresa.pt/sicnot/2022-12-13-cheias-loures.JPG-e34f562e',
             width: 200,
             height: 150,
             fit: BoxFit.fill,
