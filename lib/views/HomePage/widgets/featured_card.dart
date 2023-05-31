@@ -31,7 +31,6 @@ class FeaturedCausesCard extends StatelessWidget {
 
     return SizedBox(
       height: 250,
-      width: 100,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [

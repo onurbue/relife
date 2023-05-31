@@ -7,7 +7,6 @@ import 'package:relife/views/Donation/donation.dart';
 import 'package:relife/utils/appbar.dart';
 
 import '../HomePage/widgets/featured_card.dart';
-
 // Ver aqui sobre o sliding
 // https://api.flutter.dev/flutter/cupertino/CupertinoSlidingSegmentedControl-class.html
 
@@ -15,11 +14,17 @@ class MissionPage extends StatefulWidget {
   int missionId;
   String title;
   String description;
+  int totalAmount;
+  int? limitAmount;
+  int isLimited;
 
   MissionPage({
     required this.missionId,
     required this.title,
     required this.description,
+    required this.totalAmount,
+    this.limitAmount,
+    required this.isLimited,
   });
 
   @override
@@ -42,9 +47,14 @@ class _MissionPageState extends State<MissionPage> {
           padding: const EdgeInsets.all(18.0),
           child: Column(
             children: [
-              SizedBox(
-                height: 250,
-                child: Column(
+              if (widget.isLimited == 1) ...[
+                FeaturedCausesCard(
+                  title: '',
+                  totalAmount: widget.limitAmount!,
+                  amountDonated: widget.totalAmount,
+                ),
+              ] else ...[
+                Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     ClipRRect(
@@ -57,57 +67,34 @@ class _MissionPageState extends State<MissionPage> {
                       ),
                     ),
                     const SizedBox(height: 10),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        widget.title,
+                    const Text(
+                      'Total Donated',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: primaryColor,
+                      ),
+                    ),
+                    Text(
+                      '${widget.totalAmount.toString()} €',
+                      style: const TextStyle(
+                        fontSize: 16,
                       ),
                     ),
                     const SizedBox(height: 10),
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(5),
-                      child: SizedBox(
-                        height: 10,
-                        width: 400,
-                        child: LinearProgressIndicator(
-                          value: 1,
-                          backgroundColor: Colors.grey,
-                          valueColor:
-                              AlwaysStoppedAnimation<Color>(Colors.green),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            Text('2 €'),
-                            const Text(' / '),
-                            Text(
-                              '2 €',
-                              style: const TextStyle(
-                                  color: Color.fromRGBO(0, 0, 0, 0.5)),
-                            ),
-                          ],
-                        ),
-                        Text('(amountDonated, totalAmount).toString()} %'),
-                      ],
-                    )
                   ],
                 ),
-              ),
-              const SizedBox(height: 20),
-              Text(widget.title, style: CustomTextStyles.title),
+              ],
+              Text(widget.title,
+                  textAlign: TextAlign.center, style: CustomTextStyles.title),
               const SizedBox(height: 20),
               Text(
                 widget.description,
                 style: CustomTextStyles.button,
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 20),
-              Text('Donations', style: CustomTextStyles.title),
+              const SizedBox(height: 100),
+              Text('DONATIONS', style: CustomTextStyles.title),
               const SizedBox(height: 20),
               CupertinoSlidingSegmentedControl(
                 groupValue: _selectedIndex,
@@ -175,7 +162,7 @@ class _MissionPageState extends State<MissionPage> {
 
   Widget _buildTop10Donations() {
     return FutureBuilder<List<Donation>>(
-      future: Donations.getTop10(),
+      future: Donations.getTop10(widget.missionId),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());

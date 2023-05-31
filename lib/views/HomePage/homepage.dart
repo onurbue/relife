@@ -87,6 +87,9 @@ class _HomePageState extends State<HomePage> {
                                 missionId: mission.id,
                                 title: mission.title,
                                 description: mission.description,
+                                totalAmount: mission.totalAmount,
+                                limitAmount: mission.limitAmout,
+                                isLimited: mission.isLimited,
                               ),
                             ),
                           );
@@ -137,6 +140,8 @@ class _HomePageState extends State<HomePage> {
                               missionId: snapshot.data![index].id,
                               title: snapshot.data![index].title,
                               description: snapshot.data![index].description,
+                              totalAmount: snapshot.data![index].totalAmount,
+                              isLimited: snapshot.data![index].limitAmout,
                             ),
                           ),
                         );
