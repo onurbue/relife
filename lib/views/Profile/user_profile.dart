@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:relife/models/user.dart';
+import 'package:relife/utils/constants.dart';
 import 'package:relife/views/Login/login_page.dart';
 import 'package:relife/utils/appbar.dart';
 
@@ -102,9 +103,6 @@ class _ProfilePageState extends State<ProfilePage> {
               } else if (userSnapshot.hasError) {
                 return Scaffold(
                   appBar: customAppBar(),
-                  // body: Center(
-                  //   child: Text('Erro: ${userSnapshot.error}'),
-                  // ),
                   body: Center(
                     child: ElevatedButton(
                       onPressed: () => Users.logout(context),
@@ -120,7 +118,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     body: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Row(),
+                        const SizedBox(height: 50),
                         Stack(
                           children: [
                             _buildAvatar(user),
@@ -131,19 +129,52 @@ class _ProfilePageState extends State<ProfilePage> {
                                 onTap: () {
                                   uploadImage(user.id);
                                 },
-                                child: const CircleAvatar(
-                                  radius: 20,
-                                  backgroundColor: Colors.white,
-                                  child: Icon(
-                                    Icons.edit,
-                                    color: Colors.black,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    border: Border.all(
+                                      color: primaryColor,
+                                      width: 2,
+                                    ),
+                                  ),
+                                  child: const CircleAvatar(
+                                    radius: 20,
+                                    backgroundColor: Colors.white,
+                                    child: Icon(
+                                      Icons.edit,
+                                      color: primaryColor,
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
                           ],
                         ),
+                        const SizedBox(height: 20),
+                        Text('Registered since'),
                         Text('Olá, ${user.name}'),
+                        const SizedBox(height: 50),
+                        Text('Statistics'),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Column(
+                              children: [
+                                Text('value'),
+                                Text('Donations'),
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                Text('value'),
+                                Text('total donated'),
+                              ],
+                            )
+                          ],
+                        ),
+                        const SizedBox(height: 50),
+                        Text('Settings'),
+                        const SizedBox(height: 50),
                         ElevatedButton(
                           onPressed: () => Users.logout(context),
                           child: const Text('Logout'),
@@ -163,12 +194,20 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Widget _buildAvatar(User user) {
-    print(user.image);
-    return CircleAvatar(
-      radius: 100,
-      backgroundColor: Colors.grey,
-      backgroundImage: NetworkImage(
-        'http://localhost:3000/imagens/${user.image}?timestamp=${DateTime.now()}', //truque para atualizar a imagem
+    return Container(
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        border: Border.all(
+          color: primaryColor,
+          width: 2,
+        ),
+      ),
+      child: CircleAvatar(
+        radius: 100,
+        backgroundColor: Colors.grey,
+        backgroundImage: NetworkImage(
+          'http://localhost:3000/imagens/${user.image}?timestamp=${DateTime.now()}', //truque para atualizar a imagem
+        ),
       ),
     );
   }
