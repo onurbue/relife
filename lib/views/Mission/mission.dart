@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:relife/data/donations.dart';
 import 'package:relife/models/donation.dart';
 import 'package:relife/utils/constants.dart';
@@ -144,11 +145,53 @@ class _MissionPageState extends State<MissionPage> {
           List<Donation> donations = snapshot.data!;
           return Column(
             children: donations.map((donation) {
+              String donationDateStr = donation
+                  .donationDate; // String no formato "2023-05-31T00:00:00.000Z"
+              DateTime donationDate = DateTime.parse(
+                  donationDateStr); // Converter a string em DateTime
+              String formattedDate = DateFormat('yyyy-MM-dd')
+                  .format(donationDate); // Formatar a data
+
+              print(formattedDate);
               return Card(
                 child: ListTile(
-                  title: Text(donation.donationMessage),
+                  title: Text(
+                    'Nome do user(id user = ${donation.userId})',
+                    style: const TextStyle(
+                        color: primaryColor, fontWeight: FontWeight.bold),
+                  ),
                   subtitle: Text(donation.donationMessage),
-                  trailing: Text('\$${donation.amount.toStringAsFixed(2)}'),
+                  trailing: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        width: 70,
+                        height: 25,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.rectangle,
+                          borderRadius: BorderRadius.circular(25),
+                          color: primaryColor,
+                        ),
+                        child: Center(
+                          child: Text(
+                            '${donation.amount.toString()} €',
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 5),
+                      Text(formattedDate,
+                          style: const TextStyle(
+                            fontSize: 13,
+                            fontWeight: FontWeight.w300,
+                          )),
+                    ],
+                  ),
                 ),
               );
             }).toList(),
