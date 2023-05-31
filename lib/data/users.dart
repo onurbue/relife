@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:relife/models/user.dart';
 import 'package:relife/utils/shared.dart';
 import 'package:relife/views/start.dart';
@@ -12,7 +13,7 @@ class Users {
   static const String getUser = 'http://localhost:3000/currentUser';
 
   static Future<dynamic> createUser(
-      String name, String email, String password) async {
+      String name, String email, String password, String mobilePhone) async {
     final response = await http.post(
       Uri.parse(register),
       headers: <String, String>{
@@ -22,6 +23,7 @@ class Users {
         'name': name,
         'email': email,
         'password': password,
+        'mobile_phone': mobilePhone,
       }),
     );
 
@@ -60,27 +62,45 @@ class Users {
     }
   }
 
+  // static Future<User> fetchCurrentUser() async {
+  //   final token = await SharedPreferencesHelper.getToken();
+
+  //   if (token != null && token.isNotEmpty) {
+  //     final response = await http.get(
+  //       Uri.parse(getUser),
+  //       headers: <String, String>{
+  //         'Authorization': token,
+  //       },
+  //     );
+
+  //     if (response.statusCode == 200) {
+  //       final responseData = jsonDecode(response.body);
+  //       final user = User.fromJson(responseData);
+  //       print(user);
+  //       return user;
+  //     } else {
+  //       throw Exception('Falha ao obter os dados do user');
+  //     }
+  //   } else {
+  //     throw Exception('Token inválido');
+  //   }
+  // }
+
   static Future<User> fetchCurrentUser() async {
     final token = await SharedPreferencesHelper.getToken();
-    print(token);
-    if (token != null && token.isNotEmpty) {
-      final response = await http.get(
-        Uri.parse(getUser),
-        headers: <String, String>{
-          'Authorization': token,
-        },
-      );
 
-      if (response.statusCode == 200) {
-        final responseData = jsonDecode(response.body);
-        final user = User.fromJson(responseData);
-        print(user);
+    if (token != null && token.isNotEmpty) {
+      Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
+
+      print(decodedToken);
+      if (decodedToken != null) {
+        final user = User.fromJson(decodedToken);
         return user;
       } else {
-        throw Exception('Falha ao obter os dados do usuário');
+        throw Exception('Failed to decode token');
       }
     } else {
-      throw Exception('Token inválido');
+      throw Exception('Invalid token');
     }
   }
 

@@ -5,7 +5,7 @@ import '../models/mission.dart';
 
 class Missions {
   //constants
-  static const String url = 'http://localhost:3000/missions';
+  static const String url = 'http://localhost:3000/mission';
 
   static Future<List<Mission>> fetchMissions() async {
     //variables
@@ -21,6 +21,7 @@ class Missions {
     //deseriale the body
     missions = List<Mission>.from(iterable.map((m) => Mission.fromJson(m)));
 
+    print(missions);
     // returns deserialized list of objects
     return missions;
   }

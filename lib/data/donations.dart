@@ -5,7 +5,7 @@ import '../models/donation.dart';
 
 class Donations {
   //constants
-  static const String url = 'http://localhost:3000/donations';
+  static const String url = 'http://localhost:3000/donation';
   static const String url10 = 'http://localhost:3000/donations10';
 
   static Future<List<Donation>> getDonations(int id) async {

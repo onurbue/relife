@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:relife/models/user.dart';
 import 'package:relife/views/Login/login_page.dart';
 import 'package:relife/utils/appbar.dart';
@@ -21,7 +20,8 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   late Future<bool> _loginCheck;
   late Future<User?> _user;
-  File? _image;
+  late File _image;
+  late User _currentUser;
 
   @override
   void initState() {
@@ -29,21 +29,28 @@ class _ProfilePageState extends State<ProfilePage> {
     _loginCheck = Users.checkUserLoggedIn();
     _user = _loginCheck.then((isLoggedIn) {
       if (isLoggedIn) {
-        return Users.fetchCurrentUser();
+        return Users.fetchCurrentUser().then((user) {
+          setState(() {
+            _currentUser = user;
+          });
+          return user;
+        });
       } else {
-        return null;
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const LoginPage()),
+        );
       }
     });
   }
 
-  void uploadImage(int userid) async {
-    print(userid);
+  void uploadImage(int userId) async {
     final image = await ImagePicker().pickImage(source: ImageSource.gallery);
     if (image == null) return;
 
     final request = http.MultipartRequest(
       'POST',
-      Uri.parse('http://localhost:3000/upload/$userid'),
+      Uri.parse('http://localhost:3000/upload/$userId'),
     );
 
     request.files.add(
@@ -54,6 +61,8 @@ class _ProfilePageState extends State<ProfilePage> {
 
     if (response.statusCode == 200) {
       print('Imagem enviada com sucesso!');
+
+      setState(() {});
     } else {
       print(
           'Falha ao enviar a imagem. Código de status: ${response.statusCode}');
@@ -80,107 +89,93 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
           );
         } else {
-          bool isLoggedIn = snapshot.data ?? false;
-          if (isLoggedIn) {
-            return FutureBuilder<User?>(
-              future: _user,
-              builder: (context, userSnapshot) {
-                if (userSnapshot.connectionState == ConnectionState.waiting) {
-                  return Scaffold(
-                    appBar: customAppBar(),
-                    body: const Center(
-                      child: CircularProgressIndicator(),
+          return FutureBuilder<User?>(
+            future: _user,
+            builder: (context, userSnapshot) {
+              if (userSnapshot.connectionState == ConnectionState.waiting) {
+                return Scaffold(
+                  appBar: customAppBar(),
+                  body: const Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                );
+              } else if (userSnapshot.hasError) {
+                return Scaffold(
+                  appBar: customAppBar(),
+                  // body: Center(
+                  //   child: Text('Erro: ${userSnapshot.error}'),
+                  // ),
+                  body: Center(
+                    child: ElevatedButton(
+                      onPressed: () => Users.logout(context),
+                      child: const Text('Logout'),
                     ),
-                  );
-                } else if (userSnapshot.hasError) {
+                  ),
+                );
+              } else {
+                User? user = userSnapshot.data;
+                if (user != null) {
                   return Scaffold(
                     appBar: customAppBar(),
-                    body: Center(
-                      child: Text('Erro: ${userSnapshot.error}'),
+                    body: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Row(),
+                        Stack(
+                          children: [
+                            _buildAvatar(user),
+                            Positioned(
+                              top: 150,
+                              right: 10,
+                              child: GestureDetector(
+                                onTap: () {
+                                  uploadImage(user.id!);
+                                },
+                                child: const CircleAvatar(
+                                  radius: 20,
+                                  backgroundColor: Colors.white,
+                                  child: Icon(
+                                    Icons.edit,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Text('Olá, ${user.name}'),
+                        ElevatedButton(
+                          onPressed: () => Users.logout(context),
+                          child: const Text('Logout'),
+                        ),
+                      ],
                     ),
                   );
                 } else {
-                  User? user = userSnapshot.data;
-                  if (user != null) {
-                    return Scaffold(
-                      appBar: customAppBar(),
-                      body: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Row(),
-                          GestureDetector(
-                            onTap: () {},
-                            //onTap: _pickImage,
-                            child: _buildAvatar(user),
-                          ),
-                          ElevatedButton(
-                            onPressed: () {
-                              uploadImage(user.id);
-                            },
-                            child: Text('Selecionar Imagem'),
-                          ),
-                          Text('Olá, ${user.name}'),
-                          ElevatedButton(
-                            onPressed: () => Users.logout(context),
-                            child: const Text('Sair'),
-                          ),
-                          ElevatedButton(
-                            // onPressed: _saveImage,
-                            onPressed: () {},
-                            child: const Text('Salvar Imagem'),
-                          ),
-                        ],
-                      ),
-                    );
-                  } else {
-                    // Usuário não encontrado (tratar caso o usuário logado não exista mais)
-                    return Scaffold(
-                      appBar: customAppBar(),
-                      body: const Center(
-                        child: Text('Usuário não encontrado.'),
-                      ),
-                    );
-                  }
+                  return Container();
                 }
-              },
-            );
-          } else {
-            WidgetsBinding.instance.addPostFrameCallback((_) {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const LoginPage()),
-              );
-            });
-            return const SizedBox();
-          }
+              }
+            },
+          );
         }
       },
     );
   }
 
   Widget _buildAvatar(User user) {
-    if (_image != null) {
-      return CircleAvatar(
+    if (user.image == 'default.png') {
+      return const CircleAvatar(
         radius: 100,
         backgroundColor: Colors.grey,
-        // child: Image.asset(
-        //   'assets/images/users_profiles/${user.image}',
-        //   height: 100,
-        //   width: 100,
-        // ),
-        child: Image.network(
-          'http://localhost:3000/imagens/default.jpg',
-          width: 100,
-          height: 100,
-        ),
+        backgroundImage:
+            NetworkImage('http://localhost:3000/imagens/default.png'),
       );
     } else {
       return CircleAvatar(
         radius: 100,
         backgroundColor: Colors.grey,
-        child: Image.network(
-          'http://localhost:3000/imagens/${user.id}.jpg',
+        backgroundImage: NetworkImage(
+          'http://localhost:3000/imagens/${user.image}?timestamp=${DateTime.now()}', //truque para atualizar a imagem
         ),
       );
     }

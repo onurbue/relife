@@ -6,6 +6,8 @@ import 'package:relife/utils/constants.dart';
 import 'package:relife/views/Donation/donation.dart';
 import 'package:relife/utils/appbar.dart';
 
+import '../HomePage/widgets/featured_card.dart';
+
 // Ver aqui sobre o sliding
 // https://api.flutter.dev/flutter/cupertino/CupertinoSlidingSegmentedControl-class.html
 
@@ -40,10 +42,61 @@ class _MissionPageState extends State<MissionPage> {
           padding: const EdgeInsets.all(18.0),
           child: Column(
             children: [
-              const SizedBox(
-                height: 200,
-                width: 366,
-                child: Placeholder(),
+              SizedBox(
+                height: 250,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Image.network(
+                        'https://media.wired.com/photos/59272787cefba457b079c416/master/w_2560%2Cc_limit/GettyImages-512764656.jpg',
+                        width: 400,
+                        height: 150,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        widget.title,
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(5),
+                      child: SizedBox(
+                        height: 10,
+                        width: 400,
+                        child: LinearProgressIndicator(
+                          value: 1,
+                          backgroundColor: Colors.grey,
+                          valueColor:
+                              AlwaysStoppedAnimation<Color>(Colors.green),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Text('2 €'),
+                            const Text(' / '),
+                            Text(
+                              '2 €',
+                              style: const TextStyle(
+                                  color: Color.fromRGBO(0, 0, 0, 0.5)),
+                            ),
+                          ],
+                        ),
+                        Text('(amountDonated, totalAmount).toString()} %'),
+                      ],
+                    )
+                  ],
+                ),
               ),
               const SizedBox(height: 20),
               Text(widget.title, style: CustomTextStyles.title),
@@ -106,8 +159,8 @@ class _MissionPageState extends State<MissionPage> {
             children: donations.map((donation) {
               return Card(
                 child: ListTile(
-                  title: Text(donation.name),
-                  subtitle: Text(donation.description),
+                  title: Text(donation.donationMessage),
+                  subtitle: Text(donation.donationMessage),
                   trailing: Text('\$${donation.amount.toStringAsFixed(2)}'),
                 ),
               );
@@ -143,12 +196,12 @@ class _MissionPageState extends State<MissionPage> {
                   height: 125,
                   child: ListTile(
                     title: Text(
-                      donation.name,
+                      donation.amount.toString(),
                       style: const TextStyle(
                           fontSize: 18, fontWeight: FontWeight.bold),
                     ),
                     subtitle: Text(
-                      donation.description,
+                      donation.donationMessage,
                       style: const TextStyle(fontSize: 14),
                     ),
                     trailing: Text(
@@ -163,11 +216,11 @@ class _MissionPageState extends State<MissionPage> {
                 return Card(
                   child: ListTile(
                     title: Text(
-                      donation.name,
+                      donation.donationMessage,
                       style: TextStyle(fontSize: 14),
                     ),
                     subtitle: Text(
-                      donation.description,
+                      donation.donationMessage,
                       style: TextStyle(fontSize: 12),
                     ),
                     trailing: Text(

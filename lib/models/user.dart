@@ -3,21 +3,26 @@ class User {
   String name;
   String email;
   String image;
+  String mobilePhone;
+  String registerDate;
 
-  User(
-      {required this.id,
-      required this.name,
-      required this.email,
-      required this.image});
+  User({
+    required this.id,
+    required this.name,
+    required this.email,
+    required this.image,
+    required this.mobilePhone,
+    required this.registerDate,
+  });
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
-      id: json['id'],
-      name: json['name'],
-      email: json['email'],
-      // os primeiros users na db não tinham ainda a tabela de imagem, ficaram a null
-      // assim atribui-se o a imagem default
-      image: json['image'] ?? 'default.png',
+      id: json['user']['id_user'],
+      name: json['user']['name'],
+      mobilePhone: json['user']['mobile_phone'],
+      email: json['user']['email'],
+      image: json['user']['image'],
+      registerDate: json['user']['register_date'],
     );
   }
 }
