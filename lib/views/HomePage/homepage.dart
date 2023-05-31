@@ -10,8 +10,6 @@ import 'package:relife/views/HomePage/widgets/normal_card.dart';
 import 'package:relife/views/Mission/mission.dart';
 import 'package:relife/utils/appbar.dart';
 
-import '../../utils/bottom_nav.dart';
-
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
