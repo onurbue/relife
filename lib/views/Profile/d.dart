@@ -124,7 +124,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 right: 10,
                                 child: GestureDetector(
                                   onTap: () {
-                                    uploadImage(user.id!);
+                                    uploadImage(user.id);
                                   },
                                   child: const CircleAvatar(
                                     radius: 20,

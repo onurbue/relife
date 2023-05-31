@@ -20,14 +20,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int _selectedIndex = 0;
-
-  void _onTabSelected(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
   //variables
   late Future<List<Mission>> _missions;
 
@@ -51,7 +43,7 @@ class _HomePageState extends State<HomePage> {
               Text('Featured Causes', style: CustomTextStyles.descriptions),
 
               // Missões em Destaque
-//              buildFeaturedMissions(),
+              buildFeaturedMissions(),
 
               const SizedBox(height: 20),
               Text('Causes', style: CustomTextStyles.descriptions),
@@ -61,10 +53,6 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
         ),
-      ),
-      bottomNavigationBar: CustomBottomNavigationBar(
-        selectedIndex: _selectedIndex,
-        onTabSelected: _onTabSelected,
       ),
     );
   }
@@ -83,7 +71,6 @@ class _HomePageState extends State<HomePage> {
               scrollDirection: Axis.vertical,
               itemBuilder: (context, index) {
                 final Mission mission = snapshot.data![index];
-
                 if (mission.isLimited == 1) {
                   return InkWell(
                     onTap: () {
@@ -100,12 +87,12 @@ class _HomePageState extends State<HomePage> {
                     },
                     child: FeaturedCausesCard(
                       title: mission.title,
-                      amountDonated: 10,
-                      totalAmount: mission.totalAmount,
+                      amountDonated: mission.totalAmount,
+                      totalAmount: mission.limitAmout,
                     ),
                   );
                 } else {
-                  // Caso não seja limitado, você pode definir um widget alternativo ou retornar um widget vazio
+                  //Devolve vazio se não for limitada
                   return Container();
                 }
               },

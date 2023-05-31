@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:relife/views/Profile/user_profile.dart';
+import '../data/users.dart';
+import '../models/user.dart';
 import 'HomePage/homepage.dart';
 import 'Login/login_page.dart';
 
@@ -10,67 +12,67 @@ class InitialPage extends StatefulWidget {
   State<InitialPage> createState() => _InitialPageState();
 }
 
+int _indiceAtual = 0; // Variável para controlar o índice das telas
+late Future<bool> _loginCheck;
+late Future<User?> _user;
+late User _currentUser;
+
+final List<Widget> _telas = [
+  HomePage(),
+  ProfilePage(),
+];
+
 class _InitialPageState extends State<InitialPage> {
-  int _selectedIndex = 0;
-
-  static const List<Widget> _widgetOptions = <Widget>[
-    HomePage(),
-    // ProfilePage(),
-  ];
-
-  void _onItemTapped(int index) {
-    if (index == 1) {
-      // Verifica se o usuário selecionou o item de perfil
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => ProfilePage()),
-      ).then((_) {
-        // Define o índice da página inicial quando retornar da página de perfil
-        setState(() {
-          _selectedIndex = 0;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _loginCheck = Users.checkUserLoggedIn();
+    _user = _loginCheck.then((isLoggedIn) {
+      if (isLoggedIn) {
+        return Users.fetchCurrentUser().then((user) {
+          setState(() {
+            _currentUser = user;
+          });
+          return user;
         });
-      });
-    } else {
-      setState(() {
-        _selectedIndex = index;
-      });
-    }
+      } else {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const LoginPage()),
+        );
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        // Impede que o usuário retorne à página de login ao pressionar o botão Voltar no dispositivo
-        if (_selectedIndex == 1) {
-          setState(() {
-            _selectedIndex = 0;
-          });
-          return false;
-        }
-        return true;
-      },
-      child: Scaffold(
-        body: IndexedStack(
-          index: _selectedIndex,
-          children: _widgetOptions,
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.portable_wifi_off),
-              label: 'Profile',
-            ),
-          ],
-          currentIndex: _selectedIndex,
-          selectedItemColor: Colors.amber[800],
-          onTap: _onItemTapped,
-        ),
+    print(_indiceAtual);
+    return Scaffold(
+      body: _telas[_indiceAtual],
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _indiceAtual,
+        onTap: onTabTapped,
+        items: const [
+          BottomNavigationBarItem(
+              icon: Icon(Icons.home_filled), label: "Home Page"),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
+        ],
       ),
     );
+  }
+
+  void onTabTapped(int index) {
+    if (index == 1) {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const LoginPage(),
+          ));
+    } else {
+      setState(() {
+        _indiceAtual = index;
+      });
+    }
   }
 }

@@ -163,21 +163,13 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Widget _buildAvatar(User user) {
-    if (user.image == 'default.png') {
-      return const CircleAvatar(
-        radius: 100,
-        backgroundColor: Colors.grey,
-        backgroundImage:
-            NetworkImage('http://localhost:3000/imagens/default.png'),
-      );
-    } else {
-      return CircleAvatar(
-        radius: 100,
-        backgroundColor: Colors.grey,
-        backgroundImage: NetworkImage(
-          'http://localhost:3000/imagens/${user.image}?timestamp=${DateTime.now()}', //truque para atualizar a imagem
-        ),
-      );
-    }
+    print(user.image);
+    return CircleAvatar(
+      radius: 100,
+      backgroundColor: Colors.grey,
+      backgroundImage: NetworkImage(
+        'http://localhost:3000/imagens/${user.image}?timestamp=${DateTime.now()}', //truque para atualizar a imagem
+      ),
+    );
   }
 }
