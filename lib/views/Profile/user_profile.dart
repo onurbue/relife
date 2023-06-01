@@ -206,7 +206,7 @@ class _ProfilePageState extends State<ProfilePage> {
         radius: 100,
         backgroundColor: Colors.grey,
         backgroundImage: NetworkImage(
-          'http://localhost:3000/imagens/${user.image}?timestamp=${DateTime.now()}', //truque para atualizar a imagem
+          'https://relife-api.vercel.app/imagens/${user.image}?timestamp=${DateTime.now()}', //truque para atualizar a imagem
         ),
       ),
     );

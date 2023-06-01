@@ -5,7 +5,7 @@ import '../models/mission.dart';
 
 class Missions {
   //constants
-  static const String url = 'http://localhost:3000/mission';
+  static const String url = 'https://relife-api.vercel.app/mission';
 
   static Future<List<Mission>> fetchMissions() async {
     //variables

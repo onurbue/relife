@@ -43,7 +43,7 @@ class _DashboardState extends State<Dashboard> {
 
   Future<void> fetchMissions() async {
     final url = Uri.parse(
-        'http://localhost:3000/mission'); // Coloque o endereço correto da sua API
+        'https://relife-api.vercel.app/mission'); // Coloque o endereço correto da sua API
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
@@ -145,7 +145,7 @@ class _DashboardState extends State<Dashboard> {
 
                       // Envia os dados da nova missão para a API
                       final response = await http.post(
-                        Uri.parse('http://localhost:3000/mission'),
+                        Uri.parse('https://relife-api.vercel.app/mission'),
                         headers: {'Content-Type': 'application/json'},
                         body: json.encode({
                           'title': newMission.name,
@@ -224,7 +224,7 @@ class _DashboardState extends State<Dashboard> {
                             // Envia a requisição DELETE para a API
                             final response = await http.delete(
                               Uri.parse(
-                                  'http://localhost:3000/mission?id=$missionId'),
+                                  'https://relife-api.vercel.app/mission?id=$missionId'),
                               headers: {'Content-Type': 'application/json'},
                             );
 
