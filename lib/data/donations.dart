@@ -6,7 +6,6 @@ import '../models/donation.dart';
 class Donations {
   //constants
   static const String url = 'http://localhost:3000/donations';
-  static const String url10 = 'http://localhost:3000/donations10';
 
   static Future<List<Donation>> getDonations(int id) async {
     // variables
@@ -14,7 +13,7 @@ class Donations {
     List<Donation> donations;
 
     // ask data
-    final response = await http.get(Uri.parse('$url?id=$id'));
+    final response = await http.get(Uri.parse('$url?missionId=$id'));
 
     // deserialize process for a list
     iterable = json.decode(response.body);
@@ -26,18 +25,18 @@ class Donations {
     return donations;
   }
 
-  static Future<List<Donation>> getTop10() async {
-    //variables
+  static Future<List<Donation>> getTop10(int id) async {
+    // variables
     Iterable iterable;
     List<Donation> donations;
 
     // ask data
-    final response = await http.get(Uri.parse(url10));
+    final response = await http.get(Uri.parse('$url?missionId=$id&top10=true'));
 
-    //deserialize process for a list
+    // deserialize process for a list
     iterable = json.decode(response.body);
 
-    //deseriale the body
+    // deserialize the body
     donations = List<Donation>.from(iterable.map((d) => Donation.fromJson(d)));
 
     // returns deserialized list of objects

@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:relife/views/start.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:convert';
-
 import 'package:relife/utils/appbar.dart';
 import 'package:relife/utils/constants.dart';
 import 'package:relife/data/users.dart';
-
-import 'package:relife/views/HomePage/homepage.dart';
 import 'package:relife/views/Register/register.dart';
 import 'package:relife/views/RecoverPassword/recover_password.dart';
 
@@ -36,7 +32,6 @@ class _LoginPageState extends State<LoginPage> {
           // Armazene o token como uma string
           prefs.setString('token', token);
 
-          // Depois de armazenar o token, você pode prosseguir com a navegação
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => const InitialPage()),
@@ -44,6 +39,11 @@ class _LoginPageState extends State<LoginPage> {
         });
       }).catchError((error) {
         // Trata o erro de login
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Invalid password or email'),
+          ),
+        );
       });
     }
   }
@@ -121,7 +121,7 @@ class _LoginPageState extends State<LoginPage> {
                 },
                 child: const Text('Recover password'),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 100),
               GestureDetector(
                 onTap: () {
                   Navigator.push(
@@ -131,7 +131,15 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   );
                 },
-                child: const Text('New User? Create an account'),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Text('New User? '),
+                      Text(
+                        'Create an account',
+                        style: TextStyle(color: primaryColor),
+                      ),
+                    ]),
               ),
             ]),
           ),

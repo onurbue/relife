@@ -5,6 +5,8 @@ import 'package:relife/views/Login/login_page.dart';
 import 'package:relife/utils/appbar.dart';
 import 'package:relife/utils/constants.dart';
 
+import '../../utils/helper.dart';
+
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
 
@@ -17,30 +19,23 @@ class _RegisterPageState extends State<RegisterPage> {
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _mobilePhoneController = TextEditingController();
 
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
       final name = _nameController.text;
       final email = _emailController.text;
       final password = _passwordController.text;
+      final mobilePhone = _mobilePhoneController.text;
 
-      Users.createUser(name, email, password).then((result) {
+      Users.createUser(name, email, password, mobilePhone).then((result) {
         print(result);
         Navigator.pushReplacement(context,
             MaterialPageRoute(builder: (context) => const LoginPage()));
-        // Faça algo com a resposta da API
       }).catchError((error) {
         print(error);
-        // Trate o erro adequadamente
       });
     }
-  }
-
-  bool isValidEmail(String email) {
-    // Regex para validar o formato do e-mail
-    final emailRegex = RegExp(
-        r'^[\w-]+(\.[\w-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,})$');
-    return emailRegex.hasMatch(email);
   }
 
   @override
@@ -79,9 +74,22 @@ class _RegisterPageState extends State<RegisterPage> {
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Please, insert an email';
-                          // Checks if the email is valid formatted with @domain.com
                         } else if (!isValidEmail(value)) {
                           return 'Please, insert a valid email.';
+                        }
+                        return null;
+                      },
+                    ),
+                    TextFormField(
+                      controller: _mobilePhoneController,
+                      keyboardType: TextInputType.phone,
+                      decoration:
+                          const InputDecoration(labelText: 'Mobile Phone'),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please, insert your mobile phone';
+                        } else if (!isValidPhoneNumber(value)) {
+                          return 'Please, insert a valid mobile phone';
                         }
                         return null;
                       },
