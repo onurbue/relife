@@ -8,8 +8,8 @@ import 'package:relife/views/start.dart';
 
 class Users {
   //constants
-  static const String register = 'http://localhost:3000/register';
-  static const String login = 'http://localhost:3000/login';
+  static const String register = 'https://relife-api.vercel.app/register';
+  static const String login = 'https://relife-api.vercel.app/login';
   static const String getUser = 'http://localhost:3000/currentUser';
 
   static Future<dynamic> createUser(

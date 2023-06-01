@@ -5,7 +5,7 @@ import '../models/donation.dart';
 
 class Donations {
   //constants
-  static const String url = 'http://localhost:3000/donations';
+  static const String url = 'https://relife-api.vercel.app/donations';
 
   static Future<List<Donation>> getDonations(int id) async {
     // variables
