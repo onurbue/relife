@@ -24,8 +24,8 @@ class MyApp extends StatelessWidget {
         ),
       ),
       title: 'ReLife',
-      home: const InitialPage(),
-      // home: Dashboard(),
+      //home: const InitialPage(),
+      home: Dashboard(),
     );
   }
 }
