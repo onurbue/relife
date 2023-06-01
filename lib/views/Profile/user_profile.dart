@@ -51,7 +51,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
     final request = http.MultipartRequest(
       'POST',
-      Uri.parse('http://localhost:3000/upload/$userId'),
+      Uri.parse('https://relife-api.vercel.app/upload/$userId'),
     );
 
     request.files.add(
