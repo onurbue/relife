@@ -14,6 +14,7 @@ class FeaturedCausesCard extends StatelessWidget {
 
   int percentageCalculator(int v1, int v2) {
     double value = (v1 / v2) * 100;
+
     return value.round();
   }
 
@@ -21,6 +22,8 @@ class FeaturedCausesCard extends StatelessWidget {
   Widget build(BuildContext context) {
 //Testes
     int v = percentageCalculator(amountDonated, totalAmount);
+    print('here $v');
+
     String vv = '0.$v';
     double vvv = double.parse(vv);
 

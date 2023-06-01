@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:relife/utils/constants.dart';
 import 'package:relife/views/Profile/user_profile.dart';
 import '../data/users.dart';
 import '../models/user.dart';
@@ -30,8 +31,17 @@ class _InitialPageState extends State<InitialPage> {
         onTap: onTabTapped,
         items: const [
           BottomNavigationBarItem(
-              icon: Icon(Icons.home_filled), label: "Home Page"),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
+            icon: Icon(
+              Icons.home_filled,
+            ),
+            label: "Home Page",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.person,
+            ),
+            label: "Profile",
+          ),
         ],
       ),
     );
