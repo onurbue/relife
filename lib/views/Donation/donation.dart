@@ -3,7 +3,10 @@ import 'package:relife/utils/appbar.dart';
 import 'package:relife/views/Donation/widgets/header.dart';
 
 class DonationPage extends StatelessWidget {
-  const DonationPage({super.key});
+  final _formKey = GlobalKey<FormState>();
+  final _amountController = TextEditingController();
+
+  DonationPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +19,7 @@ class DonationPage extends StatelessWidget {
               percentage: 0.5, title: 'You are almost finishing'),
           const SizedBox(height: 120),
           Container(
-            margin: EdgeInsets.all(8),
+            margin: const EdgeInsets.all(8),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -38,7 +41,37 @@ class DonationPage extends StatelessWidget {
                     customDonationButton(50),
                   ],
                 ),
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      TextFormField(
+                        controller: _amountController,
+                        keyboardType: TextInputType.number,
+                        decoration: const InputDecoration(
+                          labelText: 'Custom Amount',
+                        ),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please, insert an amount';
+                          }
+                          return null;
+                        },
+                      ),
+                    ],
+                  ),
+                ),
               ],
+            ),
+          ),
+          SizedBox(
+            width: 238,
+            height: 48,
+            child: ElevatedButton(
+              child: const Text('Donate'),
+              onPressed: () {
+                print(_amountController);
+              },
             ),
           ),
         ],
