@@ -18,61 +18,66 @@ class DonationPage extends StatelessWidget {
           const CustomBarHeader(
               percentage: 0.5, title: 'You are almost finishing'),
           const SizedBox(height: 120),
-          Container(
-            margin: const EdgeInsets.all(8),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const SizedBox(height: 10),
-                const Row(children: [Text('Donation')]),
-                const SizedBox(height: 25),
-                Row(
+          Card(
+            color: Colors.white38,
+            child: Column(children: [
+              Container(
+                margin: const EdgeInsets.all(8),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    customDonationButton(5),
-                    const SizedBox(width: 10),
-                    customDonationButton(10),
-                  ],
-                ),
-                const SizedBox(height: 10),
-                Row(
-                  children: [
-                    customDonationButton(20),
-                    const SizedBox(width: 10),
-                    customDonationButton(50),
-                  ],
-                ),
-                Form(
-                  key: _formKey,
-                  child: Column(
-                    children: [
-                      TextFormField(
-                        controller: _amountController,
-                        keyboardType: TextInputType.number,
-                        decoration: const InputDecoration(
-                          labelText: 'Custom Amount',
-                        ),
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Please, insert an amount';
-                          }
-                          return null;
-                        },
+                    const SizedBox(height: 10),
+                    const Row(children: [Text('Donation')]),
+                    const SizedBox(height: 25),
+                    Row(
+                      children: [
+                        customDonationButton(5),
+                        const SizedBox(width: 10),
+                        customDonationButton(10),
+                      ],
+                    ),
+                    const SizedBox(height: 10),
+                    Row(
+                      children: [
+                        customDonationButton(20),
+                        const SizedBox(width: 10),
+                        customDonationButton(50),
+                      ],
+                    ),
+                    Form(
+                      key: _formKey,
+                      child: Column(
+                        children: [
+                          TextFormField(
+                            controller: _amountController,
+                            keyboardType: TextInputType.number,
+                            decoration: const InputDecoration(
+                              labelText: 'Custom Amount',
+                            ),
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Please, insert an amount';
+                              }
+                              return null;
+                            },
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          ),
-          SizedBox(
-            width: 238,
-            height: 48,
-            child: ElevatedButton(
-              child: const Text('Donate'),
-              onPressed: () {
-                print(_amountController);
-              },
-            ),
+              ),
+              SizedBox(
+                width: 238,
+                height: 48,
+                child: ElevatedButton(
+                  child: const Text('Donate'),
+                  onPressed: () {
+                    print(_amountController);
+                  },
+                ),
+              ),
+            ]),
           ),
         ],
       ),
