@@ -131,9 +131,9 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   );
                 },
-                child: Row(
+                child: const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
+                    children: [
                       Text('New User? '),
                       Text(
                         'Create an account',
