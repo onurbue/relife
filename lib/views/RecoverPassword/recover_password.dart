@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:relife/data/users.dart';
 import 'package:relife/utils/appbar.dart';
 import 'package:relife/utils/constants.dart';
+import 'package:relife/views/Login/login_page.dart';
 
 class RecoverPassword extends StatelessWidget {
   const RecoverPassword({super.key});
@@ -16,6 +17,12 @@ class RecoverPassword extends StatelessWidget {
     void _submitForm() {
       if (_formKey.currentState!.validate()) {
         final email = _emailController.text;
+
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const LoginPage(),
+            ));
       }
     }
 
@@ -35,6 +42,7 @@ class RecoverPassword extends StatelessWidget {
               Form(
                 key: _formKey,
                 child: Column(children: [
+                  const SizedBox(height: 100),
                   TextFormField(
                     controller: _emailController,
                     decoration: const InputDecoration(labelText: 'E-mail'),
@@ -45,7 +53,7 @@ class RecoverPassword extends StatelessWidget {
                       return null;
                     },
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: 70),
                   SizedBox(
                     width: 346,
                     height: 56,

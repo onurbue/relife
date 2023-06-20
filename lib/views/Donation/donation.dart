@@ -19,7 +19,9 @@ class DonationPage extends StatelessWidget {
               percentage: 0.5, title: 'You are almost finishing'),
           const SizedBox(height: 120),
           Card(
-            color: Colors.white38,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(41)),
+            color: const Color.fromRGBO(252, 252, 252, 100),
             child: Column(children: [
               Container(
                 margin: const EdgeInsets.all(8),
@@ -27,7 +29,10 @@ class DonationPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const SizedBox(height: 10),
-                    const Row(children: [Text('Donation')]),
+                    const Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [Text('Donation')],
+                    ),
                     const SizedBox(height: 25),
                     Row(
                       children: [
@@ -73,7 +78,7 @@ class DonationPage extends StatelessWidget {
                 child: ElevatedButton(
                   child: const Text('Donate'),
                   onPressed: () {
-                    print(_amountController);
+                    print(_amountController.text);
                   },
                 ),
               ),
@@ -88,6 +93,10 @@ class DonationPage extends StatelessWidget {
 Widget customDonationButton(int amount) {
   return SizedBox(
     width: 130,
-    child: ElevatedButton(onPressed: () {}, child: Text(amount.toString())),
+    child: ElevatedButton(
+        onPressed: () {
+          print(amount);
+        },
+        child: Text(amount.toString())),
   );
 }
