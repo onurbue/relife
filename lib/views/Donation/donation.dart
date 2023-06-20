@@ -20,12 +20,14 @@ class DonationPage extends StatelessWidget {
               percentage: 0.5, title: 'You are almost finishing'),
           const SizedBox(height: 120),
           Card(
+            margin: const EdgeInsets.symmetric(horizontal: 32),
+            elevation: 3,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(41)),
-            color: const Color.fromRGBO(252, 252, 252, 100),
+            color: const Color.fromRGBO(252, 252, 252, 30),
             child: Column(children: [
               Container(
-                margin: const EdgeInsets.all(8),
+                margin: const EdgeInsets.all(30),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -83,11 +85,17 @@ class DonationPage extends StatelessWidget {
               const SizedBox(height: 50),
             ]),
           ),
-          const SizedBox(height: 150),
+          const SizedBox(height: 100),
           SizedBox(
             width: 238,
             height: 48,
             child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: primaryColor,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(24),
+                ),
+              ),
               child: const Text('Donate'),
               onPressed: () {
                 print(_amountController.text);
@@ -101,12 +109,29 @@ class DonationPage extends StatelessWidget {
 }
 
 Widget customDonationButton(int amount) {
-  return SizedBox(
-    width: 130,
-    child: ElevatedButton(
-        onPressed: () {
-          print(amount);
-        },
-        child: Text(amount.toString())),
-  );
+  if (amount != 50) {
+    return SizedBox(
+      width: 130,
+      child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: primaryColor,
+          ),
+          onPressed: () {
+            print(amount);
+          },
+          child: Text(amount.toString())),
+    );
+  } else {
+    return SizedBox(
+      width: 130,
+      child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: const Color.fromRGBO(4, 140, 141, 100),
+          ),
+          onPressed: () {
+            print(amount);
+          },
+          child: Text(amount.toString())),
+    );
+  }
 }

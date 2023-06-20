@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:relife/utils/constants.dart';
 
 class CustomBarHeader extends StatelessWidget {
   final String title;
@@ -24,7 +25,7 @@ class CustomBarHeader extends StatelessWidget {
             child: LinearProgressIndicator(
               value: percentage,
               backgroundColor: Colors.grey,
-              valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
+              valueColor: const AlwaysStoppedAnimation<Color>(primaryColor),
             ),
           ),
         ),
