@@ -15,7 +15,10 @@ class CustomBarHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(title),
+        Text(
+          title,
+          style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+        ),
         const SizedBox(height: 20),
         ClipRRect(
           borderRadius: BorderRadius.circular(5),

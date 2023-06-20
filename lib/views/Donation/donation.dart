@@ -16,8 +16,7 @@ class DonationPage extends StatelessWidget {
       body: Column(
         children: [
           const SizedBox(height: 30),
-          const CustomBarHeader(
-              percentage: 0.5, title: 'You are almost finishing'),
+          CustomBarHeader(percentage: 0.5, title: customAppText()),
           const SizedBox(height: 120),
           Card(
             margin: const EdgeInsets.symmetric(horizontal: 32),
@@ -134,4 +133,8 @@ Widget customDonationButton(int amount) {
           child: Text(amount.toString())),
     );
   }
+}
+
+String customAppText() {
+  return 'You are almost Finishing';
 }
