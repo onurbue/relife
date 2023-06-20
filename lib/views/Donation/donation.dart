@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:relife/utils/appbar.dart';
+import 'package:relife/utils/constants.dart';
 import 'package:relife/views/Donation/widgets/header.dart';
 
 class DonationPage extends StatelessWidget {
@@ -29,12 +30,18 @@ class DonationPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const SizedBox(height: 10),
-                    const Row(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: [Text('Donation')],
+                      children: [
+                        Text(
+                          'Donation',
+                          style: CustomTextStyles.title,
+                        ),
+                      ],
                     ),
                     const SizedBox(height: 25),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         customDonationButton(5),
                         const SizedBox(width: 10),
@@ -43,6 +50,7 @@ class DonationPage extends StatelessWidget {
                     ),
                     const SizedBox(height: 10),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         customDonationButton(20),
                         const SizedBox(width: 10),
@@ -72,17 +80,19 @@ class DonationPage extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(
-                width: 238,
-                height: 48,
-                child: ElevatedButton(
-                  child: const Text('Donate'),
-                  onPressed: () {
-                    print(_amountController.text);
-                  },
-                ),
-              ),
+              const SizedBox(height: 50),
             ]),
+          ),
+          const SizedBox(height: 150),
+          SizedBox(
+            width: 238,
+            height: 48,
+            child: ElevatedButton(
+              child: const Text('Donate'),
+              onPressed: () {
+                print(_amountController.text);
+              },
+            ),
           ),
         ],
       ),
