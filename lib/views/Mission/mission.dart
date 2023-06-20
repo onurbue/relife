@@ -20,6 +20,7 @@ class MissionPage extends StatefulWidget {
   int isLimited;
 
   MissionPage({
+    super.key,
     required this.missionId,
     required this.title,
     required this.description,

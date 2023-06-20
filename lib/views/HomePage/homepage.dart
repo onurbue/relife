@@ -1,7 +1,4 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:relife/data/missions.dart';
 import 'package:relife/models/mission.dart';
 import 'package:relife/utils/constants.dart';
@@ -18,7 +15,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  //variables
+  // variables
   late Future<List<Mission>> _missions;
 
   @override

@@ -108,31 +108,28 @@ class DonationPage extends StatelessWidget {
 }
 
 Widget customDonationButton(int amount) {
-  if (amount != 50) {
-    return SizedBox(
-      width: 130,
-      child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: primaryColor,
-          ),
-          onPressed: () {
-            print(amount);
-          },
-          child: Text(amount.toString())),
-    );
-  } else {
-    return SizedBox(
-      width: 130,
-      child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: const Color.fromRGBO(4, 140, 141, 100),
-          ),
-          onPressed: () {
-            print(amount);
-          },
-          child: Text(amount.toString())),
-    );
-  }
+  return SizedBox(
+    width: 130,
+    child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: primaryColor,
+        ),
+        onPressed: () {
+          print(amount);
+        },
+        child: Text(amount.toString())),
+  );
+  //   return SizedBox(
+  //     width: 130,
+  //     child: ElevatedButton(
+  //         style: ElevatedButton.styleFrom(
+  //           backgroundColor: const Color.fromRGBO(4, 140, 141, 100),
+  //         ),
+  //         onPressed: () {
+  //           print(amount);
+  //         },
+  //         child: Text(amount.toString())),
+  //   );
 }
 
 String customAppText() {

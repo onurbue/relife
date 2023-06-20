@@ -27,6 +27,7 @@ class _InitialPageState extends State<InitialPage> {
     return Scaffold(
       body: _telas[_pageIndex],
       bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: primaryColor,
         currentIndex: _pageIndex,
         onTap: onTabTapped,
         items: const [
