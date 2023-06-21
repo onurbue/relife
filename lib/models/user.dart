@@ -19,7 +19,7 @@ class User {
     return User(
       id: json['user']['id_user'],
       name: json['user']['name'],
-      mobilePhone: json['user']['mobile_phone'],
+      mobilePhone: json['user']['mobile_phone'].toString(),
       email: json['user']['email'],
       image: json['user']['image'],
       registerDate: json['user']['register_date'],
