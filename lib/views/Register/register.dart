@@ -1,13 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:relife/data/users.dart';
 import 'package:relife/views/Login/login_page.dart';
+import 'package:relife/utils/appbar.dart';
+import 'package:relife/utils/constants.dart';
 
-import '../../widgets/appbar.dart';
+import '../../utils/helper.dart';
 
-class RegisterPage extends StatelessWidget {
+class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
 
   @override
+  State<RegisterPage> createState() => _RegisterPageState();
+}
+
+class _RegisterPageState extends State<RegisterPage> {
+  final _formKey = GlobalKey<FormState>();
+  final _nameController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _mobilePhoneController = TextEditingController();
+
+  void _submitForm() {
+    if (_formKey.currentState!.validate()) {
+      final name = _nameController.text;
+      final email = _emailController.text;
+      final password = _passwordController.text;
+      final mobilePhone = _mobilePhoneController.text;
+
+      Users.createUser(name, email, password, mobilePhone).then((result) {
+        print(result);
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => const LoginPage()));
+      }).catchError((error) {
+        print(error);
+      });
+    }
+  }
+
+  @override
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: customAppBar(),
@@ -17,65 +49,91 @@ class RegisterPage extends StatelessWidget {
         children: [
           Text(
             'Register',
+
+            style: CustomTextStyles.title,
+
             style: GoogleFonts.workSans(
                 textStyle:
                     const TextStyle(fontSize: 36, fontWeight: FontWeight.w500)),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(50),
-            child: Column(children: [
-              TextFormField(
-                decoration: const InputDecoration(
-                  hintText: 'Insere o teu nome',
-                  labelText: 'Nome',
-                ),
-              ),
-              TextFormField(
-                decoration: const InputDecoration(
-                  hintText: 'Insere a tua idade',
-                  labelText: 'Idade',
-                ),
-              ),
-              TextFormField(
-                decoration: const InputDecoration(
-                  hintText: 'Insere o teu email',
-                  labelText: 'Email',
-                ),
-              ),
-              TextFormField(
-                decoration: const InputDecoration(
-                  hintText: 'Insere a tua password',
-                  labelText: 'Password',
-                ),
-              ),
-              const SizedBox(height: 60),
-              SizedBox(
-                width: 346,
-                height: 56,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const LoginPage(),
-                      ),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.black,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(24),
+
+
+              Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    TextFormField(
+                      controller: _nameController,
+                      decoration: const InputDecoration(labelText: 'Name'),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please, insert your name';
+                        }
+                        return null;
+                      },
                     ),
-                  ),
-                  child: Text(
-                    'Registar',
-                    style: GoogleFonts.workSans(
-                      textStyle: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
+                    TextFormField(
+                      controller: _emailController,
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: const InputDecoration(labelText: 'E-mail'),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please, insert an email';
+                        } else if (!isValidEmail(value)) {
+                          return 'Please, insert a valid email.';
+                        }
+                        return null;
+                      },
+                    ),
+                    TextFormField(
+                      controller: _mobilePhoneController,
+                      keyboardType: TextInputType.phone,
+                      decoration:
+                          const InputDecoration(labelText: 'Mobile Phone'),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please, insert your mobile phone';
+                        } else if (!isValidPhoneNumber(value)) {
+                          return 'Please, insert a valid mobile phone';
+                        }
+                        return null;
+                      },
+                    ),
+                    TextFormField(
+                      controller: _passwordController,
+                      decoration: const InputDecoration(labelText: 'Password'),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please, insert a password';
+                        }
+                        return null;
+                      },
+                      obscureText: true,
+                    ),
+                    const SizedBox(height: 16.0),
+                    SizedBox(
+                      width: 346,
+                      height: 56,
+                      child: ElevatedButton(
+                        onPressed: _submitForm,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: primaryColor,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(24),
+                          ),
+                        ),
+                        child: Text(
+                          'Register',
+                          style: GoogleFonts.workSans(
+                            textStyle: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
+                  ],
+
                 ),
               ),
             ]),
