@@ -25,6 +25,7 @@ class _InitialPageState extends State<InitialPage> {
   Widget build(BuildContext context) {
     print(_pageIndex);
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: _telas[_pageIndex],
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: primaryColor,

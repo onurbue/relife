@@ -151,11 +151,11 @@ class _ProfilePageState extends State<ProfilePage> {
                           ],
                         ),
                         const SizedBox(height: 20),
-                        Text('Registered since'),
+                        const Text('Registered since'),
                         Text('Olá, ${user.name}'),
                         const SizedBox(height: 50),
-                        Text('Statistics'),
-                        Row(
+                        const Text('Statistics'),
+                        const Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             Column(
@@ -173,7 +173,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           ],
                         ),
                         const SizedBox(height: 50),
-                        Text('Settings'),
+                        const Text('Settings'),
                         const SizedBox(height: 50),
                         ElevatedButton(
                           onPressed: () => Users.logout(context),
