@@ -44,18 +44,25 @@ class DonationPage extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        customDonationButton(5),
+                        customDonationButton(5, (amount) {
+                          _amountController.text = amount.toString();
+                        }),
                         const SizedBox(width: 10),
-                        customDonationButton(10),
+                        customDonationButton(10, (amount) {
+                          _amountController.text = amount.toString();
+                        }),
                       ],
                     ),
-                    const SizedBox(height: 10),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        customDonationButton(20),
+                        customDonationButton(20, (amount) {
+                          _amountController.text = amount.toString();
+                        }),
                         const SizedBox(width: 10),
-                        customDonationButton(50),
+                        customDonationButton(50, (amount) {
+                          _amountController.text = amount.toString();
+                        }),
                       ],
                     ),
                     Form(
@@ -107,30 +114,34 @@ class DonationPage extends StatelessWidget {
   }
 }
 
-Widget customDonationButton(int amount) {
+Widget customDonationButton(int amount, ValueSetter<int>? onPressed) {
   return SizedBox(
     width: 130,
     child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: primaryColor,
-        ),
-        onPressed: () {
-          print(amount);
-        },
-        child: Text(amount.toString())),
+      style: ElevatedButton.styleFrom(
+        backgroundColor: primaryColor,
+      ),
+      onPressed: () {
+        if (onPressed != null) {
+          onPressed(amount);
+        }
+      },
+      child: Text(amount.toString()),
+    ),
   );
-  //   return SizedBox(
-  //     width: 130,
-  //     child: ElevatedButton(
-  //         style: ElevatedButton.styleFrom(
-  //           backgroundColor: const Color.fromRGBO(4, 140, 141, 100),
-  //         ),
-  //         onPressed: () {
-  //           print(amount);
-  //         },
-  //         child: Text(amount.toString())),
-  //   );
 }
+
+//   return SizedBox(
+//     width: 130,
+//     child: ElevatedButton(
+//         style: ElevatedButton.styleFrom(
+//           backgroundColor: const Color.fromRGBO(4, 140, 141, 100),
+//         ),
+//         onPressed: () {
+//           print(amount);
+//         },
+//         child: Text(amount.toString())),
+//   );
 
 String customAppText() {
   return 'You are almost Finishing';
