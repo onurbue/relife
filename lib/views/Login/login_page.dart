@@ -8,7 +8,6 @@ import 'package:relife/data/users.dart';
 import 'package:relife/views/Register/register.dart';
 import 'package:relife/views/RecoverPassword/recover_password.dart';
 
-
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -53,6 +52,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: customAppBar(),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -65,7 +65,6 @@ class _LoginPageState extends State<LoginPage> {
           Padding(
             padding: const EdgeInsets.all(50),
             child: Column(children: [
-
               Form(
                 key: _formKey,
                 child: Column(
@@ -90,7 +89,6 @@ class _LoginPageState extends State<LoginPage> {
                         return null;
                       },
                       obscureText: true,
-
                     ),
                     const SizedBox(height: 16.0),
                     SizedBox(
