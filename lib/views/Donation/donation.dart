@@ -129,8 +129,6 @@ Widget customDonationButton(int amount, ValueSetter<int>? onPressed) {
       child: Text(amount.toString()),
     ),
   );
-}
-
 //   return SizedBox(
 //     width: 130,
 //     child: ElevatedButton(
@@ -142,6 +140,7 @@ Widget customDonationButton(int amount, ValueSetter<int>? onPressed) {
 //         },
 //         child: Text(amount.toString())),
 //   );
+}
 
 String customAppText() {
   return 'You are almost Finishing';
