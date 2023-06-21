@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+
 import 'package:relife/data/users.dart';
 import 'package:relife/utils/appbar.dart';
 import 'package:relife/utils/constants.dart';
 import 'package:relife/views/Login/login_page.dart';
+
 
 class RecoverPassword extends StatelessWidget {
   const RecoverPassword({super.key});
@@ -29,6 +31,7 @@ class RecoverPassword extends StatelessWidget {
     return Scaffold(
       appBar: customAppBar(),
       body: Column(
+
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

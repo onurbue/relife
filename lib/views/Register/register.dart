@@ -39,6 +39,7 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   @override
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: customAppBar(),
@@ -48,11 +49,14 @@ class _RegisterPageState extends State<RegisterPage> {
         children: [
           Text(
             'Register',
+
             style: CustomTextStyles.title,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(50),
-            child: Column(children: [
+
+            style: GoogleFonts.workSans(
+                textStyle:
+                    const TextStyle(fontSize: 36, fontWeight: FontWeight.w500)),
+
+
               Form(
                 key: _formKey,
                 child: Column(
@@ -129,6 +133,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                     ),
                   ],
+
                 ),
               ),
             ]),
