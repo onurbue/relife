@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:relife/utils/appbar.dart';
 import 'package:relife/utils/constants.dart';
+import 'package:relife/views/Donation/donation_finished.dart';
 import 'package:relife/views/Donation/widgets/header.dart';
 
 class DonationPage extends StatefulWidget {
@@ -125,6 +126,10 @@ class _DonationPageState extends State<DonationPage> {
               child: const Text('Donate'),
               onPressed: () {
                 print(_amountController.text);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const FinishedDonationPage()));
               },
             ),
           ),
@@ -142,12 +147,11 @@ Widget customDonationButton(
       style: ElevatedButton.styleFrom(
         backgroundColor:
             isSelected ? const Color.fromRGBO(4, 140, 141, 100) : primaryColor,
-        primary: isSelected ? Colors.white : null,
       ),
       onPressed: onPressed,
       child: Text(
         amount.toString(),
-        style: TextStyle(color: Colors.white),
+        style: const TextStyle(color: Colors.white),
       ),
     ),
   );

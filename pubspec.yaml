@@ -31,3 +31,4 @@ flutter:
   #Deixar a pasta aberta, porque como é dinâmico tem que haver sempre acesso
   assets:
     - assets/images/users_profiles/
+    - assets/images/logo/
