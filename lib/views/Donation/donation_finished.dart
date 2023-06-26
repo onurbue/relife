@@ -5,6 +5,7 @@ import 'package:relife/utils/constants.dart';
 import 'package:relife/views/Donation/donation.dart';
 import 'package:relife/views/Donation/widgets/header.dart';
 import 'package:relife/views/HomePage/homepage.dart';
+import 'package:relife/views/start.dart';
 
 class FinishedDonationPage extends StatelessWidget {
   final int amountDonated;
@@ -59,7 +60,7 @@ class FinishedDonationPage extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const HomePage(),
+                    builder: (context) => const InitialPage(),
                   ),
                 );
               },

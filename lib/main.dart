@@ -25,11 +25,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       title: 'ReLife',
-
       home: const InitialPage(),
-      routes: {
-        '/homePage': (context) => const InitialPage(),
-      },
       //home: Dashboard(),
     );
   }
