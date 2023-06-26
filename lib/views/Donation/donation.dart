@@ -19,11 +19,13 @@ class _DonationPageState extends State<DonationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: customAppBar(),
       body: Column(
         children: [
           const SizedBox(height: 30),
-          CustomBarHeader(percentage: 0.5, title: customAppText()),
+          const CustomBarHeader(
+              percentage: 0.5, title: 'You are almost Finishing'),
           const SizedBox(height: 120),
           Card(
             margin: const EdgeInsets.symmetric(horizontal: 32),
@@ -129,7 +131,9 @@ class _DonationPageState extends State<DonationPage> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const FinishedDonationPage()));
+                        builder: (context) => FinishedDonationPage(
+                              amountDonated: int.parse(_amountController.text),
+                            )));
               },
             ),
           ),
@@ -155,8 +159,4 @@ Widget customDonationButton(
       ),
     ),
   );
-}
-
-String customAppText() {
-  return 'You are almost Finishing';
 }

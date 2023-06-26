@@ -27,6 +27,13 @@ class CustomTextStyles {
       fontWeight: FontWeight.w500,
     ),
   );
+
+  static final TextStyle donation = GoogleFonts.workSans(
+    textStyle: const TextStyle(
+      fontSize: 14,
+      letterSpacing: 0.2,
+    ),
+  );
 }
 
 class AppDimensions {
