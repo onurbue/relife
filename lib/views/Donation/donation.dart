@@ -124,7 +124,7 @@ class _DonationPageState extends State<DonationPage> {
               child: const Text('Donate'),
               onPressed: () {
                 print(_amountController.text);
-                Navigator.push(
+                Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
                         builder: (context) => FinishedDonationPage(
