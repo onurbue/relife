@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-AppBar customAppBar() {
+AppBar customAppBar(bool backArrow) {
   return AppBar(
+    automaticallyImplyLeading: backArrow,
     backgroundColor: Colors.white,
     centerTitle: true,
     title: Row(

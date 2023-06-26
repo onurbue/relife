@@ -5,7 +5,6 @@ import 'package:relife/views/HomePage/homepage.dart';
 
 import 'package:relife/views/start.dart';
 
-
 void main() {
   runApp(
     const MyApp(),
@@ -28,8 +27,10 @@ class MyApp extends StatelessWidget {
       title: 'ReLife',
 
       home: const InitialPage(),
+      routes: {
+        '/homePage': (context) => const InitialPage(),
+      },
       //home: Dashboard(),
-
     );
   }
 }

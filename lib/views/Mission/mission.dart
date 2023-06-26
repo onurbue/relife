@@ -43,7 +43,7 @@ class _MissionPageState extends State<MissionPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppBar(),
+      appBar: customAppBar(true),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(18.0),

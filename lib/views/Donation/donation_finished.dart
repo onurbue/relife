@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:relife/utils/appbar.dart';
 import 'package:relife/utils/constants.dart';
+import 'package:relife/views/Donation/donation.dart';
 import 'package:relife/views/Donation/widgets/header.dart';
+import 'package:relife/views/HomePage/homepage.dart';
 
 class FinishedDonationPage extends StatelessWidget {
   final int amountDonated;
@@ -14,7 +16,7 @@ class FinishedDonationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppBar(),
+      appBar: customAppBar(true),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -35,12 +37,32 @@ class FinishedDonationPage extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 16),
           Padding(
             padding: const EdgeInsets.all(41),
             child: Text(
               'Thank you for the $amountDonated € that you have donated to Earthquakes.\n\nWe appreciate all the help.',
               style: CustomTextStyles.donation,
+            ),
+          ),
+          SizedBox(
+            width: 238,
+            height: 48,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: primaryColor,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(24),
+                ),
+              ),
+              child: const Text('Continue'),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const HomePage(),
+                  ),
+                );
+              },
             ),
           ),
           const Row(),

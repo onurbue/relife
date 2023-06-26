@@ -77,14 +77,14 @@ class _ProfilePageState extends State<ProfilePage> {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Scaffold(
-            appBar: customAppBar(),
+            appBar: customAppBar(true),
             body: const Center(
               child: CircularProgressIndicator(),
             ),
           );
         } else if (snapshot.hasError) {
           return Scaffold(
-            appBar: customAppBar(),
+            appBar: customAppBar(true),
             body: Center(
               child: Text('Erro: ${snapshot.error}'),
             ),
@@ -95,14 +95,14 @@ class _ProfilePageState extends State<ProfilePage> {
             builder: (context, userSnapshot) {
               if (userSnapshot.connectionState == ConnectionState.waiting) {
                 return Scaffold(
-                  appBar: customAppBar(),
+                  appBar: customAppBar(true),
                   body: const Center(
                     child: CircularProgressIndicator(),
                   ),
                 );
               } else if (userSnapshot.hasError) {
                 return Scaffold(
-                  appBar: customAppBar(),
+                  appBar: customAppBar(true),
                   body: Center(
                     child: ElevatedButton(
                       onPressed: () => Users.logout(context),
@@ -114,7 +114,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 User? user = userSnapshot.data;
                 if (user != null) {
                   return Scaffold(
-                    appBar: customAppBar(),
+                    appBar: customAppBar(true),
                     body: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [

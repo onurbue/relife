@@ -20,7 +20,7 @@ class _DonationPageState extends State<DonationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: customAppBar(),
+      appBar: customAppBar(true),
       body: Column(
         children: [
           const SizedBox(height: 30),

@@ -28,7 +28,7 @@ class RecoverPassword extends StatelessWidget {
     }
 
     return Scaffold(
-      appBar: customAppBar(),
+      appBar: customAppBar(true),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
