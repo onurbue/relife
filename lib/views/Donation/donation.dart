@@ -56,14 +56,12 @@ class _DonationPageState extends State<DonationPage> {
                         children: [
                           customDonationButton(5, () {
                             setState(() {
-                              _amountController.text = '5';
                               _selected = 1;
                             });
                           }, _selected == 1),
                           const SizedBox(width: 10),
                           customDonationButton(10, () {
                             setState(() {
-                              _amountController.text = '10';
                               _selected = 2;
                             });
                           }, _selected == 2),
@@ -74,14 +72,12 @@ class _DonationPageState extends State<DonationPage> {
                         children: [
                           customDonationButton(20, () {
                             setState(() {
-                              _amountController.text = '20';
                               _selected = 3;
                             });
                           }, _selected == 3),
                           const SizedBox(width: 10),
                           customDonationButton(50, () {
                             setState(() {
-                              _amountController.text = '50';
                               _selected = 4;
                             });
                           }, _selected == 4),
