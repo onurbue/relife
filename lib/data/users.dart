@@ -192,8 +192,27 @@ class Users {
         ),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
-          'user_id': userId,
+          'id_user': userId,
           'email': email,
+        }),
+      );
+
+      print(response.statusCode);
+    } catch (e) {
+      throw Exception('Failed to connect to the server');
+    }
+  }
+
+  static Future<void> changePassword(int userId, String password) async {
+    try {
+      final response = await http.put(
+        Uri.parse(
+          'https://relife-api.vercel.app/user/password',
+        ),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'id_user': userId,
+          'password': password,
         }),
       );
 
