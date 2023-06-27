@@ -10,49 +10,52 @@ Widget normalDonationCard({
 }) {
   return Stack(
     children: [
-      Card(
-        margin: const EdgeInsets.only(left: 30.0),
-        child: ListTile(
-          title: Text(
-            'Nome do usuário (ID do usuário = $userID)',
-            style: const TextStyle(
-              color: primaryColor,
-              fontWeight: FontWeight.bold,
+      Padding(
+        padding: const EdgeInsets.symmetric(vertical: 10),
+        child: Card(
+          margin: const EdgeInsets.only(left: 30.0),
+          child: ListTile(
+            title: Text(
+              'Nome do usuário (ID do usuário = $userID)',
+              style: const TextStyle(
+                color: primaryColor,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ),
-          subtitle: Text(donationMessage ?? ''),
-          trailing: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                width: 70,
-                height: 25,
-                decoration: BoxDecoration(
-                  shape: BoxShape.rectangle,
-                  borderRadius: BorderRadius.circular(25),
-                  color: primaryColor,
-                ),
-                child: Center(
-                  child: Text(
-                    '${donationAmount.toString()} €',
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
+            subtitle: Text(donationMessage ?? ''),
+            trailing: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  width: 70,
+                  height: 25,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.rectangle,
+                    borderRadius: BorderRadius.circular(25),
+                    color: primaryColor,
+                  ),
+                  child: Center(
+                    child: Text(
+                      '${donationAmount.toString()} €',
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 5),
-              Text(
-                donationDate,
-                style: const TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w300,
+                const SizedBox(height: 5),
+                Text(
+                  donationDate,
+                  style: const TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w300,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
