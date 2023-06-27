@@ -58,7 +58,7 @@ class Donations {
       'donation_message': donationMessage,
     };
 
-    final token = 'SEU_TOKEN_JWT'; // Substitua pelo seu token JWT válido
+    const token = 'SEU_TOKEN_JWT'; // Substitua pelo seu token JWT válido
 
     try {
       final response = await http.post(

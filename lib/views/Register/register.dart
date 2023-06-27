@@ -50,82 +50,85 @@ class _RegisterPageState extends State<RegisterPage> {
               'Register',
               style: CustomTextStyles.title,
             ),
-            Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  TextFormField(
-                    controller: _nameController,
-                    decoration: const InputDecoration(labelText: 'Name'),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Please, insert your name';
-                      }
-                      return null;
-                    },
-                  ),
-                  TextFormField(
-                    controller: _emailController,
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: const InputDecoration(labelText: 'E-mail'),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Please, insert an email';
-                      } else if (!isValidEmail(value)) {
-                        return 'Please, insert a valid email.';
-                      }
-                      return null;
-                    },
-                  ),
-                  TextFormField(
-                    controller: _mobilePhoneController,
-                    keyboardType: TextInputType.phone,
-                    decoration:
-                        const InputDecoration(labelText: 'Mobile Phone'),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Please, insert your mobile phone';
-                      } else if (!isValidPhoneNumber(value)) {
-                        return 'Please, insert a valid mobile phone';
-                      }
-                      return null;
-                    },
-                  ),
-                  TextFormField(
-                    controller: _passwordController,
-                    decoration: const InputDecoration(labelText: 'Password'),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Please, insert a password';
-                      }
-                      return null;
-                    },
-                    obscureText: true,
-                  ),
-                  const SizedBox(height: 16.0),
-                  SizedBox(
-                    width: 346,
-                    height: 56,
-                    child: ElevatedButton(
-                      onPressed: _submitForm,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: primaryColor,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(24),
+            Padding(
+              padding: const EdgeInsets.all(21.5),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    TextFormField(
+                      controller: _nameController,
+                      decoration: const InputDecoration(labelText: 'Name'),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please, insert your name';
+                        }
+                        return null;
+                      },
+                    ),
+                    TextFormField(
+                      controller: _emailController,
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: const InputDecoration(labelText: 'E-mail'),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please, insert an email';
+                        } else if (!isValidEmail(value)) {
+                          return 'Please, insert a valid email.';
+                        }
+                        return null;
+                      },
+                    ),
+                    TextFormField(
+                      controller: _mobilePhoneController,
+                      keyboardType: TextInputType.phone,
+                      decoration:
+                          const InputDecoration(labelText: 'Mobile Phone'),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please, insert your mobile phone';
+                        } else if (!isValidPhoneNumber(value)) {
+                          return 'Please, insert a valid mobile phone';
+                        }
+                        return null;
+                      },
+                    ),
+                    TextFormField(
+                      controller: _passwordController,
+                      decoration: const InputDecoration(labelText: 'Password'),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please, insert a password';
+                        }
+                        return null;
+                      },
+                      obscureText: true,
+                    ),
+                    const SizedBox(height: 16.0),
+                    SizedBox(
+                      width: 346,
+                      height: 56,
+                      child: ElevatedButton(
+                        onPressed: _submitForm,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: primaryColor,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(24),
+                          ),
                         ),
-                      ),
-                      child: Text(
-                        'Register',
-                        style: GoogleFonts.workSans(
-                          textStyle: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
+                        child: Text(
+                          'Register',
+                          style: GoogleFonts.workSans(
+                            textStyle: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ]),

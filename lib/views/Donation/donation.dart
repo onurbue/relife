@@ -99,14 +99,14 @@ class _DonationPageState extends State<DonationPage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          customDonationButton(5, () {
+                          _customDonationButton(5, () {
                             setState(() {
                               _selected = 1;
                               donationValue = 5;
                             });
                           }, _selected == 1),
                           const SizedBox(width: 10),
-                          customDonationButton(10, () {
+                          _customDonationButton(10, () {
                             setState(() {
                               _selected = 2;
                               donationValue = 10;
@@ -117,14 +117,14 @@ class _DonationPageState extends State<DonationPage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          customDonationButton(20, () {
+                          _customDonationButton(20, () {
                             setState(() {
                               _selected = 3;
                               donationValue = 20;
                             });
                           }, _selected == 3),
                           const SizedBox(width: 10),
-                          customDonationButton(50, () {
+                          _customDonationButton(50, () {
                             setState(() {
                               _selected = 4;
                               donationValue = 50;
@@ -197,7 +197,7 @@ class _DonationPageState extends State<DonationPage> {
   }
 }
 
-Widget customDonationButton(
+Widget _customDonationButton(
     int amount, VoidCallback onPressed, bool isSelected) {
   return SizedBox(
     width: 130,
