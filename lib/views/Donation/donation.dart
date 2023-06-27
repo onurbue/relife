@@ -20,6 +20,7 @@ class DonationPage extends StatefulWidget {
 class _DonationPageState extends State<DonationPage> {
   final _formKey = GlobalKey<FormState>();
   final _customValue = TextEditingController();
+  final _customMessage = TextEditingController();
   int _selected = 0;
   int donationValue = 0;
   late Future<bool> _loginCheck;
@@ -46,13 +47,14 @@ class _DonationPageState extends State<DonationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: customAppBar(true),
       body: Column(
         children: [
           const SizedBox(height: 30),
           const CustomBarHeader(
               percentage: 0.5, title: 'You are almost Finishing'),
-          const SizedBox(height: 120),
+          const SizedBox(height: 20),
           Card(
             margin: const EdgeInsets.symmetric(horizontal: 32),
             elevation: 3,
@@ -130,6 +132,13 @@ class _DonationPageState extends State<DonationPage> {
                                 return null;
                               },
                             ),
+                            TextFormField(
+                              controller: _customMessage,
+                              keyboardType: TextInputType.multiline,
+                              decoration: const InputDecoration(
+                                labelText: 'Custom Amount',
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -157,7 +166,7 @@ class _DonationPageState extends State<DonationPage> {
                     userId: _currentUser.id,
                     missionId: widget.missionID,
                     donationAmount: int.parse(_customValue.text),
-                    donationMessage: '');
+                    donationMessage: _customMessage.text);
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
