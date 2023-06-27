@@ -3,9 +3,13 @@ import 'package:flutter/material.dart';
 class NormalCausesCard extends StatelessWidget {
   final String title;
   final String description;
+  final String image;
 
   const NormalCausesCard(
-      {super.key, required this.title, required this.description});
+      {super.key,
+      required this.title,
+      required this.description,
+      required this.image});
 
   @override
   Widget build(BuildContext context) {
@@ -13,16 +17,19 @@ class NormalCausesCard extends StatelessWidget {
       height: 400,
       width: 200,
       child: Card(
-        elevation: 4, //ver qual tem no figma
+        elevation: 4,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(20),
         ),
         child: Column(children: [
-          Image.network(
-            'https://images.impresa.pt/sicnot/2022-12-13-cheias-loures.JPG-e34f562e',
-            width: 200,
-            height: 150,
-            fit: BoxFit.fill,
+          ClipRRect(
+            borderRadius: BorderRadius.circular(20.0),
+            child: Image.asset(
+              'assets/images/missions/$image',
+              width: 200,
+              height: 150,
+              fit: BoxFit.fill,
+            ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -39,7 +46,7 @@ class NormalCausesCard extends StatelessWidget {
               Text(
                 description,
                 style: const TextStyle(),
-                maxLines: 10,
+                maxLines: 5,
                 overflow: TextOverflow.ellipsis,
               ),
             ]),

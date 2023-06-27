@@ -1,3 +1,4 @@
+import 'package:custom_sliding_segmented_control/custom_sliding_segmented_control.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -6,20 +7,21 @@ import 'package:relife/models/donation.dart';
 import 'package:relife/utils/constants.dart';
 import 'package:relife/views/Donation/donation.dart';
 import 'package:relife/utils/appbar.dart';
+import 'package:relife/views/Mission/widgets/donations_cards.dart';
 
 import '../HomePage/widgets/featured_card.dart';
 // Ver aqui sobre o sliding
 // https://api.flutter.dev/flutter/cupertino/CupertinoSlidingSegmentedControl-class.html
 
 class MissionPage extends StatefulWidget {
-  int missionId;
-  String title;
-  String description;
-  int totalAmount;
-  int? limitAmount;
-  int isLimited;
+  final int missionId;
+  final String title;
+  final String description;
+  final int totalAmount;
+  final int? limitAmount;
+  final int isLimited;
 
-  MissionPage({
+  const MissionPage({
     super.key,
     required this.missionId,
     required this.title,
@@ -35,10 +37,10 @@ class MissionPage extends StatefulWidget {
 
 class _MissionPageState extends State<MissionPage> {
   int _selectedIndex = 0;
-  final Map<int, Widget> _segments = {
-    0: const Text('Latest Donations'),
-    1: const Text('Top 10'),
-  };
+  // final Map<int, Widget> _segments = {
+  //   0: const Text('Latest Donations'),
+  //   1: const Text('Top 10'),
+  // };
 
   @override
   Widget build(BuildContext context) {
@@ -98,12 +100,27 @@ class _MissionPageState extends State<MissionPage> {
               const SizedBox(height: 100),
               Text('DONATIONS', style: CustomTextStyles.title),
               const SizedBox(height: 20),
-              CupertinoSlidingSegmentedControl(
-                groupValue: _selectedIndex,
-                children: _segments,
-                onValueChanged: (value) {
+              CustomSlidingSegmentedControl<int>(
+                fixedWidth: 170,
+                height: 48,
+                initialValue: 0,
+                children: const {
+                  0: Text('Latest Donations'),
+                  1: Text('Top 10 '),
+                },
+                decoration: BoxDecoration(
+                  color: secondaryColor,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                thumbDecoration: BoxDecoration(
+                  color: primaryColor,
+                  borderRadius: BorderRadius.circular(6),
+                ),
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.easeInToLinear,
+                onValueChanged: (v) {
                   setState(() {
-                    _selectedIndex = value!;
+                    _selectedIndex = v;
                   });
                 },
               ),
@@ -148,8 +165,13 @@ class _MissionPageState extends State<MissionPage> {
           return Text('Erro ao buscar as doações: ${snapshot.error}');
         } else if (snapshot.hasData) {
           List<Donation> donations = snapshot.data!;
-          return Column(
-            children: donations.map((donation) {
+
+          return ListView.builder(
+            shrinkWrap: true,
+            itemCount: donations.length,
+            itemBuilder: (context, index) {
+              final donation = donations[index];
+
               String donationDateStr = donation
                   .donationDate; // String no formato "2023-05-31T00:00:00.000Z"
               DateTime donationDate = DateTime.parse(
@@ -157,49 +179,12 @@ class _MissionPageState extends State<MissionPage> {
               String formattedDate = DateFormat('yyyy-MM-dd')
                   .format(donationDate); // Formatar a data
 
-              print(formattedDate);
-              return Card(
-                child: ListTile(
-                  title: Text(
-                    'Nome do user(id user = ${donation.userId})',
-                    style: const TextStyle(
-                        color: primaryColor, fontWeight: FontWeight.bold),
-                  ),
-                  subtitle: Text(donation.donationMessage),
-                  trailing: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: 70,
-                        height: 25,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.rectangle,
-                          borderRadius: BorderRadius.circular(25),
-                          color: primaryColor,
-                        ),
-                        child: Center(
-                          child: Text(
-                            '${donation.amount.toString()} €',
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 5),
-                      Text(formattedDate,
-                          style: const TextStyle(
-                            fontSize: 13,
-                            fontWeight: FontWeight.w300,
-                          )),
-                    ],
-                  ),
-                ),
-              );
-            }).toList(),
+              return normalDonationCard(
+                  userID: donation.userId,
+                  donationAmount: donation.amount,
+                  donationDate: formattedDate,
+                  donationMessage: donation.donationMessage);
+            },
           );
         } else {
           return const Text('Nenhuma doação encontrada.');
@@ -223,52 +208,34 @@ class _MissionPageState extends State<MissionPage> {
             itemCount: donations.length,
             itemBuilder: (context, index) {
               final donation = donations[index];
+
+              String donationDateStr = donation
+                  .donationDate; // String no formato "2023-05-31T00:00:00.000Z"
+              DateTime donationDate = DateTime.parse(
+                  donationDateStr); // Converter a string em DateTime
+              String formattedDate = DateFormat('yyyy-MM-dd')
+                  .format(donationDate); // Formatar a data
+
               //Primeiro card, ou seja o primeiro index
               if (index == 0) {
                 // Primeiro card
-                return Container(
-                  color: Colors.red,
-                  height: 125,
-                  child: ListTile(
-                    title: Text(
-                      donation.amount.toString(),
-                      style: const TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.bold),
-                    ),
-                    subtitle: Text(
-                      donation.donationMessage,
-                      style: const TextStyle(fontSize: 14),
-                    ),
-                    trailing: Text(
-                      '${donation.amount} €',
-                      style: const TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                );
+                return bigDonationCard(
+                    userID: donation.userId,
+                    donationAmount: donation.amount,
+                    donationDate: formattedDate,
+                    donationMessage: donation.donationMessage);
               } else {
                 // os outros
-                return Card(
-                  child: ListTile(
-                    title: Text(
-                      donation.donationMessage,
-                      style: TextStyle(fontSize: 14),
-                    ),
-                    subtitle: Text(
-                      donation.donationMessage,
-                      style: TextStyle(fontSize: 12),
-                    ),
-                    trailing: Text(
-                      '${donation.amount} €',
-                      style: TextStyle(fontSize: 14),
-                    ),
-                  ),
-                );
+                return normalDonationCard(
+                    userID: donation.userId,
+                    donationAmount: donation.amount,
+                    donationDate: formattedDate,
+                    donationMessage: donation.donationMessage);
               }
             },
           );
         } else {
-          return Text('Nenhuma doação encontrada.');
+          return const Text('Nenhuma doação encontrada.');
         }
       },
     );

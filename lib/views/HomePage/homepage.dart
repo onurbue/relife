@@ -158,6 +158,7 @@ class _HomePageState extends State<HomePage> {
                         child: NormalCausesCard(
                           title: mission.title,
                           description: mission.description,
+                          image: mission.image,
                         ),
                       );
                     },
