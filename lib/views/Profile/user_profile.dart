@@ -25,6 +25,7 @@ class _ProfilePageState extends State<ProfilePage> {
   late User _currentUser;
   late Future<int> valorDoado;
   late Future<int> quantidadeDoacoes;
+
   @override
   void initState() {
     super.initState();

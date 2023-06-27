@@ -38,7 +38,7 @@ class FeaturedCausesCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           ClipRRect(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(35),
             child: Image.network(
               'https://static.mundoeducacao.uol.com.br/mundoeducacao/conteudo_legenda/092c05b38cb5fb3340de31b92577e54c.jpg',
               width: 400,
