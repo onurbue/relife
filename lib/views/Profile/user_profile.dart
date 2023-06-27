@@ -277,6 +277,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                         GestureDetector(
                           onTap: () {
+                            Users.logout(context);
                             Users.deleteUser(user.id);
                             Navigator.pushReplacement(
                                 context,
