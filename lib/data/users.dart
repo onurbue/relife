@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:relife/models/user.dart';
+import 'package:relife/urls.dart';
 import 'package:relife/utils/shared.dart';
 import 'package:relife/views/start.dart';
 
@@ -63,7 +64,7 @@ class Users {
   }
 
   static Future<int> getUserTotalDonation(int userId) async {
-    final url = 'https://relife-api.vercel.app/donations/$userId';
+    final url = '$baseAPIurl/donations/$userId';
     final response = await http.get(Uri.parse(url));
 
     if (response.statusCode == 200) {
@@ -77,8 +78,8 @@ class Users {
 
   static Future<int> getUserDonationCount(int userId) async {
     try {
-      final response = await http.get(
-          Uri.parse('https://relife-api.vercel.app/donations/$userId/count'));
+      final response =
+          await http.get(Uri.parse('$baseAPIurl/donations/$userId/count'));
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
@@ -155,7 +156,7 @@ class Users {
     try {
       final response = await http.post(
         Uri.parse(
-          'https://relife-api.vercel.app/recover-password',
+          '$baseAPIurl/recover-password',
         ),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
@@ -164,6 +165,75 @@ class Users {
       );
 
       return response.statusCode;
+    } catch (e) {
+      throw Exception('Failed to connect to the server');
+    }
+  }
+
+  static Future<String> getUserName(int userId) async {
+    final url =
+        '$baseAPIurl/getUserName/$userId'; // Substitua pela URL correta do seu backend
+    final response = await http.get(Uri.parse(url));
+
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      final userName = data['name'];
+      return userName;
+    } else {
+      throw Exception('Erro ao buscar o nome do usuário');
+    }
+  }
+
+  static Future<void> changeEmail(int userId, String email) async {
+    try {
+      final response = await http.put(
+        Uri.parse(
+          '$baseAPIurl/user/email',
+        ),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'id_user': userId,
+          'email': email,
+        }),
+      );
+
+      print(response.statusCode);
+    } catch (e) {
+      throw Exception('Failed to connect to the server');
+    }
+  }
+
+  static Future<void> changePassword(int userId, String password) async {
+    try {
+      final response = await http.put(
+        Uri.parse(
+          '$baseAPIurl/user/password',
+        ),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'id_user': userId,
+          'password': password,
+        }),
+      );
+
+      print(response.statusCode);
+    } catch (e) {
+      throw Exception('Failed to connect to the server');
+    }
+  }
+
+  static Future<void> deleteUser(int userId) async {
+    try {
+      final response = await http.delete(
+          Uri.parse(
+            '$baseAPIurl/user',
+          ),
+          headers: {'Content-Type': 'application/json'},
+          body: jsonEncode({
+            'id_user': userId,
+          }));
+
+      print(response.statusCode);
     } catch (e) {
       throw Exception('Failed to connect to the server');
     }

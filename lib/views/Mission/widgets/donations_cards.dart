@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../data/users.dart';
+import '../../../models/user.dart';
 import '../../../utils/constants.dart';
 
 Widget normalDonationCard({
@@ -12,18 +14,39 @@ Widget normalDonationCard({
     children: [
       Padding(
         padding: const EdgeInsets.symmetric(vertical: 10),
-        
         child: Card(
           margin: const EdgeInsets.only(left: 30.0),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
           child: ListTile(
-            title: Text(
-              'Nome do usuário (ID do usuário = $userID)',
-              style: const TextStyle(
-                color: primaryColor,
-                fontWeight: FontWeight.bold,
-              ),
+            title: FutureBuilder<String>(
+              future: Users.getUserName(userID),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Text('');
+                } else if (snapshot.hasError) {
+                  return Text('Erro ao buscar o usuário: ${snapshot.error}');
+                } else if (snapshot.hasData) {
+                  String userName = snapshot.data!;
+                  return Padding(
+                    padding: const EdgeInsets.only(left: 20),
+                    child: Text(
+                      userName,
+                      style: const TextStyle(
+                        color: primaryColor,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  );
+                } else {
+                  return const Text('Nenhum usuário encontrado.');
+                }
+              },
             ),
-            subtitle: Text(donationMessage ?? ''),
+            subtitle: Padding(
+              padding: const EdgeInsets.only(left: 20.0),
+              child: Text(donationMessage ?? ''),
+            ),
             trailing: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -34,7 +57,7 @@ Widget normalDonationCard({
                   decoration: BoxDecoration(
                     shape: BoxShape.rectangle,
                     borderRadius: BorderRadius.circular(45),
-                    color: primaryColor,
+                    color: secondaryColor,
                   ),
                   child: Center(
                     child: Text(
@@ -52,7 +75,6 @@ Widget normalDonationCard({
                   donationDate,
                   style: const TextStyle(
                     fontSize: 13,
-                    fontWeight: FontWeight.w300,
                   ),
                 ),
               ],
@@ -61,7 +83,7 @@ Widget normalDonationCard({
         ),
       ),
       Positioned(
-        top: 5,
+        top: 20,
         left: -330,
         right: .0,
         child: Center(
@@ -85,7 +107,9 @@ Widget bigDonationCard({
   return Stack(
     children: [
       Card(
-
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.0),
+        ),
         margin: const EdgeInsets.only(top: 20.0),
         child: SizedBox(
             height: 150.0,
@@ -104,19 +128,19 @@ Widget bigDonationCard({
                     ),
                   ),
                   if (donationMessage != null)
-                  Center(
-                        child: Text(
-                          donationMessage,
-                          style: const TextStyle(
-                            fontSize: 20,
-                          ),
-                          textAlign: TextAlign.center,
+                    Center(
+                      child: Text(
+                        donationMessage,
+                        style: const TextStyle(
+                          fontSize: 20,
                         ),
+                        textAlign: TextAlign.center,
                       ),
+                    ),
                   Text(
-                    donationAmount.toString(),
+                    '${donationAmount.toString()} €',
                     style: const TextStyle(
-                      fontSize: 13,
+                      fontSize: 18,
                     ),
                   ),
                   Text(

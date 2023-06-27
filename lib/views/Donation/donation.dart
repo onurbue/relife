@@ -54,7 +54,7 @@ class _DonationPageState extends State<DonationPage> {
           const SizedBox(height: 30),
           const CustomBarHeader(
               percentage: 0.5, title: 'You are almost Finishing'),
-          const SizedBox(height: 120),
+          const SizedBox(height: 50),
           Card(
             margin: const EdgeInsets.symmetric(horizontal: 32),
             elevation: 3,
@@ -136,7 +136,7 @@ class _DonationPageState extends State<DonationPage> {
                               controller: _customMessage,
                               keyboardType: TextInputType.multiline,
                               decoration: const InputDecoration(
-                                labelText: 'Custom Amount',
+                                labelText: 'Message',
                               ),
                             ),
                           ],
@@ -149,7 +149,7 @@ class _DonationPageState extends State<DonationPage> {
               ],
             ),
           ),
-          const SizedBox(height: 100),
+          const SizedBox(height: 50),
           SizedBox(
             width: 238,
             height: 48,
