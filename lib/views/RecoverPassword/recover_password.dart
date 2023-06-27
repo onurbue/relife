@@ -11,13 +11,15 @@ class RecoverPassword extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // variables
-    final _formKey = GlobalKey<FormState>();
-    final _emailController = TextEditingController();
+    final formKey = GlobalKey<FormState>();
+    final emailController = TextEditingController();
 
     // submit the form
     void _submitForm() {
-      if (_formKey.currentState!.validate()) {
-        final email = _emailController.text;
+      if (formKey.currentState!.validate()) {
+        final email = emailController.text;
+
+        Users.recoverPassword(email);
 
         Navigator.pushReplacement(
             context,
@@ -41,11 +43,11 @@ class RecoverPassword extends StatelessWidget {
             padding: const EdgeInsets.all(50),
             child: Column(children: [
               Form(
-                key: _formKey,
+                key: formKey,
                 child: Column(children: [
                   const SizedBox(height: 100),
                   TextFormField(
-                    controller: _emailController,
+                    controller: emailController,
                     decoration: const InputDecoration(labelText: 'E-mail'),
                     validator: (value) {
                       if (value!.isEmpty) {
