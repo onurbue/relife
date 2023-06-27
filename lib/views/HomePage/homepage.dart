@@ -88,6 +88,7 @@ class _HomePageState extends State<HomePage> {
                                 totalAmount: mission.totalAmount,
                                 limitAmount: mission.limitAmout,
                                 isLimited: mission.isLimited,
+                                image: mission.image,
                               ),
                             ),
                           );
@@ -96,6 +97,7 @@ class _HomePageState extends State<HomePage> {
                           title: mission.title,
                           amountDonated: mission.totalAmount,
                           totalAmount: mission.limitAmout,
+                          image: mission.image,
                         ),
                       );
                     },
@@ -152,6 +154,7 @@ class _HomePageState extends State<HomePage> {
                                 totalAmount: mission.totalAmount,
                                 limitAmount: mission.limitAmout,
                                 isLimited: mission.isLimited,
+                                image: mission.image,
                               ),
                             ),
                           );

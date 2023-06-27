@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:relife/urls.dart';
 
 class FeaturedCausesCard extends StatelessWidget {
   final String title;
   final int amountDonated;
   final int totalAmount;
+  final String image;
 
   const FeaturedCausesCard({
     Key? key,
     required this.title,
     required this.amountDonated,
     required this.totalAmount,
+    required this.image,
   });
 
   int percentageCalculator(int v1, int v2) {
@@ -40,7 +43,7 @@ class FeaturedCausesCard extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(35),
             child: Image.network(
-              'https://static.mundoeducacao.uol.com.br/mundoeducacao/conteudo_legenda/092c05b38cb5fb3340de31b92577e54c.jpg',
+              '$baseAPIurl/missions/$image',
               width: 400,
               height: 150,
               fit: BoxFit.cover,

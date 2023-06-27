@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:relife/data/donations.dart';
 import 'package:relife/models/donation.dart';
+import 'package:relife/urls.dart';
 import 'package:relife/utils/constants.dart';
 import 'package:relife/views/Donation/donation.dart';
 import 'package:relife/utils/appbar.dart';
@@ -17,6 +18,7 @@ class MissionPage extends StatefulWidget {
   final int totalAmount;
   final int? limitAmount;
   final int isLimited;
+  final String image;
 
   const MissionPage({
     super.key,
@@ -26,6 +28,7 @@ class MissionPage extends StatefulWidget {
     required this.totalAmount,
     this.limitAmount,
     required this.isLimited,
+    required this.image,
   });
 
   @override
@@ -49,6 +52,7 @@ class _MissionPageState extends State<MissionPage> {
                   title: '',
                   totalAmount: widget.limitAmount!,
                   amountDonated: widget.totalAmount,
+                  image: widget.image,
                 ),
               ] else ...[
                 Column(
@@ -57,7 +61,7 @@ class _MissionPageState extends State<MissionPage> {
                     ClipRRect(
                       borderRadius: BorderRadius.circular(10),
                       child: Image.network(
-                        'https://media.wired.com/photos/59272787cefba457b079c416/master/w_2560%2Cc_limit/GettyImages-512764656.jpg',
+                        '$baseAPIurl/imagens/missions/${widget.image}',
                         width: 400,
                         height: 150,
                         fit: BoxFit.cover,

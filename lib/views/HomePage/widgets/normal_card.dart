@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:relife/a.dart';
+import 'package:relife/urls.dart';
 
 class NormalCausesCard extends StatelessWidget {
   final String title;
