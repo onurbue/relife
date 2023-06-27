@@ -95,8 +95,18 @@ Widget bigDonationCard({
                 children: <Widget>[
                   Text(
                     userID.toString(),
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.blue,
+                    ),
                   ),
-                  Text(donationAmount.toString()),
+                Text(
+                  donationAmount.toString(),
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
                   if (donationMessage != null) Text(donationMessage),
                   Text(donationDate.toString()),
                 ],
