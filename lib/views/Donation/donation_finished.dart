@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:relife/utils/appbar.dart';
 import 'package:relife/utils/constants.dart';
-import 'package:relife/views/Donation/donation.dart';
 import 'package:relife/views/Donation/widgets/header.dart';
 import 'package:relife/views/HomePage/homepage.dart';
 import 'package:relife/views/start.dart';
@@ -57,12 +55,11 @@ class FinishedDonationPage extends StatelessWidget {
               ),
               child: const Text('Continue'),
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const InitialPage(),
-                  ),
-                );
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const InitialPage(),
+                    ));
               },
             ),
           ),

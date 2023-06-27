@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:relife/data/donations.dart';
-import 'package:relife/models/donation.dart';
 import 'package:relife/utils/appbar.dart';
 import 'package:relife/utils/constants.dart';
 import 'package:relife/views/Donation/donation_finished.dart';
@@ -12,7 +11,7 @@ import '../../models/user.dart';
 
 class DonationPage extends StatefulWidget {
   final int missionID;
-  DonationPage({Key? key, required this.missionID}) : super(key: key);
+  const DonationPage({Key? key, required this.missionID}) : super(key: key);
 
   @override
   _DonationPageState createState() => _DonationPageState();
@@ -99,37 +98,21 @@ class _DonationPageState extends State<DonationPage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          _customDonationButton(5, () {
-                            setState(() {
-                              _selected = 1;
-                              donationValue = 5;
-                            });
-                          }, _selected == 1),
+                          _customDonationButton(
+                              context, 5, _currentUser, widget.missionID),
                           const SizedBox(width: 10),
-                          _customDonationButton(10, () {
-                            setState(() {
-                              _selected = 2;
-                              donationValue = 10;
-                            });
-                          }, _selected == 2),
+                          _customDonationButton(
+                              context, 10, _currentUser, widget.missionID),
                         ],
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          _customDonationButton(20, () {
-                            setState(() {
-                              _selected = 3;
-                              donationValue = 20;
-                            });
-                          }, _selected == 3),
+                          _customDonationButton(
+                              context, 20, _currentUser, widget.missionID),
                           const SizedBox(width: 10),
-                          _customDonationButton(50, () {
-                            setState(() {
-                              _selected = 4;
-                              donationValue = 50;
-                            });
-                          }, _selected == 4),
+                          _customDonationButton(
+                              context, 50, _currentUser, widget.missionID),
                         ],
                       ),
                       Form(
@@ -198,15 +181,27 @@ class _DonationPageState extends State<DonationPage> {
 }
 
 Widget _customDonationButton(
-    int amount, VoidCallback onPressed, bool isSelected) {
+    BuildContext context, amount, User currentUser, int missionId) {
   return SizedBox(
     width: 130,
     child: ElevatedButton(
       style: ElevatedButton.styleFrom(
-        backgroundColor:
-            isSelected ? const Color.fromRGBO(4, 140, 141, 100) : primaryColor,
+        backgroundColor: primaryColor,
       ),
-      onPressed: onPressed,
+      onPressed: () {
+        Donations().createDonation(
+            userId: currentUser.id,
+            missionId: missionId,
+            donationAmount: amount);
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => FinishedDonationPage(
+              amountDonated: amount,
+            ),
+          ),
+        );
+      },
       child: Text(
         amount.toString(),
         style: const TextStyle(color: Colors.white),

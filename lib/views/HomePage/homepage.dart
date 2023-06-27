@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: customAppBar(true),
+      appBar: customAppBar(false),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(10.0),

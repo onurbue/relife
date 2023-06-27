@@ -131,7 +131,7 @@ class _MissionPageState extends State<MissionPage> {
           width: 300,
           child: FloatingActionButton.extended(
             onPressed: () {
-              Navigator.push(
+              Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
                     builder: (context) => DonationPage(
