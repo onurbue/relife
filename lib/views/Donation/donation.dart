@@ -20,6 +20,7 @@ class DonationPage extends StatefulWidget {
 class _DonationPageState extends State<DonationPage> {
   final _formKey = GlobalKey<FormState>();
   final _customValue = TextEditingController();
+  final _customMessage = TextEditingController();
   int _selected = 0;
   int donationValue = 0;
   late Future<bool> _loginCheck;
@@ -130,6 +131,13 @@ class _DonationPageState extends State<DonationPage> {
                                 return null;
                               },
                             ),
+                            TextFormField(
+                              controller: _customMessage,
+                              keyboardType: TextInputType.multiline,
+                              decoration: const InputDecoration(
+                                labelText: 'Message',
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -157,7 +165,7 @@ class _DonationPageState extends State<DonationPage> {
                     userId: _currentUser.id,
                     missionId: widget.missionID,
                     donationAmount: int.parse(_customValue.text),
-                    donationMessage: '');
+                    donationMessage: _customMessage.text);
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
