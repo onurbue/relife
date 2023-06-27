@@ -18,7 +18,7 @@ Widget normalDonationCard({
           margin: const EdgeInsets.only(left: 30.0),
           child: ListTile(
             title: FutureBuilder<String>(
-              future: Users.gerUserName(userID),
+              future: Users.getUserName(userID),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Text('');
