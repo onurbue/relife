@@ -54,12 +54,12 @@ class _DonationPageState extends State<DonationPage> {
           const SizedBox(height: 30),
           const CustomBarHeader(
               percentage: 0.5, title: 'You are almost Finishing'),
-          const SizedBox(height: 20),
+          const SizedBox(height: 120),
           Card(
             margin: const EdgeInsets.symmetric(horizontal: 32),
             elevation: 3,
             shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(41)),
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(45)),
             color: const Color.fromRGBO(252, 252, 252, 30),
             child: Column(
               children: [

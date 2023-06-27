@@ -12,6 +12,7 @@ Widget normalDonationCard({
     children: [
       Padding(
         padding: const EdgeInsets.symmetric(vertical: 10),
+        
         child: Card(
           margin: const EdgeInsets.only(left: 30.0),
           child: ListTile(
@@ -32,7 +33,7 @@ Widget normalDonationCard({
                   height: 25,
                   decoration: BoxDecoration(
                     shape: BoxShape.rectangle,
-                    borderRadius: BorderRadius.circular(25),
+                    borderRadius: BorderRadius.circular(45),
                     color: primaryColor,
                   ),
                   child: Center(
@@ -84,31 +85,46 @@ Widget bigDonationCard({
   return Stack(
     children: [
       Card(
+
         margin: const EdgeInsets.only(top: 20.0),
         child: SizedBox(
             height: 150.0,
             width: double.infinity,
             child: Padding(
-              padding: const EdgeInsets.only(top: 45.0),
+              padding: const EdgeInsets.only(top: 40.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Text(
                     userID.toString(),
-                    style: TextStyle(
-                      fontSize: 20,
+                    style: const TextStyle(
+                      fontSize: 35,
                       fontWeight: FontWeight.bold,
-                      color: Colors.blue,
+                      color: secondaryColor,
                     ),
                   ),
-                Text(
-                  donationAmount.toString(),
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
+                  if (donationMessage != null)
+                  Center(
+                        child: Text(
+                          donationMessage,
+                          style: const TextStyle(
+                            fontSize: 20,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                  Text(
+                    donationAmount.toString(),
+                    style: const TextStyle(
+                      fontSize: 13,
+                    ),
                   ),
-                ),
-                  if (donationMessage != null) Text(donationMessage),
-                  Text(donationDate.toString()),
+                  Text(
+                    donationDate.toString(),
+                    style: const TextStyle(
+                      fontSize: 13,
+                    ),
+                  ),
                 ],
               ),
             )),

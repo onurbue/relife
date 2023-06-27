@@ -101,17 +101,27 @@ class _MissionPageState extends State<MissionPage> {
                 fixedWidth: 170,
                 height: 48,
                 initialValue: 0,
-                children: const {
-                  0: Text('Latest Donations'),
-                  1: Text('Top 10 '),
+                children: {
+                  0: const Text(
+                    'Latest Donations',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                  1: const Text(
+                    'Top 10',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
                 },
                 decoration: BoxDecoration(
                   color: secondaryColor,
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(50),
                 ),
                 thumbDecoration: BoxDecoration(
                   color: primaryColor,
-                  borderRadius: BorderRadius.circular(6),
+                  borderRadius: BorderRadius.circular(50),
                 ),
                 duration: const Duration(milliseconds: 300),
                 curve: Curves.easeInToLinear,
