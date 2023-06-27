@@ -34,8 +34,8 @@ class _ProfilePageState extends State<ProfilePage> {
         return Users.fetchCurrentUser().then((user) {
           setState(() {
             _currentUser = user;
-            valorDoado = Users().getUserTotalDonation(_currentUser.id);
-            quantidadeDoacoes = Users().getUserDonationCount(_currentUser.id);
+            valorDoado = Users.getUserTotalDonation(_currentUser.id);
+            quantidadeDoacoes = Users.getUserDonationCount(_currentUser.id);
           });
           return user;
         });

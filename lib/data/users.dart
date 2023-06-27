@@ -62,7 +62,7 @@ class Users {
     }
   }
 
-  Future<int> getUserTotalDonation(int userId) async {
+  static Future<int> getUserTotalDonation(int userId) async {
     final url = 'https://relife-api.vercel.app/donations/$userId';
     final response = await http.get(Uri.parse(url));
 
@@ -75,7 +75,7 @@ class Users {
     }
   }
 
-  Future<int> getUserDonationCount(int userId) async {
+  static Future<int> getUserDonationCount(int userId) async {
     try {
       final response = await http.get(
           Uri.parse('https://relife-api.vercel.app/donations/$userId/count'));
