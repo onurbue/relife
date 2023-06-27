@@ -150,4 +150,27 @@ class Users {
     Navigator.pushReplacement(
         context, MaterialPageRoute(builder: (context) => const InitialPage()));
   }
+
+  static Future<void> recoverPassword(String email) async {
+    try {
+      final response = await http.post(
+        Uri.parse(
+          'https://relife-api.vercel.app/recover-password',
+        ),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'email': email,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        print('Recebeu email');
+      } else {
+        print('Erro: ${response.statusCode}');
+        print(response.body);
+      }
+    } catch (e) {
+      throw Exception('Failed to connect to the server');
+    }
+  }
 }
