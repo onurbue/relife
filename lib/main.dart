@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:relife/utils/constants.dart';
-import 'package:relife/views/Backend/backend.dart';
-import 'package:relife/views/HomePage/homepage.dart';
-
 import 'package:relife/views/start.dart';
 
 void main() {
@@ -26,7 +23,6 @@ class MyApp extends StatelessWidget {
       ),
       title: 'ReLife',
       home: const InitialPage(),
-      //home: Dashboard(),
     );
   }
 }

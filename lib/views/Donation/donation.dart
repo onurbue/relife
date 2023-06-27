@@ -10,9 +10,10 @@ import 'donation_finished.dart';
 
 class DonationPage extends StatefulWidget {
   final int missionID;
-  const DonationPage({Key? key, required this.missionID}) : super(key: key);
+  final String missionName;
+  const DonationPage(
+      {super.key, required this.missionID, required this.missionName});
 
-  @override
   _DonationPageState createState() => _DonationPageState();
 }
 
@@ -155,13 +156,14 @@ class _DonationPageState extends State<DonationPage> {
                 Donations().createDonation(
                     userId: _currentUser.id,
                     missionId: widget.missionID,
-                    donationAmount: donationValue,
+                    donationAmount: int.parse(_customValue.text),
                     donationMessage: '');
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                     builder: (context) => FinishedDonationPage(
-                      amountDonated: donationValue,
+                      amountDonated: int.parse(_customValue.text),
+                      missionName: widget.missionName,
                     ),
                   ),
                 );

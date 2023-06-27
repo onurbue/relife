@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:relife/utils/appbar.dart';
 import 'package:relife/utils/constants.dart';
 import 'package:relife/views/Donation/widgets/header.dart';
-import 'package:relife/views/HomePage/homepage.dart';
 import 'package:relife/views/start.dart';
 
 class FinishedDonationPage extends StatelessWidget {
   final int amountDonated;
+  final String missionName;
   const FinishedDonationPage({
     super.key,
     required this.amountDonated,
+    required this.missionName,
   });
 
   @override
@@ -39,7 +40,7 @@ class FinishedDonationPage extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(41),
             child: Text(
-              'Thank you for the $amountDonated € that you have donated to Earthquakes.\n\nWe appreciate all the help.',
+              'Thank you for the $amountDonated € that you have donated to $missionName.\n\nWe appreciate all the help.',
               style: CustomTextStyles.donation,
             ),
           ),

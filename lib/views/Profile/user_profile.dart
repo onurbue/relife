@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:relife/models/user.dart';
@@ -21,7 +19,6 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   late Future<bool> _loginCheck;
   late Future<User?> _user;
-  late File _image;
   late User _currentUser;
   late Future<int> valorDoado;
   late Future<int> quantidadeDoacoes;
@@ -46,6 +43,7 @@ class _ProfilePageState extends State<ProfilePage> {
           MaterialPageRoute(builder: (context) => const LoginPage()),
         );
       }
+      return null;
     });
   }
 
@@ -169,7 +167,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   builder: (context, snapshot) {
                                     if (snapshot.connectionState ==
                                         ConnectionState.waiting) {
-                                      return CircularProgressIndicator();
+                                      return const CircularProgressIndicator();
                                     } else if (snapshot.hasError) {
                                       return Text('Erro: ${snapshot.error}');
                                     } else {
@@ -189,7 +187,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   builder: (context, snapshot) {
                                     if (snapshot.connectionState ==
                                         ConnectionState.waiting) {
-                                      return CircularProgressIndicator();
+                                      return const CircularProgressIndicator();
                                     } else if (snapshot.hasError) {
                                       return Text('Erro: ${snapshot.error}');
                                     } else {

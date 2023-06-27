@@ -140,6 +140,7 @@ class _MissionPageState extends State<MissionPage> {
                 MaterialPageRoute(
                     builder: (context) => DonationPage(
                           missionID: widget.missionId,
+                          missionName: widget.title,
                         )),
               );
             },

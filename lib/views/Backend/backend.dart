@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
-import 'package:relife/views/HomePage/homepage.dart';
 import 'package:relife/views/start.dart';
 
 class Mission {

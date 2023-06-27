@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:relife/utils/constants.dart';
 import 'package:relife/views/Profile/user_profile.dart';
-import '../data/users.dart';
-import '../models/user.dart';
 import 'HomePage/homepage.dart';
-import 'Login/login_page.dart';
 
 class InitialPage extends StatefulWidget {
   const InitialPage({Key? key}) : super(key: key);
