@@ -1,5 +1,4 @@
 import 'package:custom_sliding_segmented_control/custom_sliding_segmented_control.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:relife/data/donations.dart';
@@ -10,8 +9,6 @@ import 'package:relife/utils/appbar.dart';
 import 'package:relife/views/Mission/widgets/donations_cards.dart';
 
 import '../HomePage/widgets/featured_card.dart';
-// Ver aqui sobre o sliding
-// https://api.flutter.dev/flutter/cupertino/CupertinoSlidingSegmentedControl-class.html
 
 class MissionPage extends StatefulWidget {
   final int missionId;
@@ -37,10 +34,6 @@ class MissionPage extends StatefulWidget {
 
 class _MissionPageState extends State<MissionPage> {
   int _selectedIndex = 0;
-  // final Map<int, Widget> _segments = {
-  //   0: const Text('Latest Donations'),
-  //   1: const Text('Top 10'),
-  // };
 
   @override
   Widget build(BuildContext context) {

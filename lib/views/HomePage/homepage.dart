@@ -75,6 +75,7 @@ class _HomePageState extends State<HomePage> {
                     scrollDirection: Axis.vertical,
                     itemBuilder: (context, index) {
                       final Mission mission = filteredMissions[index];
+                      print(mission.totalAmount);
                       return InkWell(
                         onTap: () {
                           Navigator.push(
