@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../data/users.dart';
+import '../../../models/user.dart';
 import '../../../utils/constants.dart';
 
 Widget normalDonationCard({
@@ -15,12 +17,29 @@ Widget normalDonationCard({
         child: Card(
           margin: const EdgeInsets.only(left: 30.0),
           child: ListTile(
-            title: Text(
-              'Nome do usuário (ID do usuário = $userID)',
-              style: const TextStyle(
-                color: primaryColor,
-                fontWeight: FontWeight.bold,
-              ),
+            title: FutureBuilder<String>(
+              future: Users.gerUserName(userID),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Text('');
+                } else if (snapshot.hasError) {
+                  return Text('Erro ao buscar o usuário: ${snapshot.error}');
+                } else if (snapshot.hasData) {
+                  String userName = snapshot.data!;
+                  return Padding(
+                    padding: const EdgeInsets.only(left: 30),
+                    child: Text(
+                      userName,
+                      style: const TextStyle(
+                        color: primaryColor,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  );
+                } else {
+                  return const Text('Nenhum usuário encontrado.');
+                }
+              },
             ),
             subtitle: Text(donationMessage ?? ''),
             trailing: Column(
