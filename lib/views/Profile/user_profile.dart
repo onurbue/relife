@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:relife/models/user.dart';
 import 'package:relife/utils/constants.dart';
+import 'package:relife/views/HomePage/homepage.dart';
 import 'package:relife/views/Login/login_page.dart';
 import 'package:relife/utils/appbar.dart';
-
 import 'package:http/http.dart' as http;
 import 'package:relife/views/Profile/change_email.dart';
 import 'package:relife/views/Profile/change_password.dart';
-import 'package:relife/views/start.dart';
 
 import '../../data/users.dart';
 
@@ -282,7 +281,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const InitialPage()));
+                                    builder: (context) => const HomePage()));
                           },
                           child: const Text('Delete Account'),
                         ),
