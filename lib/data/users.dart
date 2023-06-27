@@ -62,6 +62,36 @@ class Users {
     }
   }
 
+  Future<int> getUserTotalDonation(int userId) async {
+    final url = 'https://relife-api.vercel.app/donations/$userId';
+    final response = await http.get(Uri.parse(url));
+
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      final totalDonation = data['totalDonation'] as int;
+      return totalDonation;
+    } else {
+      throw Exception('Falha ao obter o valor total da doação do usuário');
+    }
+  }
+
+  Future<int> getUserDonationCount(int userId) async {
+    try {
+      final response = await http.get(
+          Uri.parse('https://relife-api.vercel.app/donations/$userId/count'));
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        final count = data['count'] as int;
+        return count;
+      } else {
+        throw Exception('Failed to get user donation count');
+      }
+    } catch (error) {
+      throw Exception('Failed to connect to the server');
+    }
+  }
+
   // static Future<User> fetchCurrentUser() async {
   //   final token = await SharedPreferencesHelper.getToken();
 

@@ -123,7 +123,10 @@ class _MissionPageState extends State<MissionPage> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => DonationPage()),
+                MaterialPageRoute(
+                    builder: (context) => DonationPage(
+                          missionID: widget.missionId,
+                        )),
               );
             },
             label: const Text('Donate'),

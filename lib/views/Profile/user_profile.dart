@@ -23,7 +23,8 @@ class _ProfilePageState extends State<ProfilePage> {
   late Future<User?> _user;
   late File _image;
   late User _currentUser;
-
+  late Future<int> valorDoado;
+  late Future<int> quantidadeDoacoes;
   @override
   void initState() {
     super.initState();
@@ -33,6 +34,8 @@ class _ProfilePageState extends State<ProfilePage> {
         return Users.fetchCurrentUser().then((user) {
           setState(() {
             _currentUser = user;
+            valorDoado = Users().getUserTotalDonation(_currentUser.id);
+            quantidadeDoacoes = Users().getUserDonationCount(_currentUser.id);
           });
           return user;
         });
@@ -155,19 +158,46 @@ class _ProfilePageState extends State<ProfilePage> {
                         Text('Olá, ${user.name}'),
                         const SizedBox(height: 50),
                         const Text('Statistics'),
-                        const Row(
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             Column(
                               children: [
-                                Text('value'),
-                                Text('Donations'),
+                                FutureBuilder<int>(
+                                  future: quantidadeDoacoes,
+                                  builder: (context, snapshot) {
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.waiting) {
+                                      return CircularProgressIndicator();
+                                    } else if (snapshot.hasError) {
+                                      return Text('Erro: ${snapshot.error}');
+                                    } else {
+                                      int quantidadeDoacoes =
+                                          snapshot.data ?? 0;
+                                      return Text('$quantidadeDoacoes');
+                                    }
+                                  },
+                                ),
+                                const Text('Donations'),
                               ],
                             ),
                             Column(
                               children: [
-                                Text('value'),
-                                Text('total donated'),
+                                FutureBuilder<int>(
+                                  future: valorDoado,
+                                  builder: (context, snapshot) {
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.waiting) {
+                                      return CircularProgressIndicator();
+                                    } else if (snapshot.hasError) {
+                                      return Text('Erro: ${snapshot.error}');
+                                    } else {
+                                      int totalDoado = snapshot.data ?? 0;
+                                      return Text('$totalDoado');
+                                    }
+                                  },
+                                ),
+                                const Text('total donated'),
                               ],
                             )
                           ],

@@ -42,4 +42,40 @@ class Donations {
     // returns deserialized list of objects
     return donations;
   }
+
+  Future<void> createDonation(
+      {required int userId,
+      required int missionId,
+      required int donationAmount,
+      String? donationMessage}) async {
+    final url = Uri.parse('https://relife-api.vercel.app/donation');
+
+    // Dados da doação a serem enviados
+    final data = {
+      'id_user': userId,
+      'id_mission': missionId,
+      'amount': donationAmount,
+      'donation_message': donationMessage,
+    };
+
+    final token = 'SEU_TOKEN_JWT'; // Substitua pelo seu token JWT válido
+
+    try {
+      final response = await http.post(
+        url,
+        // headers: {'Content-Type': 'application/json', 'token': token},
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode(data),
+      );
+
+      if (response.statusCode == 200) {
+        print('Doação criada com sucesso!');
+      } else {
+        print('Erro ao criar doação: ${response.statusCode}');
+        print(response.body);
+      }
+    } catch (error) {
+      print('Erro na solicitação: $error');
+    }
+  }
 }

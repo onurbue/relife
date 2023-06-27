@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:relife/data/donations.dart';
+import 'package:relife/models/donation.dart';
 import 'package:relife/utils/appbar.dart';
 import 'package:relife/utils/constants.dart';
 import 'package:relife/views/Donation/donation_finished.dart';
 import 'package:relife/views/Donation/widgets/header.dart';
 
+import '../../data/users.dart';
+import '../../models/user.dart';
+
 class DonationPage extends StatefulWidget {
-  DonationPage({Key? key}) : super(key: key);
+  final int missionID;
+  DonationPage({Key? key, required this.missionID}) : super(key: key);
 
   @override
   _DonationPageState createState() => _DonationPageState();
@@ -17,10 +23,25 @@ class _DonationPageState extends State<DonationPage> {
   final _customValue = TextEditingController();
   int _selected = 0;
   int donationValue = 0;
-
+  late Future<bool> _loginCheck;
+  late Future<User?> _user;
+  late User _currentUser;
   @override
   void initState() {
     super.initState();
+    _loginCheck = Users.checkUserLoggedIn();
+    _user = _loginCheck.then((isLoggedIn) {
+      if (isLoggedIn) {
+        return Users.fetchCurrentUser().then((user) {
+          setState(() {
+            _currentUser = user;
+          });
+          return user;
+        });
+      } else {
+        print('w');
+      }
+    });
     //para saber quando o valor muda
     _customValue.addListener(updateDonationValue);
   }
@@ -154,6 +175,11 @@ class _DonationPageState extends State<DonationPage> {
               ),
               child: const Text('Donate'),
               onPressed: () {
+                Donations().createDonation(
+                    userId: _currentUser.id,
+                    missionId: widget.missionID,
+                    donationAmount: donationValue,
+                    donationMessage: '');
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
