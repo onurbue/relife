@@ -6,6 +6,7 @@ import 'package:relife/views/Login/login_page.dart';
 import 'package:relife/utils/appbar.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:relife/views/Profile/change_email.dart';
 
 import '../../data/users.dart';
 
@@ -167,7 +168,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   builder: (context, snapshot) {
                                     if (snapshot.connectionState ==
                                         ConnectionState.waiting) {
-                                      return CircularProgressIndicator();
+                                      return const CircularProgressIndicator();
                                     } else if (snapshot.hasError) {
                                       return Text('Erro: ${snapshot.error}');
                                     } else {
@@ -187,7 +188,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   builder: (context, snapshot) {
                                     if (snapshot.connectionState ==
                                         ConnectionState.waiting) {
-                                      return CircularProgressIndicator();
+                                      return const CircularProgressIndicator();
                                     } else if (snapshot.hasError) {
                                       return Text('Erro: ${snapshot.error}');
                                     } else {
@@ -204,23 +205,35 @@ class _ProfilePageState extends State<ProfilePage> {
                         const SizedBox(height: 50),
                         const Text('Settings'),
                         const SizedBox(height: 10),
-                        Card(
-                          margin: const EdgeInsets.symmetric(horizontal: 32),
-                          elevation: 3,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Container(
-                            width: 373,
-                            height: 51,
-                            color: const Color.fromRGBO(252, 252, 252, 30),
-                            child: Center(
-                              child: const Text(
-                                'Change Email',
-                                style: TextStyle(
-                                  color: const Color.fromRGBO(0, 0, 0, 0.3),
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ChangeEmailPage(
+                                  userId: user.id,
+                                ),
+                              ),
+                            );
+                          },
+                          child: Card(
+                            margin: const EdgeInsets.symmetric(horizontal: 32),
+                            elevation: 3,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Container(
+                              width: 373,
+                              height: 51,
+                              color: const Color.fromRGBO(252, 252, 252, 30),
+                              child: const Center(
+                                child: Text(
+                                  'Change Email',
+                                  style: TextStyle(
+                                    color: Color.fromRGBO(0, 0, 0, 0.3),
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
                             ),
@@ -237,11 +250,11 @@ class _ProfilePageState extends State<ProfilePage> {
                             width: 373,
                             height: 51,
                             color: const Color.fromRGBO(252, 252, 252, 30),
-                            child: Center(
-                              child: const Text(
+                            child: const Center(
+                              child: Text(
                                 'Change Password',
                                 style: TextStyle(
-                                  color: const Color.fromRGBO(0, 0, 0, 0.3),
+                                  color: Color.fromRGBO(0, 0, 0, 0.3),
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
                                 ),
