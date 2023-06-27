@@ -120,13 +120,13 @@ class _ProfilePageState extends State<ProfilePage> {
                     body: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        const SizedBox(height: 50),
+                        const SizedBox(height: 30),
                         Stack(
                           children: [
                             _buildAvatar(user),
                             Positioned(
                               top: 150,
-                              right: 10,
+                              right: 25,
                               child: GestureDetector(
                                 onTap: () {
                                   uploadImage(user.id);
@@ -140,7 +140,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                     ),
                                   ),
                                   child: const CircleAvatar(
-                                    radius: 20,
+                                    radius: 12,
                                     backgroundColor: Colors.white,
                                     child: Icon(
                                       Icons.edit,
@@ -167,7 +167,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   builder: (context, snapshot) {
                                     if (snapshot.connectionState ==
                                         ConnectionState.waiting) {
-                                      return const CircularProgressIndicator();
+                                      return CircularProgressIndicator();
                                     } else if (snapshot.hasError) {
                                       return Text('Erro: ${snapshot.error}');
                                     } else {
@@ -187,7 +187,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   builder: (context, snapshot) {
                                     if (snapshot.connectionState ==
                                         ConnectionState.waiting) {
-                                      return const CircularProgressIndicator();
+                                      return CircularProgressIndicator();
                                     } else if (snapshot.hasError) {
                                       return Text('Erro: ${snapshot.error}');
                                     } else {
@@ -203,7 +203,53 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                         const SizedBox(height: 50),
                         const Text('Settings'),
-                        const SizedBox(height: 50),
+                        const SizedBox(height: 10),
+                        Card(
+                          margin: const EdgeInsets.symmetric(horizontal: 32),
+                          elevation: 3,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Container(
+                            width: 373,
+                            height: 51,
+                            color: const Color.fromRGBO(252, 252, 252, 30),
+                            child: Center(
+                              child: const Text(
+                                'Change Email',
+                                style: TextStyle(
+                                  color: const Color.fromRGBO(0, 0, 0, 0.3),
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        Card(
+                          margin: const EdgeInsets.symmetric(horizontal: 32),
+                          elevation: 3,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Container(
+                            width: 373,
+                            height: 51,
+                            color: const Color.fromRGBO(252, 252, 252, 30),
+                            child: Center(
+                              child: const Text(
+                                'Change Password',
+                                style: TextStyle(
+                                  color: const Color.fromRGBO(0, 0, 0, 0.3),
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 15),
                         ElevatedButton(
                           onPressed: () => Users.logout(context),
                           child: const Text('Logout'),
@@ -232,7 +278,7 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
       ),
       child: CircleAvatar(
-        radius: 100,
+        radius: 86.5,
         backgroundColor: Colors.grey,
         backgroundImage: NetworkImage(
           'https://relife-api.vercel.app/imagens/${user.image}?timestamp=${DateTime.now()}', //truque para atualizar a imagem
