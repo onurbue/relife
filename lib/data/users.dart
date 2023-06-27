@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:relife/models/user.dart';
+import 'package:relife/urls.dart';
 import 'package:relife/utils/shared.dart';
 import 'package:relife/views/start.dart';
 
@@ -169,22 +170,17 @@ class Users {
     }
   }
 
-  static Future<void> changeEmail(int userId, String email) async {
-    try {
-      final response = await http.put(
-        Uri.parse(
-          'https://relife-api.vercel.app/user/email',
-        ),
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode({
-          'user_id': userId,
-          'email': email,
-        }),
-      );
+  static Future<String> gerUserName(int userId) async {
+    final url =
+        '$baseAPIurl/getUserName/$userId'; // Substitua pela URL correta do seu backend
+    final response = await http.get(Uri.parse(url));
 
-      print(response.statusCode);
-    } catch (e) {
-      throw Exception('Failed to connect to the server');
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      final userName = data['name'];
+      return userName;
+    } else {
+      throw Exception('Erro ao buscar o nome do usuário');
     }
   }
 }
