@@ -19,7 +19,13 @@ class RecoverPassword extends StatelessWidget {
       if (formKey.currentState!.validate()) {
         final email = emailController.text;
 
-        Users.recoverPassword(email);
+        if (Users.recoverPassword(email) == 200) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Irá Receber um E-mail com uma nova palavra passe'),
+            ),
+          );
+        }
 
         Navigator.pushReplacement(
             context,
