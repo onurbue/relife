@@ -122,13 +122,13 @@ class _ProfilePageState extends State<ProfilePage> {
                     body: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        const SizedBox(height: 50),
+                        const SizedBox(height: 30),
                         Stack(
                           children: [
                             _buildAvatar(user),
                             Positioned(
                               top: 150,
-                              right: 10,
+                              right: 25,
                               child: GestureDetector(
                                 onTap: () {
                                   uploadImage(user.id);
@@ -142,7 +142,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                     ),
                                   ),
                                   child: const CircleAvatar(
-                                    radius: 20,
+                                    radius: 12,
                                     backgroundColor: Colors.white,
                                     child: Icon(
                                       Icons.edit,
@@ -155,57 +155,124 @@ class _ProfilePageState extends State<ProfilePage> {
                           ],
                         ),
                         const SizedBox(height: 20),
+
                         const Text('Registered since'),
-                        Text('Olá, ${user.name}'),
-                        const SizedBox(height: 50),
-                        const Text('Statistics'),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Column(
-                              children: [
-                                FutureBuilder<int>(
-                                  future: quantidadeDoacoes,
-                                  builder: (context, snapshot) {
-                                    if (snapshot.connectionState ==
-                                        ConnectionState.waiting) {
-                                      return CircularProgressIndicator();
-                                    } else if (snapshot.hasError) {
-                                      return Text('Erro: ${snapshot.error}');
-                                    } else {
-                                      int quantidadeDoacoes =
-                                          snapshot.data ?? 0;
-                                      return Text('$quantidadeDoacoes');
-                                    }
-                                  },
-                                ),
-                                const Text('Donations'),
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                FutureBuilder<int>(
-                                  future: valorDoado,
-                                  builder: (context, snapshot) {
-                                    if (snapshot.connectionState ==
-                                        ConnectionState.waiting) {
-                                      return CircularProgressIndicator();
-                                    } else if (snapshot.hasError) {
-                                      return Text('Erro: ${snapshot.error}');
-                                    } else {
-                                      int totalDoado = snapshot.data ?? 0;
-                                      return Text('$totalDoado');
-                                    }
-                                  },
-                                ),
-                                const Text('total donated'),
-                              ],
-                            )
-                          ],
+                        const SizedBox(height: 10),
+                        Center(
+                          child: Text(
+                            'Olá, ${user.name}',
+                            textAlign: TextAlign.center,
+                          ),
                         ),
-                        const SizedBox(height: 50),
+                        const SizedBox(height: 30),
+                        Card(
+                          margin: const EdgeInsets.symmetric(horizontal: 32),
+                          elevation: 3,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Column(
+                            children: [
+                              const Text('Statistics'),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Column(
+                                    children: [
+                                      FutureBuilder<int>(
+                                        future: quantidadeDoacoes,
+                                        builder: (context, snapshot) {
+                                          if (snapshot.connectionState ==
+                                              ConnectionState.waiting) {
+                                            return CircularProgressIndicator();
+                                          } else if (snapshot.hasError) {
+                                            return Text(
+                                                'Erro: ${snapshot.error}');
+                                          } else {
+                                            int quantidadeDoacoes =
+                                                snapshot.data ?? 0;
+                                            return Text('$quantidadeDoacoes');
+                                          }
+                                        },
+                                      ),
+                                      const Text('Donations'),
+                                    ],
+                                  ),
+                                  Column(
+                                    children: [
+                                      FutureBuilder<int>(
+                                        future: valorDoado,
+                                        builder: (context, snapshot) {
+                                          if (snapshot.connectionState ==
+                                              ConnectionState.waiting) {
+                                            return CircularProgressIndicator();
+                                          } else if (snapshot.hasError) {
+                                            return Text(
+                                                'Erro: ${snapshot.error}');
+                                          } else {
+                                            int totalDoado = snapshot.data ?? 0;
+                                            return Text('$totalDoado');
+                                          }
+                                        },
+                                      ),
+                                      const Text('total donated'),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 10),
                         const Text('Settings'),
-                        const SizedBox(height: 50),
+                        const SizedBox(height: 10),
+                        Card(
+                          margin: const EdgeInsets.symmetric(horizontal: 32),
+                          elevation: 3,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Container(
+                            width: 373,
+                            height: 51,
+                            color: const Color.fromRGBO(252, 252, 252, 30),
+                            child: Center(
+                              child: const Text(
+                                'Change Email',
+                                style: TextStyle(
+                                  color: const Color.fromRGBO(0, 0, 0, 0.3),
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        Card(
+                          margin: const EdgeInsets.symmetric(horizontal: 32),
+                          elevation: 3,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Container(
+                            width: 373,
+                            height: 51,
+                            color: const Color.fromRGBO(252, 252, 252, 30),
+                            child: Center(
+                              child: const Text(
+                                'Change Password',
+                                style: TextStyle(
+                                  color: const Color.fromRGBO(0, 0, 0, 0.3),
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 15),
                         ElevatedButton(
                           onPressed: () => Users.logout(context),
                           child: const Text('Logout'),
@@ -234,7 +301,7 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
       ),
       child: CircleAvatar(
-        radius: 100,
+        radius: 86.5,
         backgroundColor: Colors.grey,
         backgroundImage: NetworkImage(
           'https://relife-api.vercel.app/imagens/${user.image}?timestamp=${DateTime.now()}', //truque para atualizar a imagem
