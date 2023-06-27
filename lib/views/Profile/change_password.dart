@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:relife/data/users.dart';
-import 'package:relife/utils/appbar.dart';
-import 'package:relife/utils/constants.dart';
 import 'package:relife/views/Profile/user_profile.dart';
 
-class ChangeEmailPage extends StatefulWidget {
+import '../../data/users.dart';
+import '../../utils/appbar.dart';
+import '../../utils/constants.dart';
+
+class ChangePasswordPage extends StatefulWidget {
   final int userId;
-  const ChangeEmailPage({super.key, required this.userId});
+  const ChangePasswordPage({super.key, required this.userId});
 
   @override
-  State<ChangeEmailPage> createState() => _ChangeEmailPageState();
+  State<ChangePasswordPage> createState() => _ChangePasswordPageState();
 }
 
-class _ChangeEmailPageState extends State<ChangeEmailPage> {
+class _ChangePasswordPageState extends State<ChangePasswordPage> {
   final _formKey = GlobalKey<FormState>();
-  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -37,13 +38,13 @@ class _ChangeEmailPageState extends State<ChangeEmailPage> {
                 padding: const EdgeInsets.all(8),
                 child: TextFormField(
                   keyboardType: TextInputType.emailAddress,
-                  controller: _emailController,
+                  controller: _passwordController,
                   decoration: const InputDecoration(
-                    labelText: 'Change Email',
+                    labelText: 'Change Password',
                   ),
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return 'Please, insert an e-mail';
+                      return 'Please, insert a Password';
                     }
                     return null;
                   },
@@ -64,9 +65,7 @@ class _ChangeEmailPageState extends State<ChangeEmailPage> {
               ),
               child: const Text('Change'),
               onPressed: () {
-                Users.changeEmail(widget.userId, _emailController.text);
-
-                //Navigator.pop(context);
+                Users.changePassword(widget.userId, _passwordController.text);
                 Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(

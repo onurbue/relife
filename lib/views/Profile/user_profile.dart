@@ -7,6 +7,7 @@ import 'package:relife/utils/appbar.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:relife/views/Profile/change_email.dart';
+import 'package:relife/views/Profile/change_password.dart';
 
 import '../../data/users.dart';
 
@@ -240,23 +241,35 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                         ),
                         const SizedBox(height: 20),
-                        Card(
-                          margin: const EdgeInsets.symmetric(horizontal: 32),
-                          elevation: 3,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Container(
-                            width: 373,
-                            height: 51,
-                            color: const Color.fromRGBO(252, 252, 252, 30),
-                            child: const Center(
-                              child: Text(
-                                'Change Password',
-                                style: TextStyle(
-                                  color: Color.fromRGBO(0, 0, 0, 0.3),
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ChangePasswordPage(
+                                  userId: user.id,
+                                ),
+                              ),
+                            );
+                          },
+                          child: Card(
+                            margin: const EdgeInsets.symmetric(horizontal: 32),
+                            elevation: 3,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Container(
+                              width: 373,
+                              height: 51,
+                              color: const Color.fromRGBO(252, 252, 252, 30),
+                              child: const Center(
+                                child: Text(
+                                  'Change Password',
+                                  style: TextStyle(
+                                    color: Color.fromRGBO(0, 0, 0, 0.3),
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
                             ),
