@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:relife/utils/appbar.dart';
 import 'package:relife/utils/constants.dart';
 import 'package:relife/views/Donation/donation_finished.dart';
@@ -13,8 +14,31 @@ class DonationPage extends StatefulWidget {
 
 class _DonationPageState extends State<DonationPage> {
   final _formKey = GlobalKey<FormState>();
-  final _amountController = TextEditingController();
+  final _customValue = TextEditingController();
   int _selected = 0;
+  int donationValue = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    //para saber quando o valor muda
+    _customValue.addListener(updateDonationValue);
+  }
+
+  @override
+  void dispose() {
+    //para descartar
+    _customValue.removeListener(updateDonationValue);
+    _customValue.dispose();
+    super.dispose();
+  }
+
+  void updateDonationValue() {
+    setState(() {
+      _selected = 0;
+      donationValue = int.tryParse(_customValue.text) ?? 0;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,12 +81,14 @@ class _DonationPageState extends State<DonationPage> {
                           customDonationButton(5, () {
                             setState(() {
                               _selected = 1;
+                              donationValue = 5;
                             });
                           }, _selected == 1),
                           const SizedBox(width: 10),
                           customDonationButton(10, () {
                             setState(() {
                               _selected = 2;
+                              donationValue = 10;
                             });
                           }, _selected == 2),
                         ],
@@ -73,12 +99,14 @@ class _DonationPageState extends State<DonationPage> {
                           customDonationButton(20, () {
                             setState(() {
                               _selected = 3;
+                              donationValue = 20;
                             });
                           }, _selected == 3),
                           const SizedBox(width: 10),
                           customDonationButton(50, () {
                             setState(() {
                               _selected = 4;
+                              donationValue = 50;
                             });
                           }, _selected == 4),
                         ],
@@ -88,8 +116,11 @@ class _DonationPageState extends State<DonationPage> {
                         child: Column(
                           children: [
                             TextFormField(
-                              controller: _amountController,
+                              controller: _customValue,
                               keyboardType: TextInputType.number,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.digitsOnly
+                              ],
                               decoration: const InputDecoration(
                                 labelText: 'Custom Amount',
                               ),
@@ -123,13 +154,14 @@ class _DonationPageState extends State<DonationPage> {
               ),
               child: const Text('Donate'),
               onPressed: () {
-                print(_amountController.text);
                 Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => FinishedDonationPage(
-                              amountDonated: int.parse(_amountController.text),
-                            )));
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => FinishedDonationPage(
+                      amountDonated: donationValue,
+                    ),
+                  ),
+                );
               },
             ),
           ),
