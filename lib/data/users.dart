@@ -170,7 +170,7 @@ class Users {
     }
   }
 
-  static Future<String> gerUserName(int userId) async {
+  static Future<String> getUserName(int userId) async {
     final url =
         '$baseAPIurl/getUserName/$userId'; // Substitua pela URL correta do seu backend
     final response = await http.get(Uri.parse(url));
@@ -181,6 +181,25 @@ class Users {
       return userName;
     } else {
       throw Exception('Erro ao buscar o nome do usuário');
+    }
+  }
+
+  static Future<void> changeEmail(int userId, String email) async {
+    try {
+      final response = await http.put(
+        Uri.parse(
+          'https://relife-api.vercel.app/user/email',
+        ),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'user_id': userId,
+          'email': email,
+        }),
+      );
+
+      print(response.statusCode);
+    } catch (e) {
+      throw Exception('Failed to connect to the server');
     }
   }
 }
