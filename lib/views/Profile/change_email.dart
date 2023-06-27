@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:relife/data/users.dart';
 import 'package:relife/utils/appbar.dart';
 import 'package:relife/utils/constants.dart';
+import 'package:relife/views/Profile/user_profile.dart';
 
 class ChangeEmailPage extends StatefulWidget {
   final int userId;
@@ -62,7 +64,14 @@ class _ChangeEmailPageState extends State<ChangeEmailPage> {
               ),
               child: const Text('Change'),
               onPressed: () {
-                Navigator.pop(context);
+                final response =
+                    Users.changeEmail(widget.userId, _emailController.text);
+
+                //Navigator.pop(context);
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ProfilePage()));
               },
             ),
           ),

@@ -168,4 +168,23 @@ class Users {
       throw Exception('Failed to connect to the server');
     }
   }
+
+  static Future<void> changeEmail(int userId, String email) async {
+    try {
+      final response = await http.put(
+        Uri.parse(
+          'https://relife-api.vercel.app/user/email',
+        ),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'user_id': userId,
+          'email': email,
+        }),
+      );
+
+      print(response.statusCode);
+    } catch (e) {
+      throw Exception('Failed to connect to the server');
+    }
+  }
 }

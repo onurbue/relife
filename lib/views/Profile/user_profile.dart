@@ -207,7 +207,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         const SizedBox(height: 10),
                         GestureDetector(
                           onTap: () {
-                            Navigator.pushReplacement(
+                            Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => ChangeEmailPage(
