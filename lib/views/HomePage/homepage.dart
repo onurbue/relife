@@ -134,7 +134,7 @@ class _HomePageState extends State<HomePage> {
               children: [
                 Text('Normal Causes', style: CustomTextStyles.descriptions),
                 SizedBox(
-                  height: 400,
+                  height: 336,
                   child: ListView.builder(
                     itemCount: filteredMissions.length,
                     scrollDirection: Axis.horizontal,
