@@ -26,7 +26,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
         children: [
           Center(
             child: Text(
-              'Change Email',
+              'Change Password',
               style: CustomTextStyles.title,
             ),
           ),
@@ -37,7 +37,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
               child: Padding(
                 padding: const EdgeInsets.all(8),
                 child: TextFormField(
-                  keyboardType: TextInputType.emailAddress,
+                  keyboardType: TextInputType.text,
                   controller: _passwordController,
                   decoration: const InputDecoration(
                     labelText: 'Change Password',

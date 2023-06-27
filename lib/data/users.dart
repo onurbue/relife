@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:relife/models/user.dart';
-import 'package:relife/urls.dart';
+import 'package:relife/utils/urls.dart';
 import 'package:relife/utils/shared.dart';
 import 'package:relife/views/start.dart';
 

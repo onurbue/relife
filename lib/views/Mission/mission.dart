@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:relife/data/donations.dart';
 import 'package:relife/models/donation.dart';
-import 'package:relife/urls.dart';
+import 'package:relife/utils/urls.dart';
 import 'package:relife/utils/constants.dart';
 import 'package:relife/views/Donation/donation.dart';
 import 'package:relife/utils/appbar.dart';
