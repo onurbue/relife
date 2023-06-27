@@ -8,6 +8,7 @@ import 'package:relife/utils/appbar.dart';
 import 'package:http/http.dart' as http;
 import 'package:relife/views/Profile/change_email.dart';
 import 'package:relife/views/Profile/change_password.dart';
+import 'package:relife/views/start.dart';
 
 import '../../data/users.dart';
 
@@ -274,6 +275,16 @@ class _ProfilePageState extends State<ProfilePage> {
                               ),
                             ),
                           ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Users.deleteUser(user.id);
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const InitialPage()));
+                          },
+                          child: const Text('Delete Account'),
                         ),
                         const SizedBox(height: 15),
                         ElevatedButton(

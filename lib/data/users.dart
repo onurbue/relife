@@ -64,7 +64,7 @@ class Users {
   }
 
   static Future<int> getUserTotalDonation(int userId) async {
-    final url = 'https://relife-api.vercel.app/donations/$userId';
+    final url = '$baseAPIurl/donations/$userId';
     final response = await http.get(Uri.parse(url));
 
     if (response.statusCode == 200) {
@@ -78,8 +78,8 @@ class Users {
 
   static Future<int> getUserDonationCount(int userId) async {
     try {
-      final response = await http.get(
-          Uri.parse('https://relife-api.vercel.app/donations/$userId/count'));
+      final response =
+          await http.get(Uri.parse('$baseAPIurl/donations/$userId/count'));
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
@@ -156,7 +156,7 @@ class Users {
     try {
       final response = await http.post(
         Uri.parse(
-          'https://relife-api.vercel.app/recover-password',
+          '$baseAPIurl/recover-password',
         ),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
@@ -188,7 +188,7 @@ class Users {
     try {
       final response = await http.put(
         Uri.parse(
-          'https://relife-api.vercel.app/user/email',
+          '$baseAPIurl/user/email',
         ),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
@@ -207,7 +207,7 @@ class Users {
     try {
       final response = await http.put(
         Uri.parse(
-          'https://relife-api.vercel.app/user/password',
+          '$baseAPIurl/user/password',
         ),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
@@ -215,6 +215,23 @@ class Users {
           'password': password,
         }),
       );
+
+      print(response.statusCode);
+    } catch (e) {
+      throw Exception('Failed to connect to the server');
+    }
+  }
+
+  static Future<void> deleteUser(int userId) async {
+    try {
+      final response = await http.delete(
+          Uri.parse(
+            '$baseAPIurl/user',
+          ),
+          headers: {'Content-Type': 'application/json'},
+          body: jsonEncode({
+            'id_user': userId,
+          }));
 
       print(response.statusCode);
     } catch (e) {
