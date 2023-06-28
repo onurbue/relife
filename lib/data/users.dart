@@ -137,7 +137,7 @@ class Users {
         context, MaterialPageRoute(builder: (context) => const InitialPage()));
   }
 
-  static Future<int> recoverPassword(String email) async {
+  static Future<dynamic> recoverPassword(String email) async {
     try {
       final response = await http.post(
         Uri.parse(
@@ -148,8 +148,10 @@ class Users {
           'email': email,
         }),
       );
-
-      return response.statusCode;
+      print(response.statusCode);
+      if (response.statusCode == 200) {
+        return 'Deverá Receber um e-mail com uma palavra passe nova';
+      }
     } catch (e) {
       throw Exception('Failed to connect to the server');
     }

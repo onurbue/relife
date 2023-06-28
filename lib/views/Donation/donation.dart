@@ -55,7 +55,6 @@ class _DonationPageState extends State<DonationPage> {
     return Scaffold(
       appBar: customAppBar(true),
       body: SingleChildScrollView(
-        // Adicionado SingleChildScrollView para permitir rolagem
         child: Column(
           children: [
             const SizedBox(height: 30),
