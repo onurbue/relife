@@ -70,7 +70,10 @@ class _LoginPageState extends State<LoginPage> {
                   children: [
                     TextFormField(
                       controller: _emailController,
-                      decoration: const InputDecoration(labelText: 'E-mail'),
+                      decoration: const InputDecoration(
+                          labelText: 'E-mail',
+                          focusColor: primaryColor,
+                          labelStyle: TextStyle(color: primaryColor)),
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Please, insert an email';

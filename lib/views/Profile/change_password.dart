@@ -38,6 +38,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                 padding: const EdgeInsets.all(8),
                 child: TextFormField(
                   keyboardType: TextInputType.text,
+                  obscureText: true,
                   controller: _passwordController,
                   decoration: const InputDecoration(
                     labelText: 'Change Password',

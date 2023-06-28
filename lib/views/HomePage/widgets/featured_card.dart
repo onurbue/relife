@@ -56,7 +56,8 @@ class FeaturedCausesCard extends StatelessWidget {
               child: LinearProgressIndicator(
                 value: progressValue,
                 backgroundColor: Colors.grey,
-                valueColor: const AlwaysStoppedAnimation<Color>(Colors.green),
+                valueColor: const AlwaysStoppedAnimation<Color>(
+                    Color.fromRGBO(6, 188, 193, 1)),
               ),
             ),
           ),
