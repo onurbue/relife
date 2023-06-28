@@ -228,66 +228,88 @@ class _ProfilePageState extends State<ProfilePage> {
                           textAlign: TextAlign.center,
                           style: const TextStyle(fontSize: 24),
                         ),
-                        const SizedBox(height: 50),
-                        const Text(
-                          'Statistics',
-                          style: TextStyle(fontSize: 20),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Column(
+                        const SizedBox(height: 30),
+                        Card(
+                          margin: const EdgeInsets.symmetric(
+                            horizontal: 32,
+                          ),
+                          elevation: 3,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(16), // Added padding
+                            child: Column(
                               children: [
-                                FutureBuilder<int>(
-                                  future: quantidadeDoacoes,
-                                  builder: (context, snapshot) {
-                                    if (snapshot.connectionState ==
-                                        ConnectionState.waiting) {
-                                      return const CircularProgressIndicator();
-                                    } else if (snapshot.hasError) {
-                                      return Text('Erro: ${snapshot.error}');
-                                    } else {
-                                      int quantidadeDoacoes =
-                                          snapshot.data ?? 0;
-                                      return Text(
-                                        '$quantidadeDoacoes',
-                                        style: const TextStyle(fontSize: 32),
-                                      );
-                                    }
-                                  },
-                                ),
                                 const Text(
-                                  'Donations',
-                                  style: TextStyle(fontSize: 16),
+                                  'Statistics',
+                                  style: TextStyle(fontSize: 20),
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Column(
+                                      children: [
+                                        FutureBuilder<int>(
+                                          future: quantidadeDoacoes,
+                                          builder: (context, snapshot) {
+                                            if (snapshot.connectionState ==
+                                                ConnectionState.waiting) {
+                                              return const CircularProgressIndicator();
+                                            } else if (snapshot.hasError) {
+                                              return Text(
+                                                  'Erro: ${snapshot.error}');
+                                            } else {
+                                              int quantidadeDoacoes =
+                                                  snapshot.data ?? 0;
+                                              return Text(
+                                                '$quantidadeDoacoes',
+                                                style: const TextStyle(
+                                                    fontSize: 32),
+                                              );
+                                            }
+                                          },
+                                        ),
+                                        const Text(
+                                          'Donations',
+                                          style: TextStyle(fontSize: 16),
+                                        ),
+                                      ],
+                                    ),
+                                    Column(
+                                      children: [
+                                        FutureBuilder<int>(
+                                          future: valorDoado,
+                                          builder: (context, snapshot) {
+                                            if (snapshot.connectionState ==
+                                                ConnectionState.waiting) {
+                                              return const CircularProgressIndicator();
+                                            } else if (snapshot.hasError) {
+                                              return Text(
+                                                  'Erro: ${snapshot.error}');
+                                            } else {
+                                              int totalDoado =
+                                                  snapshot.data ?? 0;
+                                              return Text(
+                                                '$totalDoado €',
+                                                style: const TextStyle(
+                                                    fontSize: 32),
+                                              );
+                                            }
+                                          },
+                                        ),
+                                        const Text(
+                                          'Total Donated',
+                                          style: TextStyle(fontSize: 16),
+                                        ),
+                                      ],
+                                    )
+                                  ],
                                 ),
                               ],
                             ),
-                            Column(
-                              children: [
-                                FutureBuilder<int>(
-                                  future: valorDoado,
-                                  builder: (context, snapshot) {
-                                    if (snapshot.connectionState ==
-                                        ConnectionState.waiting) {
-                                      return const CircularProgressIndicator();
-                                    } else if (snapshot.hasError) {
-                                      return Text('Erro: ${snapshot.error}');
-                                    } else {
-                                      int totalDoado = snapshot.data ?? 0;
-                                      return Text(
-                                        '$totalDoado €',
-                                        style: const TextStyle(fontSize: 32),
-                                      );
-                                    }
-                                  },
-                                ),
-                                const Text(
-                                  'Total Donated',
-                                  style: TextStyle(fontSize: 16),
-                                ),
-                              ],
-                            )
-                          ],
+                          ),
                         ),
                         const SizedBox(height: 50),
                         const Text(
