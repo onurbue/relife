@@ -6,16 +6,17 @@ class Mission {
   int totalAmount;
   int limitAmout;
   int isLimited;
+  bool active;
 
-  Mission({
-    required this.id,
-    required this.image,
-    required this.title,
-    required this.description,
-    required this.totalAmount,
-    required this.limitAmout,
-    required this.isLimited,
-  });
+  Mission(
+      {required this.id,
+      required this.image,
+      required this.title,
+      required this.description,
+      required this.totalAmount,
+      required this.limitAmout,
+      required this.isLimited,
+      required this.active});
 
   factory Mission.fromJson(Map<String, dynamic> json) {
     return Mission(
@@ -26,6 +27,7 @@ class Mission {
       totalAmount: json['total_amount'],
       limitAmout: json['limit_amount'],
       isLimited: json['is_limited'],
+      active: json['active'],
     );
   }
 }
