@@ -32,10 +32,12 @@ class Users {
 
     if (response.statusCode == 200) {
       return jsonDecode(response.body);
-    } else if (response.statusCode == 400) {
+    } else if (response.statusCode == 409) {
+      // 409 indicates email already exists
       return 'E-mail já está em uso';
     } else {
-      throw Exception('Erro ao criar usuário');
+      throw Exception(
+          'Falha ao criar usuário'); // Throw a generic exception for other errors
     }
   }
 

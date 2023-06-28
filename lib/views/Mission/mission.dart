@@ -10,9 +10,6 @@ import 'package:relife/views/Donation/donation.dart';
 import 'package:relife/utils/appbar.dart';
 import 'package:relife/views/Mission/widgets/donations_cards.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../../data/users.dart';
-import '../../models/user.dart';
 import '../HomePage/widgets/featured_card.dart';
 import '../Login/login_page.dart';
 
@@ -175,7 +172,7 @@ class _MissionPageState extends State<MissionPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => LoginPage(),
+                        builder: (context) => const LoginPage(),
                       ),
                     );
                   },

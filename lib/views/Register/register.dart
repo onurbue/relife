@@ -29,9 +29,16 @@ class _RegisterPageState extends State<RegisterPage> {
       final mobilePhone = _mobilePhoneController.text;
 
       Users.createUser(name, email, password, mobilePhone).then((result) {
-        //print(result);
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => const LoginPage()));
+        if (result is String) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(result),
+            ),
+          );
+        } else {
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) => const LoginPage()));
+        }
       }).catchError((error) {
         //print(error);
       });

@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:relife/utils/shared.dart';
-
-import '../data/users.dart';
 
 AppBar customAppBar(bool backArrow) {
   return AppBar(
