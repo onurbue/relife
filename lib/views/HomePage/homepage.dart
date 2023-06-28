@@ -59,8 +59,7 @@ class _HomePageState extends State<HomePage> {
           return Text('${snapshot.error}');
         } else if (snapshot.hasData) {
           final filteredMissions = snapshot.data!
-              .where(
-                  (mission) => mission.isLimited == 1 && mission.active == true)
+              .where((mission) => mission.isLimited == 1 && mission.active)
               .toList();
           if (filteredMissions.isNotEmpty) {
             return Column(
