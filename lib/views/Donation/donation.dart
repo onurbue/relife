@@ -7,6 +7,7 @@ import 'package:relife/utils/constants.dart';
 import 'package:relife/views/Donation/widgets/header.dart';
 
 import '../../data/donations.dart';
+import '../../data/users.dart';
 import '../../models/user.dart';
 import 'donation_finished.dart';
 
@@ -27,6 +28,8 @@ class _DonationPageState extends State<DonationPage> {
   int _selected = 0;
   int donationValue = 0;
 
+  late Future<bool> _loginCheck;
+  late Future<User?> _user;
   late User _currentUser;
 
   @override
@@ -34,6 +37,19 @@ class _DonationPageState extends State<DonationPage> {
     super.initState();
     //para saber quando o valor muda
     _customValue.addListener(updateDonationValue);
+    _loginCheck = Users.checkUserLoggedIn();
+    _user = _loginCheck.then((isLoggedIn) {
+      if (isLoggedIn) {
+        return Users.fetchCurrentUser().then((user) {
+          setState(() {
+            _currentUser = user;
+          });
+          return user;
+        });
+      } else {
+        print('w');
+      }
+    });
   }
 
   @override
