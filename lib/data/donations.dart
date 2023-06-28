@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
@@ -57,8 +59,6 @@ class Donations {
       'amount': donationAmount,
       'donation_message': donationMessage,
     };
-
-    const token = 'SEU_TOKEN_JWT'; // Substitua pelo seu token JWT válido
 
     try {
       final response = await http.post(

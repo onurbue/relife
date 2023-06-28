@@ -1,12 +1,12 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:relife/utils/appbar.dart';
 import 'package:relife/utils/constants.dart';
 import 'package:relife/views/Donation/widgets/header.dart';
-import 'package:relife/views/Login/login_page.dart';
 
 import '../../data/donations.dart';
-import '../../data/users.dart';
 import '../../models/user.dart';
 import 'donation_finished.dart';
 
@@ -16,6 +16,7 @@ class DonationPage extends StatefulWidget {
   const DonationPage(
       {super.key, required this.missionID, required this.missionName});
 
+  @override
   _DonationPageState createState() => _DonationPageState();
 }
 
@@ -26,8 +27,6 @@ class _DonationPageState extends State<DonationPage> {
   int _selected = 0;
   int donationValue = 0;
 
-  late Future<bool> _loginCheck;
-  late Future<User?> _user;
   late User _currentUser;
 
   @override
@@ -35,20 +34,6 @@ class _DonationPageState extends State<DonationPage> {
     super.initState();
     //para saber quando o valor muda
     _customValue.addListener(updateDonationValue);
-
-    _loginCheck = Users.checkUserLoggedIn();
-    _user = _loginCheck.then((isLoggedIn) {
-      if (isLoggedIn) {
-        return Users.fetchCurrentUser().then((user) {
-          setState(() {
-            _currentUser = user;
-          });
-          return user;
-        });
-      } else {
-        print('w');
-      }
-    });
   }
 
   @override

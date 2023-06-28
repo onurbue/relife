@@ -15,11 +15,13 @@ class RecoverPassword extends StatelessWidget {
     final emailController = TextEditingController();
 
     // submit the form
+    // ignore: no_leading_underscores_for_local_identifiers
     void _submitForm() {
       if (formKey.currentState!.validate()) {
         final email = emailController.text;
-        final _statusResponse = Users.recoverPassword(email);
-        if (_statusResponse == 200) {
+        final statusResponse = Users.recoverPassword(email);
+        // ignore: unrelated_type_equality_checks
+        if (statusResponse == 200) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
               content: Text('Irá Receber um E-mail com uma nova palavra-passe'),

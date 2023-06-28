@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:relife/utils/shared.dart';
 
 import '../data/users.dart';
 
@@ -38,7 +39,7 @@ AppBar customAppBar(bool backArrow) {
   );
 }
 
-AppBar customAppBarLogout(BuildContext context) {
+AppBar customAppBarLogout(VoidCallback press) {
   return AppBar(
     automaticallyImplyLeading: false,
     backgroundColor: Colors.white,
@@ -72,12 +73,8 @@ AppBar customAppBarLogout(BuildContext context) {
       ],
     ),
     actions: [
-      GestureDetector(
-          onTap: () {
-            Users.logout(context);
-          },
-          child: Icon(Icons.logout)),
-      SizedBox(width: 20)
+      GestureDetector(onTap: press, child: const Icon(Icons.logout)),
+      const SizedBox(width: 20)
     ],
   );
 }

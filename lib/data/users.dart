@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -99,7 +101,8 @@ class Users {
     if (token != null && token.isNotEmpty) {
       Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
 
-      print(decodedToken);
+      //print(decodedToken);
+      // ignore: unnecessary_null_comparison
       if (decodedToken != null) {
         final user = User.fromJson(decodedToken);
         return user;

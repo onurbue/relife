@@ -29,11 +29,11 @@ class _RegisterPageState extends State<RegisterPage> {
       final mobilePhone = _mobilePhoneController.text;
 
       Users.createUser(name, email, password, mobilePhone).then((result) {
-        print(result);
+        //print(result);
         Navigator.pushReplacement(context,
             MaterialPageRoute(builder: (context) => const LoginPage()));
       }).catchError((error) {
-        print(error);
+        //print(error);
       });
     }
   }

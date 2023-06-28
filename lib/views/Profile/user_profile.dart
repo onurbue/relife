@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_null_comparison, use_build_context_synchronously, avoid_print
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -32,7 +34,7 @@ class _ProfilePageState extends State<ProfilePage> {
   late Future<int> valorDoado = Future<int>.value(0); // Inicializando com 0
   late Future<int> quantidadeDoacoes =
       Future<int>.value(0); // Inicializando com 0
-  late String token;
+  String? token;
 
   @override
   void initState() {
@@ -42,7 +44,9 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Future<void> _initializePage() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    token = prefs.getString('token')!;
+    setState(() {
+      token = prefs.getString('token');
+    });
 
     if (token != null) {
       _loginCheck = Users.checkUserLoggedIn();
@@ -68,6 +72,18 @@ class _ProfilePageState extends State<ProfilePage> {
       );
       _user = Future<User?>.value(null);
     }
+  }
+
+  Future<void> _logout() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove('token');
+    setState(() {
+      token = null;
+    });
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => const LoginPage()),
+    );
   }
 
   void uploadImage(int userId) async {
@@ -166,7 +182,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 User? user = userSnapshot.data;
                 if (user != null) {
                   return Scaffold(
-                    appBar: customAppBarLogout(context),
+                    appBar: customAppBarLogout(_logout),
                     body: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
@@ -205,7 +221,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         const SizedBox(height: 20),
                         Text(
                           'Registered since ${formatDate(user.registerDate)}',
-                          style: TextStyle(fontSize: 12),
+                          style: const TextStyle(fontSize: 12),
                         ),
                         Text(
                           user.name,
@@ -235,7 +251,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                           snapshot.data ?? 0;
                                       return Text(
                                         '$quantidadeDoacoes',
-                                        style: TextStyle(fontSize: 32),
+                                        style: const TextStyle(fontSize: 32),
                                       );
                                     }
                                   },

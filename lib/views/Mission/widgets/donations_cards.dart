@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:relife/utils/helper.dart';
 
-import '../../../data/users.dart';
-import '../../../models/user.dart';
 import '../../../utils/constants.dart';
 import '../../../utils/urls.dart';
 
@@ -14,8 +12,8 @@ Widget normalDonationCard({
   String? donationMessage,
   required String donationDate,
 }) {
-  print(userImage);
-  print('$imageUrl/$userImage');
+  // print(userImage);
+  // print('$imageUrl/$userImage');
   return Stack(
     children: [
       Padding(

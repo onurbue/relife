@@ -42,8 +42,7 @@ class MissionPage extends StatefulWidget {
 
 class _MissionPageState extends State<MissionPage> {
   int _selectedIndex = 0;
-  Future<bool>? _loginCheck;
-  User? _currentUser;
+
   String? token;
 
   @override
@@ -54,10 +53,9 @@ class _MissionPageState extends State<MissionPage> {
 
   Future<void> _checkLoginStatus() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    token = prefs.getString('token')!;
-
-    _loginCheck = Users.checkUserLoggedIn();
-    bool isLoggedIn = await _loginCheck!;
+    setState(() {
+      token = prefs.getString('token');
+    });
   }
 
   @override
@@ -98,6 +96,11 @@ class _MissionPageState extends State<MissionPage> {
                         color: primaryColor,
                       ),
                     ),
+                    if (token != null) ...[
+                      Text('Tás logado $token')
+                    ] else ...[
+                      Text('N tsTás logado $token')
+                    ],
                     Text(
                       '${widget.totalAmount.toString()} €',
                       style: const TextStyle(
@@ -156,7 +159,7 @@ class _MissionPageState extends State<MissionPage> {
         child: SizedBox(
           width: 300,
           child: FloatingActionButton.extended(
-            onPressed: _currentUser != null
+            onPressed: token != null
                 ? () {
                     Navigator.pushReplacement(
                       context,
@@ -168,6 +171,7 @@ class _MissionPageState extends State<MissionPage> {
                     );
                   }
                 : () {
+                    print(token);
                     Navigator.push(
                       context,
                       MaterialPageRoute(

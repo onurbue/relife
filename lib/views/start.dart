@@ -20,7 +20,7 @@ final List<Widget> _telas = [
 class _InitialPageState extends State<InitialPage> {
   @override
   Widget build(BuildContext context) {
-    print(_pageIndex);
+    //print(_pageIndex);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: _telas[_pageIndex],
