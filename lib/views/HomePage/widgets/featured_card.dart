@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:relife/utils/urls.dart';
 
+import '../../../utils/constants.dart';
+
 class FeaturedCausesCard extends StatelessWidget {
   final String title;
   final int amountDonated;
@@ -56,7 +58,7 @@ class FeaturedCausesCard extends StatelessWidget {
               child: LinearProgressIndicator(
                 value: progressValue,
                 backgroundColor: Colors.grey,
-                valueColor: const AlwaysStoppedAnimation<Color>(Colors.green),
+                valueColor: const AlwaysStoppedAnimation<Color>(primaryColor),
               ),
             ),
           ),
