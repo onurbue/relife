@@ -93,30 +93,6 @@ class Users {
     }
   }
 
-  // static Future<User> fetchCurrentUser() async {
-  //   final token = await SharedPreferencesHelper.getToken();
-
-  //   if (token != null && token.isNotEmpty) {
-  //     final response = await http.get(
-  //       Uri.parse(getUser),
-  //       headers: <String, String>{
-  //         'Authorization': token,
-  //       },
-  //     );
-
-  //     if (response.statusCode == 200) {
-  //       final responseData = jsonDecode(response.body);
-  //       final user = User.fromJson(responseData);
-  //       print(user);
-  //       return user;
-  //     } else {
-  //       throw Exception('Falha ao obter os dados do user');
-  //     }
-  //   } else {
-  //     throw Exception('Token inválido');
-  //   }
-  // }
-
   static Future<User> fetchCurrentUser() async {
     final token = await SharedPreferencesHelper.getToken();
 

@@ -16,7 +16,7 @@ class FinishedDonationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppBar(true),
+      appBar: customAppBar(false),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [

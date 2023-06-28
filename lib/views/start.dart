@@ -14,7 +14,7 @@ int _pageIndex = 0;
 
 final List<Widget> _telas = [
   const HomePage(),
-  ProfilePage(),
+  const ProfilePage(),
 ];
 
 class _InitialPageState extends State<InitialPage> {
@@ -47,17 +47,6 @@ class _InitialPageState extends State<InitialPage> {
   }
 
   void onTabTapped(int index) {
-    // if (index == 1) {
-    //   Navigator.push(
-    //       context,
-    //       MaterialPageRoute(
-    //         builder: (context) => const LoginPage(),
-    //       ));
-    // } else {
-    //   setState(() {
-    //     _indiceAtual = index;
-    //   });
-    // }
     setState(() {
       _pageIndex = index;
     });

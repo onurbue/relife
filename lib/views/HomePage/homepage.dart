@@ -47,8 +47,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  //Trocar isto por o carousell slider, para ficar tipo a imagem em slide
-  // destacada
   Widget buildFeaturedMissions() {
     return FutureBuilder<List<Mission>>(
       future: _missions,
@@ -67,9 +65,12 @@ class _HomePageState extends State<HomePage> {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Featured Causes', style: CustomTextStyles.descriptions),
+                Text(
+                  'Featured Causes',
+                  style: CustomTextStyles.descriptions,
+                ),
                 SizedBox(
-                  height: 220,
+                  height: 230,
                   child: ListView.builder(
                     itemCount: filteredMissions.length,
                     scrollDirection: Axis.vertical,
@@ -180,54 +181,4 @@ class _HomePageState extends State<HomePage> {
       },
     );
   }
-
-  // Widget buildNormalMissions() {
-  //   return Column(
-  //     crossAxisAlignment: CrossAxisAlignment.start,
-  //     children: [
-  //       Text('Causes', style: CustomTextStyles.descriptions),
-  //       SizedBox(
-  //         height: 400,
-  //         child: FutureBuilder<List<Mission>>(
-  //           future: _missions,
-  //           builder: (context, snapshot) {
-  //             if (snapshot.hasData) {
-  //               return ListView.builder(
-  //                 itemCount: snapshot.data!.length,
-  //                 scrollDirection: Axis.horizontal,
-  //                 itemBuilder: (context, index) {
-  //                   return InkWell(
-  //                     onTap: () {
-  //                       Navigator.push(
-  //                         context,
-  //                         MaterialPageRoute(
-  //                           builder: (context) => MissionPage(
-  //                             missionId: snapshot.data![index].id,
-  //                             title: snapshot.data![index].title,
-  //                             description: snapshot.data![index].description,
-  //                             totalAmount: snapshot.data![index].totalAmount,
-  //                             isLimited: snapshot.data![index].limitAmout,
-  //                           ),
-  //                         ),
-  //                       );
-  //                     },
-  //                     child: NormalCausesCard(
-  //                       title: snapshot.data![index].title,
-  //                       description: snapshot.data![index].description,
-  //                     ),
-  //                   );
-  //                 },
-  //               );
-  //             } else if (snapshot.hasError) {
-  //               return Text('${snapshot.error}');
-  //             }
-  //             return const Center(
-  //               child: CircularProgressIndicator(),
-  //             );
-  //           },
-  //         ),
-  //       ),
-  //     ],
-  //   );
-  // }
 }

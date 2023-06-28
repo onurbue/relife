@@ -1,99 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:relife/utils/helper.dart';
 
 import '../../../data/users.dart';
 import '../../../models/user.dart';
 import '../../../utils/constants.dart';
 import '../../../utils/urls.dart';
-
-// Widget normalDonationCard({
-//   required int userID,
-//   required int donationAmount,
-//   String? donationMessage,
-//   required String donationDate,
-// }) {
-//   return Stack(
-//     children: [
-//       Padding(
-//         padding: const EdgeInsets.symmetric(vertical: 10),
-//         child: Card(
-//           margin: const EdgeInsets.only(left: 30.0),
-//           child: ListTile(
-//             title: FutureBuilder<String>(
-//               future: Users.getUserName(userID),
-//               builder: (context, snapshot) {
-//                 if (snapshot.connectionState == ConnectionState.waiting) {
-//                   return const Text('');
-//                 } else if (snapshot.hasError) {
-//                   return Text('Erro ao buscar o usuário: ${snapshot.error}');
-//                 } else if (snapshot.hasData) {
-//                   String userName = snapshot.data!;
-//                   return Padding(
-//                     padding: const EdgeInsets.only(left: 30),
-//                     child: Text(
-//                       userName,
-//                       style: const TextStyle(
-//                         color: primaryColor,
-//                         fontWeight: FontWeight.bold,
-//                       ),
-//                     ),
-//                   );
-//                 } else {
-//                   return const Text('Nenhum usuário encontrado.');
-//                 }
-//               },
-//             ),
-//             subtitle: Text(donationMessage ?? ''),
-//             trailing: Column(
-//               crossAxisAlignment: CrossAxisAlignment.end,
-//               mainAxisAlignment: MainAxisAlignment.center,
-//               children: [
-//                 Container(
-//                   width: 70,
-//                   height: 25,
-//                   decoration: BoxDecoration(
-//                     shape: BoxShape.rectangle,
-//                     borderRadius: BorderRadius.circular(25),
-//                     color: primaryColor,
-//                   ),
-//                   child: Center(
-//                     child: Text(
-//                       '${donationAmount.toString()} €',
-//                       style: const TextStyle(
-//                         fontSize: 16,
-//                         fontWeight: FontWeight.bold,
-//                         color: Colors.white,
-//                       ),
-//                     ),
-//                   ),
-//                 ),
-//                 const SizedBox(height: 5),
-//                 Text(
-//                   donationDate,
-//                   style: const TextStyle(
-//                     fontSize: 13,
-//                     fontWeight: FontWeight.w300,
-//                   ),
-//                 ),
-//               ],
-//             ),
-//           ),
-//         ),
-//       ),
-//       Positioned(
-//         top: 5,
-//         left: -330,
-//         right: .0,
-//         child: Center(
-//           child: CircleAvatar(
-//             backgroundColor: Colors.white,
-//             radius: 30.0,
-//             child: Image.asset('assets/images/users_profiles/default.png'),
-//           ),
-//         ),
-//       ),
-//     ],
-//   );
-// }
 
 Widget normalDonationCard({
   required int userID,
@@ -104,71 +15,74 @@ Widget normalDonationCard({
   required String donationDate,
 }) {
   print(userImage);
+  print('$imageUrl/$userImage');
   return Stack(
     children: [
       Padding(
         padding: const EdgeInsets.symmetric(vertical: 10),
         child: Card(
-          margin: const EdgeInsets.only(left: 30.0),
-          child: ListTile(
-            title: Padding(
-              padding: const EdgeInsets.only(left: 30),
-              child: Text(
+          margin: const EdgeInsets.only(left: 40.0),
+          child: Padding(
+            padding: const EdgeInsets.only(left: 20.0),
+            child: ListTile(
+              title: Text(
                 userName,
                 style: const TextStyle(
                   color: primaryColor,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-            ),
-            subtitle: Text(donationMessage ?? ''),
-            trailing: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  width: 70,
-                  height: 25,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.rectangle,
-                    borderRadius: BorderRadius.circular(25),
-                    color: primaryColor,
-                  ),
-                  child: Center(
-                    child: Text(
-                      '${donationAmount.toString()} €',
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
+              subtitle: Text(donationMessage ?? ''),
+              trailing: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 70,
+                    height: 25,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      borderRadius: BorderRadius.circular(25),
+                      color: primaryColor,
+                    ),
+                    child: Center(
+                      child: Text(
+                        '${donationAmount.toString()} €',
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(height: 5),
-                Text(
-                  donationDate,
-                  style: const TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w300,
+                  const SizedBox(height: 5),
+                  Text(
+                    donationDate,
+                    style: const TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w300,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
       ),
       Positioned(
-        top: 5,
+        top: 17,
         left: -330,
         right: .0,
-        child: Center(
+        child: CircleAvatar(
+          backgroundColor: Colors.white,
+          radius: 30.0,
           child: CircleAvatar(
             backgroundColor: Colors.white,
-            radius: 30.0,
-            child: userImage == 'default.png'
-                ? Image.asset('assets/images/users_profiles/default.png')
-                : Image.network('$imageUrl/$userImage'),
+            radius: 27,
+            backgroundImage: userImage == 'default.png'
+                ? const NetworkImage('$baseAPIurl/imagens/users/default.png')
+                : NetworkImage('$imageUrl/$userImage.jpg'),
           ),
         ),
       ),
@@ -197,29 +111,47 @@ Widget bigDonationCard({
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    userID.toString(),
+                    userName,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(fontSize: 24),
                   ),
-                  Text(donationAmount.toString()),
-                  if (donationMessage != null) Text(donationMessage),
-                  Text(donationDate.toString()),
+                  if (donationMessage != null)
+                    Text(
+                      donationMessage,
+                      style: const TextStyle(fontSize: 24),
+                    ),
+                  Text(
+                    '${donationAmount.toString()} €',
+                    style: const TextStyle(fontSize: 14),
+                  ),
+                  Text(
+                    formatDate(donationDate),
+                    style: const TextStyle(fontSize: 14),
+                  )
                 ],
               ),
             )),
       ),
       Positioned(
-        top: .0,
-        left: .0,
-        right: .0,
-        child: Center(
-          child: CircleAvatar(
-            backgroundColor: Colors.white,
-            radius: 30.0,
+          top: .0,
+          left: .0,
+          right: .0,
+          child: Center(
             child: userImage == 'default.png'
-                ? Image.asset('assets/images/users_profiles/default.png')
-                : Image.network('$imageUrl/$userImage'),
-          ),
-        ),
-      )
+                ? const CircleAvatar(
+                    radius: 30,
+                    backgroundColor: Colors.white,
+                    backgroundImage:
+                        NetworkImage('$baseAPIurl/imagens/users/default.png'),
+                  )
+                : CircleAvatar(
+                    radius: 30,
+                    backgroundColor: Colors.white,
+                    backgroundImage: NetworkImage(
+                      '$imageUrl/$userImage.jpg',
+                    ),
+                  ),
+          )),
     ],
   );
 }

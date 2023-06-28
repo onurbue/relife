@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:relife/utils/appbar.dart';
 import 'package:relife/utils/constants.dart';
 import 'package:relife/views/Donation/widgets/header.dart';
+import 'package:relife/views/Login/login_page.dart';
 
 import '../../data/donations.dart';
 import '../../data/users.dart';
@@ -23,12 +25,17 @@ class _DonationPageState extends State<DonationPage> {
   final _customMessage = TextEditingController();
   int _selected = 0;
   int donationValue = 0;
+
   late Future<bool> _loginCheck;
   late Future<User?> _user;
   late User _currentUser;
+
   @override
   void initState() {
     super.initState();
+    //para saber quando o valor muda
+    _customValue.addListener(updateDonationValue);
+
     _loginCheck = Users.checkUserLoggedIn();
     _user = _loginCheck.then((isLoggedIn) {
       if (isLoggedIn) {
@@ -41,6 +48,21 @@ class _DonationPageState extends State<DonationPage> {
       } else {
         print('w');
       }
+    });
+  }
+
+  @override
+  void dispose() {
+    //para descartar
+    _customValue.removeListener(updateDonationValue);
+    _customValue.dispose();
+    super.dispose();
+  }
+
+  void updateDonationValue() {
+    setState(() {
+      _selected = 0;
+      donationValue = int.tryParse(_customValue.text) ?? 0;
     });
   }
 
@@ -83,15 +105,15 @@ class _DonationPageState extends State<DonationPage> {
                         children: [
                           customDonationButton(5, () {
                             setState(() {
-                              _customValue.text = '5';
                               _selected = 1;
+                              donationValue = 5;
                             });
                           }, _selected == 1),
                           const SizedBox(width: 10),
                           customDonationButton(10, () {
                             setState(() {
-                              _customValue.text = '10';
                               _selected = 2;
+                              donationValue = 10;
                             });
                           }, _selected == 2),
                         ],
@@ -101,15 +123,15 @@ class _DonationPageState extends State<DonationPage> {
                         children: [
                           customDonationButton(20, () {
                             setState(() {
-                              _customValue.text = '20';
                               _selected = 3;
+                              donationValue = 20;
                             });
                           }, _selected == 3),
                           const SizedBox(width: 10),
                           customDonationButton(50, () {
                             setState(() {
-                              _customValue.text = '50';
                               _selected = 4;
+                              donationValue = 50;
                             });
                           }, _selected == 4),
                         ],
@@ -121,6 +143,9 @@ class _DonationPageState extends State<DonationPage> {
                             TextFormField(
                               controller: _customValue,
                               keyboardType: TextInputType.number,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.digitsOnly
+                              ],
                               decoration: const InputDecoration(
                                 labelText: 'Custom Amount',
                               ),
@@ -153,30 +178,48 @@ class _DonationPageState extends State<DonationPage> {
             width: 238,
             height: 48,
             child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: primaryColor,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(24),
-                ),
-              ),
-              child: const Text('Donate'),
-              onPressed: () {
-                Donations().createDonation(
-                    userId: _currentUser.id,
-                    missionId: widget.missionID,
-                    donationAmount: int.parse(_customValue.text),
-                    donationMessage: _customMessage.text);
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => FinishedDonationPage(
-                      amountDonated: int.parse(_customValue.text),
-                      missionName: widget.missionName,
-                    ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: primaryColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(24),
                   ),
-                );
-              },
-            ),
+                ),
+                child: const Text('Donate'),
+                onPressed: () {
+                  if (donationValue > 0) {
+                    Donations().createDonation(
+                      userId: _currentUser.id,
+                      missionId: widget.missionID,
+                      donationAmount: donationValue,
+                      donationMessage: _customMessage.text,
+                    );
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => FinishedDonationPage(
+                          amountDonated: donationValue,
+                          missionName: widget.missionName,
+                        ),
+                      ),
+                    );
+                  } else {
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: const Text("Ups"),
+                        content: const Text("You can't donate 0€."),
+                        actions: [
+                          TextButton(
+                            child: const Text("OK"),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      ),
+                    );
+                  }
+                }),
           ),
         ],
       ),

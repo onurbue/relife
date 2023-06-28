@@ -15,35 +15,24 @@ class FeaturedCausesCard extends StatelessWidget {
     required this.image,
   });
 
-  int percentageCalculator(int v1, int v2) {
-    double value = (v1 / v2) * 100;
+  double percentageCalculator(int v1, int v2) {
+    double value = (v1 / v2).clamp(0, 1);
 
-    return value.round();
+    return value;
   }
 
   @override
   Widget build(BuildContext context) {
-//Testes
-    int v = percentageCalculator(amountDonated, totalAmount);
-    print('here $v');
-
-    String vv = '0.$v';
-    double vvv = double.parse(vv);
-
-    print(v);
-    print(vv);
-    print(vvv);
-//Testes
+    double progressValue = percentageCalculator(amountDonated, totalAmount);
 
     return SizedBox(
       height: 250,
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(35),
             child: Image.network(
-              '$baseAPIurl/missions/$image',
+              '$imageUrl/$image.jpg',
               width: 400,
               height: 150,
               fit: BoxFit.cover,
@@ -51,7 +40,7 @@ class FeaturedCausesCard extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           Align(
-            alignment: Alignment.centerLeft,
+            alignment: Alignment.center,
             child: Text(
               title,
             ),
@@ -63,7 +52,7 @@ class FeaturedCausesCard extends StatelessWidget {
               height: 10,
               width: 400,
               child: LinearProgressIndicator(
-                value: vvv,
+                value: progressValue,
                 backgroundColor: Colors.grey,
                 valueColor: const AlwaysStoppedAnimation<Color>(Colors.green),
               ),
@@ -85,10 +74,9 @@ class FeaturedCausesCard extends StatelessWidget {
                   ),
                 ],
               ),
-              Text(
-                  '${percentageCalculator(amountDonated, totalAmount).toString()} %'),
+              Text('${(progressValue * 100).toStringAsFixed(0)} %'),
             ],
-          )
+          ),
         ],
       ),
     );

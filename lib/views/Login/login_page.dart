@@ -21,7 +21,6 @@ class _LoginPageState extends State<LoginPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
-  // Submit the form, send the params to the API
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
       final email = _emailController.text;

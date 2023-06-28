@@ -3,13 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:relife/data/donations.dart';
 import 'package:relife/models/donation.dart';
+import 'package:relife/utils/helper.dart';
 import 'package:relife/utils/urls.dart';
 import 'package:relife/utils/constants.dart';
 import 'package:relife/views/Donation/donation.dart';
 import 'package:relife/utils/appbar.dart';
 import 'package:relife/views/Mission/widgets/donations_cards.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../data/users.dart';
+import '../../models/user.dart';
 import '../HomePage/widgets/featured_card.dart';
+import '../Login/login_page.dart';
 
 class MissionPage extends StatefulWidget {
   final int missionId;
@@ -37,6 +42,23 @@ class MissionPage extends StatefulWidget {
 
 class _MissionPageState extends State<MissionPage> {
   int _selectedIndex = 0;
+  Future<bool>? _loginCheck;
+  User? _currentUser;
+  String? token;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkLoginStatus();
+  }
+
+  Future<void> _checkLoginStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    token = prefs.getString('token')!;
+
+    _loginCheck = Users.checkUserLoggedIn();
+    bool isLoggedIn = await _loginCheck!;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -134,16 +156,25 @@ class _MissionPageState extends State<MissionPage> {
         child: SizedBox(
           width: 300,
           child: FloatingActionButton.extended(
-            onPressed: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => DonationPage(
-                          missionID: widget.missionId,
-                          missionName: widget.title,
-                        )),
-              );
-            },
+            onPressed: _currentUser != null
+                ? () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => DonationPage(
+                                missionID: widget.missionId,
+                                missionName: widget.title,
+                              )),
+                    );
+                  }
+                : () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => LoginPage(),
+                      ),
+                    );
+                  },
             label: const Text('Donate'),
             backgroundColor: primaryColor,
           ),
@@ -170,18 +201,11 @@ class _MissionPageState extends State<MissionPage> {
             itemBuilder: (context, index) {
               final donation = donations[index];
 
-              String donationDateStr = donation
-                  .donationDate; // String no formato "2023-05-31T00:00:00.000Z"
-              DateTime donationDate = DateTime.parse(
-                  donationDateStr); // Converter a string em DateTime
-              String formattedDate = DateFormat('yyyy-MM-dd')
-                  .format(donationDate); // Formatar a data
-
               print('HERE ${donation.userName}');
               return normalDonationCard(
                   userID: donation.userId,
                   donationAmount: donation.amount,
-                  donationDate: formattedDate,
+                  donationDate: formatDate(donation.donationDate),
                   donationMessage: donation.donationMessage,
                   userName: donation.userName,
                   userImage: donation.userImage);

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:relife/views/start.dart';
@@ -10,6 +11,7 @@ class Mission {
   int amount;
   int limitAmount;
   int isLimited;
+  String image;
 
   Mission({
     required this.id,
@@ -18,6 +20,7 @@ class Mission {
     required this.amount,
     required this.limitAmount,
     required this.isLimited,
+    required this.image,
   });
 }
 
@@ -30,7 +33,9 @@ class _DashboardState extends State<Dashboard> {
   final _formKey = GlobalKey<FormState>();
   final titleController = TextEditingController();
   final descriptionCOntroller = TextEditingController();
+
   final limitAmountCOntroller = TextEditingController();
+  final imgurID = TextEditingController();
   final List<Mission> missions = [];
 
   @override
@@ -55,6 +60,7 @@ class _DashboardState extends State<Dashboard> {
           amount: data['total_amount'],
           limitAmount: data['limit_amount'],
           isLimited: data['is_limited'],
+          image: data['image'],
         );
       }).toList();
 
@@ -87,7 +93,7 @@ class _DashboardState extends State<Dashboard> {
                     Expanded(
                       child: TextFormField(
                         controller: titleController,
-                        decoration: const InputDecoration(labelText: 'Title'),
+                        decoration: const InputDecoration(labelText: 'Tiitle'),
                         validator: (value) {
                           if (value!.isEmpty) {
                             return 'Please, insert title';
@@ -100,10 +106,14 @@ class _DashboardState extends State<Dashboard> {
                     Expanded(
                       child: TextFormField(
                         controller: limitAmountCOntroller,
+                        keyboardType: TextInputType.number,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
                         decoration: const InputDecoration(labelText: 'Amount'),
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return 'Please, insert your name';
+                            return 'Please, insert an amout';
                           }
                           return null;
                         },
@@ -113,13 +123,23 @@ class _DashboardState extends State<Dashboard> {
                 ),
                 TextFormField(
                   controller: descriptionCOntroller,
-                  decoration: const InputDecoration(labelText: 'Descriptoro'),
+                  decoration: const InputDecoration(labelText: 'Description'),
                   keyboardType: TextInputType.multiline,
                   minLines: 3,
                   maxLines: 5,
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return 'Please, insert your name';
+                      return 'Please, insert a description';
+                    }
+                    return null;
+                  },
+                ),
+                TextFormField(
+                  controller: imgurID,
+                  decoration: const InputDecoration(labelText: 'Imgur ID'),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Please, insert the imgur id';
                     }
                     return null;
                   },
@@ -131,6 +151,7 @@ class _DashboardState extends State<Dashboard> {
                       final name = titleController.text;
                       final desc = descriptionCOntroller.text;
                       final pw = limitAmountCOntroller.text;
+                      final image = imgurID.text;
 
                       final newMission = Mission(
                         name: name,
@@ -139,6 +160,7 @@ class _DashboardState extends State<Dashboard> {
                         isLimited: 1,
                         id: missions.length + 1,
                         limitAmount: int.parse(pw),
+                        image: image,
                       );
 
                       // Envia os dados da nova missão para a API
@@ -151,7 +173,7 @@ class _DashboardState extends State<Dashboard> {
                           'total_amount': 0,
                           'is_limited': 1,
                           'limit_amount': newMission.limitAmount,
-                          'image': 'default.png',
+                          'image': newMission.image,
                         }),
                       );
 
