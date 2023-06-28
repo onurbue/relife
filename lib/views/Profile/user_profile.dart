@@ -127,7 +127,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           children: [
                             _buildAvatar(user),
                             Positioned(
-                              top: 150,
+                              top: 140,
                               right: 25,
                               child: GestureDetector(
                                 onTap: () {
@@ -154,57 +154,130 @@ class _ProfilePageState extends State<ProfilePage> {
                             ),
                           ],
                         ),
-                        const SizedBox(height: 20),
+                        const SizedBox(height: 15),
                         const Text('Registered since'),
-                        Text('Olá, ${user.name}'),
-                        const SizedBox(height: 50),
-                        const Text('Statistics'),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Column(
+                        Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            '${user.name}',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 26,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 15),
+                        Card(
+                          margin: const EdgeInsets.symmetric(
+                            horizontal: 32,
+                          ),
+                          elevation: 3,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(16), // Added padding
+                            child: Column(
                               children: [
-                                FutureBuilder<int>(
-                                  future: quantidadeDoacoes,
-                                  builder: (context, snapshot) {
-                                    if (snapshot.connectionState ==
-                                        ConnectionState.waiting) {
-                                      return const CircularProgressIndicator();
-                                    } else if (snapshot.hasError) {
-                                      return Text('Erro: ${snapshot.error}');
-                                    } else {
-                                      int quantidadeDoacoes =
-                                          snapshot.data ?? 0;
-                                      return Text('$quantidadeDoacoes');
-                                    }
-                                  },
+                                const Text(
+                                  'Statistics',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                 ),
-                                const Text('Donations'),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Column(
+                                      children: [
+                                        FutureBuilder<int>(
+                                          future: quantidadeDoacoes,
+                                          builder: (context, snapshot) {
+                                            if (snapshot.connectionState ==
+                                                ConnectionState.waiting) {
+                                              return const CircularProgressIndicator();
+                                            } else if (snapshot.hasError) {
+                                              return Text(
+                                                  'Erro: ${snapshot.error}');
+                                            } else {
+                                              int quantidadeDoacoes =
+                                                  snapshot.data ?? 0;
+                                              return Text(
+                                                '$quantidadeDoacoes',
+                                                style: const TextStyle(
+                                                  fontSize: 26,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              );
+                                            }
+                                          },
+                                        ),
+                                        const Text(
+                                          'Donations',
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w400,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Column(
+                                      children: [
+                                        FutureBuilder<int>(
+                                          future: valorDoado,
+                                          builder: (context, snapshot) {
+                                            if (snapshot.connectionState ==
+                                                ConnectionState.waiting) {
+                                              return const CircularProgressIndicator();
+                                            } else if (snapshot.hasError) {
+                                              return Text(
+                                                  'Erro: ${snapshot.error}');
+                                            } else {
+                                              int totalDoado =
+                                                  snapshot.data ?? 0;
+                                              return Text(
+                                                '$totalDoado €',
+                                                style: const TextStyle(
+                                                  fontSize: 26,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              );
+                                            }
+                                          },
+                                        ),
+                                        const Text(
+                                          'Total Donated',
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w400,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ],
                             ),
-                            Column(
-                              children: [
-                                FutureBuilder<int>(
-                                  future: valorDoado,
-                                  builder: (context, snapshot) {
-                                    if (snapshot.connectionState ==
-                                        ConnectionState.waiting) {
-                                      return const CircularProgressIndicator();
-                                    } else if (snapshot.hasError) {
-                                      return Text('Erro: ${snapshot.error}');
-                                    } else {
-                                      int totalDoado = snapshot.data ?? 0;
-                                      return Text('$totalDoado');
-                                    }
-                                  },
-                                ),
-                                const Text('total donated'),
-                              ],
-                            )
-                          ],
+                          ),
                         ),
-                        const SizedBox(height: 50),
-                        const Text('Settings'),
+                        const SizedBox(height: 10),
+                        Container(
+                          alignment: Alignment.topLeft,
+                          padding: EdgeInsets.only(left: 32),
+                          child: const Text(
+                            'Settings',
+                            style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
                         const SizedBox(height: 10),
                         GestureDetector(
                           onTap: () {
@@ -227,7 +300,8 @@ class _ProfilePageState extends State<ProfilePage> {
                               width: 373,
                               height: 51,
                               color: const Color.fromRGBO(252, 252, 252, 30),
-                              child: const Center(
+                              child: const Padding(
+                                padding: EdgeInsets.only(left: 16, top: 15),
                                 child: Text(
                                   'Change Email',
                                   style: TextStyle(
@@ -262,7 +336,8 @@ class _ProfilePageState extends State<ProfilePage> {
                               width: 373,
                               height: 51,
                               color: const Color.fromRGBO(252, 252, 252, 30),
-                              child: const Center(
+                              child: const Padding(
+                                padding: EdgeInsets.only(left: 16, top: 15),
                                 child: Text(
                                   'Change Password',
                                   style: TextStyle(
@@ -315,7 +390,7 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
       ),
       child: CircleAvatar(
-        radius: 86.5,
+        radius: 81.5,
         backgroundColor: Colors.grey,
         backgroundImage: NetworkImage(
           'https://relife-api.vercel.app/imagens/${user.image}?timestamp=${DateTime.now()}', //truque para atualizar a imagem

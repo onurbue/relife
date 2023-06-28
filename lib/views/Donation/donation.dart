@@ -56,7 +56,7 @@ class _DonationPageState extends State<DonationPage> {
               percentage: 0.5, title: 'You are almost Finishing'),
           const SizedBox(height: 50),
           Card(
-            margin: const EdgeInsets.symmetric(horizontal: 32),
+            margin: const EdgeInsets.symmetric(horizontal: 22),
             elevation: 3,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(45)),

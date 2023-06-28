@@ -24,7 +24,7 @@ class CustomBarHeader extends StatelessWidget {
           borderRadius: BorderRadius.circular(5),
           child: SizedBox(
             height: 10,
-            width: 400,
+            width: 342,
             child: LinearProgressIndicator(
               value: percentage,
               backgroundColor: Colors.grey,
