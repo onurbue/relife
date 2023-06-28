@@ -93,11 +93,6 @@ class _MissionPageState extends State<MissionPage> {
                         color: primaryColor,
                       ),
                     ),
-                    if (token != null) ...[
-                      Text('Tás logado $token')
-                    ] else ...[
-                      Text('N tsTás logado $token')
-                    ],
                     Text(
                       '${widget.totalAmount.toString()} €',
                       style: const TextStyle(
