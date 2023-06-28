@@ -35,6 +35,8 @@ class Users {
     } else if (response.statusCode == 409) {
       // 409 indicates email already exists
       return 'E-mail já está em uso';
+    } else if (response.statusCode == 410) {
+      return 'Mobile Phone in use';
     } else {
       throw Exception(
           'Falha ao criar usuário'); // Throw a generic exception for other errors
