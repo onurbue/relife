@@ -111,11 +111,13 @@ Widget bigDonationCard({
                   Text(
                     userName,
                     textAlign: TextAlign.center,
-                    style: const TextStyle(fontSize: 24),
+                    style: const TextStyle(
+                        fontSize: 24, fontWeight: FontWeight.bold),
                   ),
                   if (donationMessage != null)
                     Text(
                       donationMessage,
+                      textAlign: TextAlign.center,
                       style: const TextStyle(fontSize: 24),
                     ),
                   Text(

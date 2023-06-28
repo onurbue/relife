@@ -230,14 +230,11 @@ class _MissionPageState extends State<MissionPage> {
             itemBuilder: (context, index) {
               final donation = donations[index];
 
-              String donationDateStr = donation
-                  .donationDate; // String no formato "2023-05-31T00:00:00.000Z"
-              DateTime donationDate = DateTime.parse(
-                  donationDateStr); // Converter a string em DateTime
-              String formattedDate = DateFormat('yyyy-MM-dd')
-                  .format(donationDate); // Formatar a data
+              String donationDateStr = donation.donationDate;
+              DateTime donationDate = DateTime.parse(donationDateStr);
+              String formattedDate =
+                  DateFormat('yyyy-MM-dd').format(donationDate);
 
-              //Primeiro card, ou seja o primeiro index
               if (index == 0) {
                 // Primeiro card
                 return bigDonationCard(
