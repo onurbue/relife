@@ -67,10 +67,8 @@ class _ChangeEmailPageState extends State<ChangeEmailPage> {
                 Users.changeEmail(widget.userId, _emailController.text);
 
                 //Navigator.pop(context);
-                Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const ProfilePage()));
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => ProfilePage()));
               },
             ),
           ),

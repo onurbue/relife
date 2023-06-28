@@ -5,6 +5,9 @@ class Donation {
   int amount;
   String donationMessage;
   String donationDate;
+  //
+  String userName;
+  String userImage;
 
   Donation({
     required this.id,
@@ -13,6 +16,8 @@ class Donation {
     required this.amount,
     required this.donationMessage,
     required this.donationDate,
+    required this.userImage,
+    required this.userName,
   });
 
   factory Donation.fromJson(Map<String, dynamic> json) {
@@ -23,6 +28,8 @@ class Donation {
       amount: json['amount'],
       donationMessage: json['donation_message'],
       donationDate: json['donation_date'],
+      userImage: json['image'],
+      userName: json['name'],
     );
   }
 }

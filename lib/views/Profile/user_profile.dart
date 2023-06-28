@@ -1,15 +1,21 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:relife/models/user.dart';
 import 'package:relife/utils/constants.dart';
+import 'package:relife/utils/urls.dart';
 import 'package:relife/views/HomePage/homepage.dart';
 import 'package:relife/views/Login/login_page.dart';
 import 'package:relife/utils/appbar.dart';
 import 'package:http/http.dart' as http;
 import 'package:relife/views/Profile/change_email.dart';
 import 'package:relife/views/Profile/change_password.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../data/users.dart';
+import '../../utils/shared.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -24,10 +30,19 @@ class _ProfilePageState extends State<ProfilePage> {
   late User _currentUser;
   late Future<int> valorDoado;
   late Future<int> quantidadeDoacoes;
+  late String token;
 
   @override
   void initState() {
     super.initState();
+    _initializePage();
+  }
+
+  Future<void> _initializePage() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    token = prefs.getString('token')!;
+
+    print('isto $token');
     _loginCheck = Users.checkUserLoggedIn();
     _user = _loginCheck.then((isLoggedIn) {
       if (isLoggedIn) {
@@ -44,8 +59,8 @@ class _ProfilePageState extends State<ProfilePage> {
           context,
           MaterialPageRoute(builder: (context) => const LoginPage()),
         );
+        return null;
       }
-      return null;
     });
   }
 
@@ -53,24 +68,57 @@ class _ProfilePageState extends State<ProfilePage> {
     final image = await ImagePicker().pickImage(source: ImageSource.gallery);
     if (image == null) return;
 
-    final request = http.MultipartRequest(
+    final imgurRequest = http.MultipartRequest(
       'POST',
-      Uri.parse('https://relife-api.vercel.app/upload/$userId'),
+      Uri.parse('https://api.imgur.com/3/image'),
     );
-
-    request.files.add(
+    imgurRequest.headers['Authorization'] = "Client-ID 9aa5af389353021";
+    imgurRequest.files.add(
       await http.MultipartFile.fromPath('image', image.path),
     );
 
-    final response = await request.send();
+    final imgurResponse = await imgurRequest.send();
 
-    if (response.statusCode == 200) {
-      print('Imagem enviada com sucesso!');
+    if (imgurResponse.statusCode == 200) {
+      final imgurData = await imgurResponse.stream.toBytes();
+      final imgurResult = json.decode(utf8.decode(imgurData));
+      String imgurImageId = imgurResult['data']['id'];
+      print('ID da imagem no Imgur: $imgurImageId');
 
-      setState(() {});
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? currentToken = prefs.getString('token');
+      String? oldToken = prefs.getString('oldToken');
+
+      // Solicite um novo token com os novos dados do usuário, incluindo a imagem
+      String newToken = await Users.refreshToken(currentToken!, imgurImageId);
+
+      if (currentToken != newToken) {
+        await SharedPreferencesHelper.saveToken(
+            newToken); // Update the token in SharedPreferences
+        currentToken = newToken; // Update the currentToken with the new token
+        token = newToken; // Update the variable `token` with the new value
+      }
+
+      print('NOVA: $currentToken');
+      print('VELHA: $oldToken');
+
+      final Map<String, dynamic> decodedToken = JwtDecoder.decode(currentToken);
+      final Map<String, dynamic> userMap = decodedToken['user'];
+
+      int currentUserId = userMap['id_user'] as int;
+
+      setState(() {
+        _currentUser.image = imgurImageId;
+        print(imgurImageId);
+      });
+
+      if (currentUserId == userId) {
+        Users.updateImage(userId,
+            imgurImageId); // Pass the new token to the updateImage method
+      }
     } else {
       print(
-          'Falha ao enviar a imagem. Código de status: ${response.statusCode}');
+          'Falha ao enviar a imagem para o Imgur. Código de status: ${imgurResponse.statusCode}');
     }
   }
 
@@ -108,10 +156,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 return Scaffold(
                   appBar: customAppBar(true),
                   body: Center(
-                    child: ElevatedButton(
-                      onPressed: () => Users.logout(context),
-                      child: const Text('Logout'),
-                    ),
+                    child: Text('Erro: ${userSnapshot.error}'),
                   ),
                 );
               } else {
@@ -306,21 +351,40 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Widget _buildAvatar(User user) {
-    return Container(
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        border: Border.all(
-          color: primaryColor,
-          width: 2,
+    print(user.image);
+    if (user.image != 'default.png') {
+      return Container(
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          border: Border.all(
+            color: primaryColor,
+            width: 2,
+          ),
         ),
-      ),
-      child: CircleAvatar(
-        radius: 86.5,
-        backgroundColor: Colors.grey,
-        backgroundImage: NetworkImage(
-          'https://relife-api.vercel.app/imagens/${user.image}?timestamp=${DateTime.now()}', //truque para atualizar a imagem
+        child: CircleAvatar(
+          radius: 86.5,
+          backgroundColor: Colors.grey,
+          backgroundImage: NetworkImage(
+            'https://i.imgur.com/${user.image}.jpg',
+          ),
         ),
-      ),
-    );
+      );
+    } else {
+      return Container(
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          border: Border.all(
+            color: primaryColor,
+            width: 2,
+          ),
+        ),
+        child: const CircleAvatar(
+          radius: 86.5,
+          backgroundColor: Colors.grey,
+          backgroundImage:
+              NetworkImage('$baseAPIurl/imagens/users/default.png'),
+        ),
+      );
+    }
   }
 }

@@ -9,7 +9,6 @@ import 'package:relife/views/Donation/donation.dart';
 import 'package:relife/utils/appbar.dart';
 import 'package:relife/views/Mission/widgets/donations_cards.dart';
 
-import '../../data/users.dart';
 import '../HomePage/widgets/featured_card.dart';
 
 class MissionPage extends StatefulWidget {
@@ -178,11 +177,14 @@ class _MissionPageState extends State<MissionPage> {
               String formattedDate = DateFormat('yyyy-MM-dd')
                   .format(donationDate); // Formatar a data
 
+              print('HERE ${donation.userName}');
               return normalDonationCard(
                   userID: donation.userId,
                   donationAmount: donation.amount,
                   donationDate: formattedDate,
-                  donationMessage: donation.donationMessage);
+                  donationMessage: donation.donationMessage,
+                  userName: donation.userName,
+                  userImage: donation.userImage);
             },
           );
         } else {
@@ -222,14 +224,18 @@ class _MissionPageState extends State<MissionPage> {
                     userID: donation.userId,
                     donationAmount: donation.amount,
                     donationDate: formattedDate,
-                    donationMessage: donation.donationMessage);
+                    donationMessage: donation.donationMessage,
+                    userName: donation.userName,
+                    userImage: donation.userImage);
               } else {
                 // os outros
                 return normalDonationCard(
                     userID: donation.userId,
                     donationAmount: donation.amount,
                     donationDate: formattedDate,
-                    donationMessage: donation.donationMessage);
+                    donationMessage: donation.donationMessage,
+                    userName: donation.userName,
+                    userImage: donation.userImage);
               }
             },
           );

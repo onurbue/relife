@@ -66,10 +66,8 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
               child: const Text('Change'),
               onPressed: () {
                 Users.changePassword(widget.userId, _passwordController.text);
-                Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const ProfilePage()));
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => ProfilePage()));
               },
             ),
           ),

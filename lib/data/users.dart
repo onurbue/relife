@@ -222,6 +222,47 @@ class Users {
     }
   }
 
+  static Future<void> updateImage(int userId, String image) async {
+    try {
+      final response = await http.put(
+        Uri.parse(
+          '$baseAPIurl/user/image',
+        ),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'id_user': userId,
+          'image': image,
+        }),
+      );
+
+      print(response.statusCode);
+    } catch (e) {
+      throw Exception('Failed to connect to the server');
+    }
+  }
+
+  static Future<String> refreshToken(
+      String oldToken, String imgurImageId) async {
+    final response = await http.post(
+      Uri.parse('$baseAPIurl/refresh-token'),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: json.encode({
+        'oldToken': oldToken,
+        'imgurImageId': imgurImageId,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      final jsonResponse = json.decode(response.body);
+      final newToken = jsonResponse['token'];
+      return newToken;
+    } else {
+      throw Exception('Failed to refresh token');
+    }
+  }
+
   static Future<void> deleteUser(int userId) async {
     try {
       final response = await http.delete(

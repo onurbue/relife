@@ -3,13 +3,107 @@ import 'package:flutter/material.dart';
 import '../../../data/users.dart';
 import '../../../models/user.dart';
 import '../../../utils/constants.dart';
+import '../../../utils/urls.dart';
+
+// Widget normalDonationCard({
+//   required int userID,
+//   required int donationAmount,
+//   String? donationMessage,
+//   required String donationDate,
+// }) {
+//   return Stack(
+//     children: [
+//       Padding(
+//         padding: const EdgeInsets.symmetric(vertical: 10),
+//         child: Card(
+//           margin: const EdgeInsets.only(left: 30.0),
+//           child: ListTile(
+//             title: FutureBuilder<String>(
+//               future: Users.getUserName(userID),
+//               builder: (context, snapshot) {
+//                 if (snapshot.connectionState == ConnectionState.waiting) {
+//                   return const Text('');
+//                 } else if (snapshot.hasError) {
+//                   return Text('Erro ao buscar o usuário: ${snapshot.error}');
+//                 } else if (snapshot.hasData) {
+//                   String userName = snapshot.data!;
+//                   return Padding(
+//                     padding: const EdgeInsets.only(left: 30),
+//                     child: Text(
+//                       userName,
+//                       style: const TextStyle(
+//                         color: primaryColor,
+//                         fontWeight: FontWeight.bold,
+//                       ),
+//                     ),
+//                   );
+//                 } else {
+//                   return const Text('Nenhum usuário encontrado.');
+//                 }
+//               },
+//             ),
+//             subtitle: Text(donationMessage ?? ''),
+//             trailing: Column(
+//               crossAxisAlignment: CrossAxisAlignment.end,
+//               mainAxisAlignment: MainAxisAlignment.center,
+//               children: [
+//                 Container(
+//                   width: 70,
+//                   height: 25,
+//                   decoration: BoxDecoration(
+//                     shape: BoxShape.rectangle,
+//                     borderRadius: BorderRadius.circular(25),
+//                     color: primaryColor,
+//                   ),
+//                   child: Center(
+//                     child: Text(
+//                       '${donationAmount.toString()} €',
+//                       style: const TextStyle(
+//                         fontSize: 16,
+//                         fontWeight: FontWeight.bold,
+//                         color: Colors.white,
+//                       ),
+//                     ),
+//                   ),
+//                 ),
+//                 const SizedBox(height: 5),
+//                 Text(
+//                   donationDate,
+//                   style: const TextStyle(
+//                     fontSize: 13,
+//                     fontWeight: FontWeight.w300,
+//                   ),
+//                 ),
+//               ],
+//             ),
+//           ),
+//         ),
+//       ),
+//       Positioned(
+//         top: 5,
+//         left: -330,
+//         right: .0,
+//         child: Center(
+//           child: CircleAvatar(
+//             backgroundColor: Colors.white,
+//             radius: 30.0,
+//             child: Image.asset('assets/images/users_profiles/default.png'),
+//           ),
+//         ),
+//       ),
+//     ],
+//   );
+// }
 
 Widget normalDonationCard({
   required int userID,
+  required String userName,
+  required String userImage,
   required int donationAmount,
   String? donationMessage,
   required String donationDate,
 }) {
+  print(userImage);
   return Stack(
     children: [
       Padding(
@@ -17,29 +111,15 @@ Widget normalDonationCard({
         child: Card(
           margin: const EdgeInsets.only(left: 30.0),
           child: ListTile(
-            title: FutureBuilder<String>(
-              future: Users.getUserName(userID),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Text('');
-                } else if (snapshot.hasError) {
-                  return Text('Erro ao buscar o usuário: ${snapshot.error}');
-                } else if (snapshot.hasData) {
-                  String userName = snapshot.data!;
-                  return Padding(
-                    padding: const EdgeInsets.only(left: 30),
-                    child: Text(
-                      userName,
-                      style: const TextStyle(
-                        color: primaryColor,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  );
-                } else {
-                  return const Text('Nenhum usuário encontrado.');
-                }
-              },
+            title: Padding(
+              padding: const EdgeInsets.only(left: 30),
+              child: Text(
+                userName,
+                style: const TextStyle(
+                  color: primaryColor,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
             subtitle: Text(donationMessage ?? ''),
             trailing: Column(
@@ -86,7 +166,9 @@ Widget normalDonationCard({
           child: CircleAvatar(
             backgroundColor: Colors.white,
             radius: 30.0,
-            child: Image.asset('assets/images/users_profiles/default.png'),
+            child: userImage == 'default.png'
+                ? Image.asset('assets/images/users_profiles/default.png')
+                : Image.network('$imageUrl/$userImage'),
           ),
         ),
       ),
@@ -96,6 +178,8 @@ Widget normalDonationCard({
 
 Widget bigDonationCard({
   required int userID,
+  required String userName,
+  required String userImage,
   required int donationAmount,
   String? donationMessage,
   required String donationDate,
@@ -128,9 +212,12 @@ Widget bigDonationCard({
         right: .0,
         child: Center(
           child: CircleAvatar(
-              backgroundColor: Colors.white,
-              radius: 30.0,
-              child: Image.asset('assets/images/users_profiles/default.png')),
+            backgroundColor: Colors.white,
+            radius: 30.0,
+            child: userImage == 'default.png'
+                ? Image.asset('assets/images/users_profiles/default.png')
+                : Image.network('$imageUrl/$userImage'),
+          ),
         ),
       )
     ],

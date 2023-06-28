@@ -14,7 +14,7 @@ int _pageIndex = 0;
 
 final List<Widget> _telas = [
   const HomePage(),
-  const ProfilePage(),
+  ProfilePage(),
 ];
 
 class _InitialPageState extends State<InitialPage> {
