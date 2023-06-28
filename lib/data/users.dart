@@ -32,6 +32,8 @@ class Users {
 
     if (response.statusCode == 200) {
       return jsonDecode(response.body);
+    } else if (response.statusCode == 400) {
+      return 'E-mail já está em uso';
     } else {
       throw Exception('Erro ao criar usuário');
     }
